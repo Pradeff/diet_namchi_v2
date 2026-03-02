@@ -1,4 +1,3 @@
-
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -9,6 +8,11 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+###> Uploaded & Generated Media ###
+/public/uploads/
+/public/images/WebsiteAssets/
+###< Uploaded & Generated Media ###
+
 ###> phpunit/phpunit ###
 /phpunit.xml
 /.phpunit.cache/
@@ -18,3 +22,77 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> Composer ###
+composer.phar
+/composer.lock
+/vendor
+###< Composer ###
+
+###> Logs and cache ###
+*.log
+*.cache
+/var/log/
+/var/cache/
+###< Logs and cache ###
+
+###> Symfony Encore / Vite / Frontend tools ###
+/node_modules/
+/build/
+/public/build/
+/public/static/
+/yarn.lock
+/package-lock.json
+/npm-debug.log*
+/yarn-error.log*
+/.pnpm-debug.log*
+###< Frontend tools ###
+
+###> IDEs and editors ###
+# PhpStorm / JetBrains
+.idea/
+*.iml
+
+# VSCode
+.vscode/
+
+# Eclipse
+.project
+.buildpath
+.settings/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+###< IDEs and editors ###
+
+###> Operating system ###
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+*.swp
+*.swo
+*.tmp
+*.bak
+*.old
+*~
+###< Operating system ###
+
+###> Test coverage ###
+/coverage/
+.clover
+###< Test coverage ###
+
+###> Docker ###
+.docker/
+/docker-compose.override.yml
+###< Docker ###
+
+###> Symfony Binary (if used locally) ###
+/symfony
+###< Symfony Binary ###
+
