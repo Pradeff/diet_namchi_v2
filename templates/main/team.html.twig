@@ -1,0 +1,291 @@
+{# main/team.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Our Team - DIET Namchi{% endblock %}
+
+{% block body %}
+    <!-- Compact Hero/Breadcrumb Section -->
+    <section class="compact-hero" style="background-image: url('{{ asset('images/dummy/2.jpg') }}');">
+        <div class="compact-hero-overlay"></div>
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="compact-hero-content">
+                        <span class="compact-hero-badge">
+                            <i class="bi bi-people"></i> Our Team
+                        </span>
+                        <h1 class="compact-hero-title">Meet Our Faculty & Staff</h1>
+                        <nav aria-label="breadcrumb" class="compact-breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="{{ path('app_main') }}" class="text-white">
+                                        <i class="bi bi-house-door"></i> Home
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active text-white-50" aria-current="page">Team</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Section -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-subtitle">
+                    <i class="bi bi-star"></i> Leadership
+                </span>
+                <h2 class="section-title">Administrative Team</h2>
+                <p>Our dedicated leadership team ensures academic excellence and institutional growth.</p>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+                <!-- Principal -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="principal-banner-card">
+                        <div class="principal-banner-inner">
+                            <div class="principal-avatar-block">
+                                <div class="principal-avatar-circle">
+                                    <img src="{{ asset('images/dummy/2.jpg') }}" alt="Principal" class="principal-avatar-img">
+                                </div>
+                            </div>
+                            <div class="principal-text-block">
+                                <span class="principal-intro-label">Leading With Vision</span>
+                                <p class="principal-main-text">I'm <span>Dr. [Principal Name]</span>, Principal of DIET Namchi</p>
+                                <p class="principal-sub-text">Dedicated to transforming teacher education through innovation and excellence.</p>
+                                <div class="principal-info-row">
+                                    <span class="principal-info-item">
+                                        <i class="bi bi-envelope"></i> principal@dietnamchi.org
+                                    </span>
+                                    <span class="principal-info-item">
+                                        <i class="bi bi-telephone"></i> Ext. 101
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Team -->
+            <div class="row g-4 mt-4">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card text-center">
+                        <img src="{{ asset('images/dummy/2.jpg') }}" alt="Vice Principal" class="rounded-circle mb-3 mx-auto" style="width: 120px; height: 120px; object-fit: cover; border: 4px solid var(--bg-soft);">
+                        <h5 class="mb-1">Dr. [VP Name]</h5>
+                        <p class="text-primary small mb-2">Vice Principal</p>
+                        <p class="small text-muted mb-2">M.Ed., Ph.D. in Education</p>
+                        <div class="small">
+                            <i class="bi bi-telephone text-primary me-1"></i> Ext. 102
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card text-center">
+                        <img src="{{ asset('images/dummy/2.jpg') }}" alt="Admin Officer" class="rounded-circle mb-3 mx-auto" style="width: 120px; height: 120px; object-fit: cover; border: 4px solid var(--bg-soft);">
+                        <h5 class="mb-1">Mr./Ms. [AO Name]</h5>
+                        <p class="text-primary small mb-2">Administrative Officer</p>
+                        <p class="small text-muted mb-2">MBA, M.Com</p>
+                        <div class="small">
+                            <i class="bi bi-telephone text-primary me-1"></i> Ext. 103
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-card text-center">
+                        <img src="{{ asset('images/dummy/2.jpg') }}" alt="Training Coordinator" class="rounded-circle mb-3 mx-auto" style="width: 120px; height: 120px; object-fit: cover; border: 4px solid var(--bg-soft);">
+                        <h5 class="mb-1">Dr. [TC Name]</h5>
+                        <p class="text-primary small mb-2">Training Coordinator</p>
+                        <p class="small text-muted mb-2">M.Ed., NET Qualified</p>
+                        <div class="small">
+                            <i class="bi bi-telephone text-primary me-1"></i> Ext. 104
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Faculty Section -->
+    <section class="section-padding bg-light-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-subtitle">
+                    <i class="bi bi-chalkboard-teacher"></i> Academic Faculty
+                </span>
+                <h2 class="section-title">Our Expert Faculty</h2>
+                <p>Learn from experienced educators dedicated to your professional growth.</p>
+            </div>
+
+            <div class="row g-4">
+                <!-- Faculty 1 -->
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card text-center">
+                        <img src="{{ asset('images/dummy/2.jpg') }}" alt="Faculty" class="rounded-circle mb-3 mx-auto" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid var(--bg-soft);">
+                        <h5 class="mb-1">Dr. [Faculty Name]</h5>
+                        <p class="text-primary small mb-2">Associate Professor</p>
+                        <p class="small text-muted mb-2">Educational Psychology</p>
+                        <div class="small">
+                            <i class="bi bi-telephone text-primary me-1"></i> Ext. 105
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Faculty 2 -->
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card text-center">
+                        <img src="{{ asset('images/dummy/2.jpg') }}" alt="Faculty" class="rounded-circle mb-3 mx-auto" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid var(--bg-soft);">
+                        <h5 class="mb-1">Dr. [Faculty Name]</h5>
+                        <p class="text-primary small mb-2">Associate Professor</p>
+                        <p class="small text-muted mb-2">Pedagogy & Curriculum</p>
+                        <div class="small">
+                            <i class="bi bi-telephone text-primary me-1"></i> Ext. 106
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Faculty 3 -->
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card text-center">
+                        <img src="{{ asset('images/dummy/2.jpg') }}" alt="Faculty" class="rounded-circle mb-3 mx-auto" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid var(--bg-soft);">
+                        <h5 class="mb-1">Mr./Ms. [Faculty Name]</h5>
+                        <p class="text-primary small mb-2">Assistant Professor</p>
+                        <p class="small text-muted mb-2">ICT in Education</p>
+                        <div class="small">
+                            <i class="bi bi-telephone text-primary me-1"></i> Ext. 107
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Faculty 4 -->
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-card text-center">
+                        <img src="{{ asset('images/dummy/2.jpg') }}" alt="Faculty" class="rounded-circle mb-3 mx-auto" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid var(--bg-soft);">
+                        <h5 class="mb-1">Mr./Ms. [Faculty Name]</h5>
+                        <p class="text-primary small mb-2">Assistant Professor</p>
+                        <p class="small text-muted mb-2">Inclusive Education</p>
+                        <div class="small">
+                            <i class="bi bi-telephone text-primary me-1"></i> Ext. 108
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Faculty 5 -->
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-card text-center">
+                        <img src="{{ asset('images/dummy/2.jpg') }}" alt="Faculty" class="rounded-circle mb-3 mx-auto" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid var(--bg-soft);">
+                        <h5 class="mb-1">Dr. [Faculty Name]</h5>
+                        <p class="text-primary small mb-2">Associate Professor</p>
+                        <p class="small text-muted mb-2">Language Teaching</p>
+                        <div class="small">
+                            <i class="bi bi-telephone text-primary me-1"></i> Ext. 109
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Faculty 6 -->
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-card text-center">
+                        <img src="{{ asset('images/dummy/2.jpg') }}" alt="Faculty" class="rounded-circle mb-3 mx-auto" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid var(--bg-soft);">
+                        <h5 class="mb-1">Mr./Ms. [Faculty Name]</h5>
+                        <p class="text-primary small mb-2">Assistant Professor</p>
+                        <p class="small text-muted mb-2">Mathematics Education</p>
+                        <div class="small">
+                            <i class="bi bi-telephone text-primary me-1"></i> Ext. 110
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Faculty 7 -->
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="700">
+                    <div class="feature-card text-center">
+                        <img src="{{ asset('images/dummy/2.jpg') }}" alt="Faculty" class="rounded-circle mb-3 mx-auto" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid var(--bg-soft);">
+                        <h5 class="mb-1">Dr. [Faculty Name]</h5>
+                        <p class="text-primary small mb-2">Associate Professor</p>
+                        <p class="small text-muted mb-2">Science Education</p>
+                        <div class="small">
+                            <i class="bi bi-telephone text-primary me-1"></i> Ext. 111
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Faculty 8 -->
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="800">
+                    <div class="feature-card text-center">
+                        <img src="{{ asset('images/dummy/2.jpg') }}" alt="Faculty" class="rounded-circle mb-3 mx-auto" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid var(--bg-soft);">
+                        <h5 class="mb-1">Mr./Ms. [Faculty Name]</h5>
+                        <p class="text-primary small mb-2">Assistant Professor</p>
+                        <p class="small text-muted mb-2">Social Studies</p>
+                        <div class="small">
+                            <i class="bi bi-telephone text-primary me-1"></i> Ext. 112
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Staff -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-subtitle">
+                    <i class="bi bi-heart"></i> Support Staff
+                </span>
+                <h2 class="section-title">Administrative & Support Team</h2>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon mx-auto" style="background: linear-gradient(135deg, #0ea5e9, #22c55e);">
+                            <i class="bi bi-file-earmark-text"></i>
+                        </div>
+                        <h5 class="mb-2">Office Staff</h5>
+                        <p class="small text-muted mb-0">5 Members</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon mx-auto" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">
+                            <i class="bi bi-tools"></i>
+                        </div>
+                        <h5 class="mb-2">Technical Staff</h5>
+                        <p class="small text-muted mb-0">3 Members</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon mx-auto" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);">
+                            <i class="bi bi-broom"></i>
+                        </div>
+                        <h5 class="mb-2">Support Staff</h5>
+                        <p class="small text-muted mb-0">8 Members</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div data-aos="fade-up">
+                <span class="section-subtitle mb-3">
+                    <i class="bi bi-hand-thumbs-up"></i> Join Our Team
+                </span>
+                <h2 class="mb-3">Interested in Working With Us?</h2>
+                <p class="mx-auto mb-4">Check our current openings and become part of the DIET Namchi family.</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{{ path('app_notices') }}" class="btn-apply">View Openings</a>
+                    <a href="{{ path('app_contact') }}" class="btn btn-outline-primary px-4 py-2 rounded-pill">Contact HR</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

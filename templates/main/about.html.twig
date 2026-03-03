@@ -1,0 +1,214 @@
+{# main/about.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}About DIET Namchi{% endblock %}
+
+{% block body %}
+    <!-- Compact Hero/Breadcrumb Section -->
+    <section class="compact-hero" style="background-image: url('{{ asset('images/dummy/2.jpg') }}');">
+        <div class="compact-hero-overlay"></div>
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="compact-hero-content">
+                        <span class="compact-hero-badge">
+                            <i class="bi bi-building"></i> About Us
+                        </span>
+                        <h1 class="compact-hero-title">Empowering Educators Since 2010</h1>
+                        <nav aria-label="breadcrumb" class="compact-breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="{{ path('app_main') }}" class="text-white">
+                                        <i class="bi bi-house-door"></i> Home
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active text-white-50" aria-current="page">About Us</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Our Story Section -->
+    <section id="our-story" class="section-padding">
+        <div class="container">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <span class="section-subtitle">
+                        <i class="bi bi-book-half"></i> Our Legacy
+                    </span>
+                    <h2 class="section-title">Empowering Educators Since 2010</h2>
+                    <p class="mb-4">District Institute of Education & Training (DIET) Namchi is committed to excellence in teacher education and professional development. Located in Namchi, South Sikkim, we nurture future educators through NCTE-recognized programs aligned with NEP 2020.</p>
+
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-start">
+                                <div class="feature-icon me-3">
+                                    <i class="bi bi-award"></i>
+                                </div>
+                                <div>
+                                    <strong class="d-block">NCTE Approved</strong>
+                                    <small class="text-muted">Recognized Institution</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-start">
+                                <div class="feature-icon me-3">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div>
+                                    <strong class="d-block">Expert Faculty</strong>
+                                    <small class="text-muted">Experienced Trainers</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-start">
+                                <div class="feature-icon me-3">
+                                    <i class="bi bi-mortarboard"></i>
+                                </div>
+                                <div>
+                                    <strong class="d-block">NEP 2020 Aligned</strong>
+                                    <small class="text-muted">Modern Curriculum</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-start">
+                                <div class="feature-icon me-3">
+                                    <i class="bi bi-globe-asia-australia"></i>
+                                </div>
+                                <div>
+                                    <strong class="d-block">Community Focus</strong>
+                                    <small class="text-muted">Local Impact</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="position-relative">
+                        <img src="{{ asset('images/pic1.jpg') }}"
+                             alt="DIET Namchi Campus"
+                             class="img-fluid rounded-4 shadow-lg w-100"
+                             style="object-fit: cover; height: 320px;">
+                        <div class="position-absolute bottom-0 end-0 bg-white p-3 rounded-4 shadow-soft m-3"
+                             style="max-width: 180px;">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                                <div>
+                                    <strong class="d-block small">100%</strong>
+                                    <small class="text-muted" style="font-size: 10px;">NCTE Compliance</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="section-padding" style="background: linear-gradient(180deg, var(--bg-light) 0%, var(--white) 100%);">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-subtitle">
+                    <i class="bi bi-lightbulb"></i> Our Direction
+                </span>
+                <h2 class="section-title">Mission & Vision</h2>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">
+                            <i class="bi bi-bullseye"></i>
+                        </div>
+                        <h4 class="feature-title">Our Mission</h4>
+                        <p>To prepare competent, compassionate educators equipped with innovative teaching skills and modern pedagogical practices for Sikkim's schools.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">
+                            <i class="bi bi-eye"></i>
+                        </div>
+                        <h4 class="feature-title">Our Vision</h4>
+                        <p>To be the premier teacher training institute in South Sikkim, fostering inclusive, quality education for a progressive tomorrow.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="section-padding why-choose-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-subtitle">
+                    <i class="bi bi-star"></i> Why Choose Us
+                </span>
+                <h2 class="section-title">The DIET Namchi Advantage</h2>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-journal-check"></i>
+                        </div>
+                        <h4 class="feature-title">NCTE Recognized</h4>
+                        <p>Our programs meet national standards for teacher education quality.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-lightning-charge"></i>
+                        </div>
+                        <h4 class="feature-title">Modern Pedagogy</h4>
+                        <p>Training grounded in NEP 2020 frameworks with hands-on methods.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <h4 class="feature-title">Expert Mentors</h4>
+                        <p>Learn from experienced educators passionate about development.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-graph-up-arrow"></i>
+                        </div>
+                        <h4 class="feature-title">Career Support</h4>
+                        <p>Placement assistance and continuous professional development.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section (Compact) -->
+    <section class="cta-section-compact">
+        <div class="container">
+            <div data-aos="fade-up">
+                <h2 class="mb-3">Ready to Join Our Mission?</h2>
+                <p class="mb-4">Explore our NCTE-recognized programs and start your journey.</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{{ path('app_main') }}" class="btn-apply">Explore Programs</a>
+                    <a href="{{ path('app_contact') }}" class="btn btn-outline-primary px-4 py-2 rounded-pill">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+

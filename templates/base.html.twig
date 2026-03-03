@@ -1,3 +1,4 @@
+{#template/base.html.twig#}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,7 +49,7 @@
     <div class="container">
         <div class="header-wrapper">
             <!-- Logo -->
-            <a href="index.html" class="logo-section">
+            <a href="{{ path('app_main') }}" class="logo-section">
                 <img
                     src="{{ asset('images/logo.png') }}"
                     alt="DIET Logo" class="logo-img">
@@ -62,32 +63,63 @@
             <nav class="desktop-nav">
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <a href="index.html" class="nav-link active">Home</a>
+                        <a href="{{ path('app_main') }}"
+                           class="nav-link {% if app.request.attributes.get('_route') == 'app_main' %}active{% endif %}">
+                            Home
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             About <i class="bi bi-chevron-down dropdown-indicator"></i>
                         </a>
                         <div class="dropdown-menu-custom">
-                            <a href="about.html">About DIET</a>
-                            <a href="vision-mission.html">Vision & Mission</a>
-                            <a href="history.html">History</a>
+                            <a href="{{ path('app_about') }}"
+                               class="nav-link {% if app.request.attributes.get('_route') == 'app_about' %}active{% endif %}">
+                                About DIET
+                            </a>
+                            <a href="{{ path('app_vision_mission') }}">Vision & Mission</a>
+                            <a href="{{ path('app_history') }}">History</a>
+                            <a href="{{ path('app_team') }}">Our Team</a>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a href="admission.html" class="nav-link">Admission</a>
+                        <a href="{{ path('app_admission') }}"
+                           class="nav-link {% if app.request.attributes.get('_route') == 'app_admission' %}active{% endif %}">
+                            Admission
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a href="training.html" class="nav-link">Training</a>
+                        <a href="{{ path('app_training') }}"
+                           class="nav-link {% if app.request.attributes.get('_route') == 'app_training' %}active{% endif %}">
+                            Training
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a href="notices.html" class="nav-link">Notices</a>
+                        <a href="{{ path('app_notices') }}"
+                           class="nav-link {% if app.request.attributes.get('_route') == 'app_notices' %}active{% endif %}">
+                            Notices
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a href="contact.html" class="nav-link">Contact</a>
+                        <a href="{{ path('app_gallery') }}"
+                           class="nav-link {% if app.request.attributes.get('_route') == 'app_gallery' %}active{% endif %}">
+                            Gallery
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('app_rti') }}"
+                           class="nav-link {% if app.request.attributes.get('_route') == 'app_rti' %}active{% endif %}">
+                            RTI
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('app_contact') }}"
+                           class="nav-link {% if app.request.attributes.get('_route') == 'app_contact' %}active{% endif %}">
+                            Contact
+                        </a>
                     </li>
                 </ul>
-                <a href="admission.html" class="btn-apply">Apply Now</a>
+                <a href="{{ path('app_admission') }}" class="btn-apply">Apply Now</a>
             </nav>
 
             <!-- Mobile Toggle Button -->
@@ -108,7 +140,7 @@
     <div class="offcanvas-body">
         <ul class="mobile-nav">
             <li>
-                <a href="index.html">Home</a>
+                <a href="{{ path('app_main') }}">Home</a>
             </li>
             <li>
                 <div class="dropdown-toggle-mobile" onclick="toggleMobileSubmenu(this)">
@@ -116,29 +148,33 @@
                     <i class="bi bi-chevron-down dropdown-icon"></i>
                 </div>
                 <ul class="mobile-submenu">
-                    <li><a href="about.html">About DIET</a></li>
-                    <li><a href="vision-mission.html">Vision & Mission</a></li>
-                    <li><a href="history.html">History</a></li>
+                    <li><a href="{{ path('app_about') }}">About DIET</a></li>
+                    <li><a href="{{ path('app_vision_mission') }}">Vision & Mission</a></li>
+                    <li><a href="{{ path('app_history') }}">History</a></li>
+                    <li><a href="{{ path('app_team') }}">Our Team</a></li>
                 </ul>
             </li>
             <li>
-                <a href="admission.html">Admission</a>
+                <a href="{{ path('app_admission') }}">Admission</a>
             </li>
             <li>
-                <a href="training.html">Training</a>
+                <a href="{{ path('app_training') }}">Training</a>
             </li>
             <li>
-                <a href="notices.html">Notices</a>
+                <a href="{{ path('app_notices') }}">Notices</a>
             </li>
             <li>
-                <a href="gallery.html">Gallery</a>
+                <a href="{{ path('app_gallery') }}">Gallery</a>
             </li>
             <li>
-                <a href="contact.html">Contact</a>
+                <a href="{{ path('app_rti') }}">RTI</a>
+            </li>
+            <li>
+                <a href="{{ path('app_contact') }}">Contact</a>
             </li>
         </ul>
         <div class="mobile-apply-btn">
-            <a href="admission.html" class="btn-apply">Apply Now</a>
+            <a href="{{ path('app_admission') }}" class="btn-apply">Apply Now</a>
         </div>
     </div>
 </div>
@@ -147,19 +183,7 @@
 
 <footer class="main-footer">
 
-    <!-- Newsletter Bar -->
-    <div class="footer-newsletter">
-        <div class="container">
-            <div class="footer-newsletter-text">
-                <h5><i class="bi bi-envelope-paper-heart-fill"></i> Stay Updated</h5>
-                <p>Subscribe for latest admissions & workshops</p>
-            </div>
-            <form class="footer-newsletter-form">
-                <input type="email" class="form-control" placeholder="Enter your email" required>
-                <button type="submit" class="btn btn-primary">Subscribe</button>
-            </form>
-        </div>
-    </div>
+
 
     <!-- Main Footer Content -->
     <div class="footer-content">
@@ -192,11 +216,11 @@
                     <div class="footer-column">
                         <h5 class="footer-column-title">Quick Links</h5>
                         <ul class="footer-column-links">
-                            <li><a href="about.html"><i class="bi bi-chevron-right"></i>About Us</a></li>
-                            <li><a href="admission.html"><i class="bi bi-chevron-right"></i>Admission</a></li>
-                            <li><a href="training.html"><i class="bi bi-chevron-right"></i>Training</a></li>
-                            <li><a href="notices.html"><i class="bi bi-chevron-right"></i>Notices</a></li>
-                            <li><a href="contact.html"><i class="bi bi-chevron-right"></i>Contact</a></li>
+                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>About Us</a></li>
+                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>Admission</a></li>
+                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>Training</a></li>
+                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>Notices</a></li>
+                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>Contact</a></li>
                         </ul>
                     </div>
                 </div>
@@ -206,11 +230,11 @@
                     <div class="footer-column">
                         <h5 class="footer-column-title">Programs</h5>
                         <ul class="footer-column-links">
-                            <li><a href="admission.html"><i class="bi bi-chevron-right"></i>D.El.Ed</a></li>
-                            <li><a href="admission.html"><i class="bi bi-chevron-right"></i>B.Ed</a></li>
-                            <li><a href="training.html"><i class="bi bi-chevron-right"></i>In-Service Training</a></li>
-                            <li><a href="downloads.html"><i class="bi bi-chevron-right"></i>Downloads</a></li>
-                            <li><a href="gallery.html"><i class="bi bi-chevron-right"></i>Gallery</a></li>
+                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>D.El.Ed</a></li>
+                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>B.Ed</a></li>
+                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>In-Service Training</a></li>
+                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>Downloads</a></li>
+                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>Gallery</a></li>
                         </ul>
                     </div>
                 </div>
@@ -246,9 +270,9 @@
             <div class="footer-bottom-content">
                 <p>&copy; 2026 DIET Namchi. All Rights Reserved.</p>
                 <div class="footer-bottom-links">
-                    <a href="privacy.html">Privacy Policy</a>
-                    <a href="terms.html">Terms of Use</a>
-                    <a href="sitemap.html">Sitemap</a>
+                    <a href="{{ path('app_main') }}">Privacy Policy</a>
+                    <a href="{{ path('app_main') }}">Terms of Use</a>
+                    <a href="{{ path('app_main') }}">Sitemap</a>
                 </div>
             </div>
         </div>

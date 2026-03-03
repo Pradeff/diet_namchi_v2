@@ -1,0 +1,263 @@
+{# main/rti.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}RTI - Right to Information - DIET Namchi{% endblock %}
+
+{% block body %}
+    <!-- Compact Hero/Breadcrumb Section -->
+    <section class="compact-hero" style="background-image: url('{{ asset('images/dummy/2.jpg') }}');">
+        <div class="compact-hero-overlay"></div>
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="compact-hero-content">
+                        <span class="compact-hero-badge">
+                            <i class="bi bi-file-earmark-text"></i> Transparency
+                        </span>
+                        <h1 class="compact-hero-title">Right to Information</h1>
+                        <nav aria-label="breadcrumb" class="compact-breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="{{ path('app_main') }}" class="text-white">
+                                        <i class="bi bi-house-door"></i> Home
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active text-white-50" aria-current="page">RTI</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RTI Information -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-subtitle">
+                    <i class="bi bi-shield-check"></i> RTI Act 2005
+                </span>
+                <h2 class="section-title">Transparency & Accountability</h2>
+                <p>DIET Namchi is committed to transparency and proactive disclosure of information as mandated under the Right to Information Act, 2005.</p>
+            </div>
+
+            <div class="row g-4">
+                <!-- RTI Officer Details -->
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">
+                            <i class="bi bi-person-badge"></i>
+                        </div>
+                        <h4 class="feature-title">RTI Information Officer</h4>
+                        <p>For any information requests under RTI Act 2005, please contact our designated Public Information Officer (PIO):</p>
+                        <div class="mt-3">
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-2">
+                                    <strong>Name:</strong> Dr. [Officer Name]<br>
+                                    <small class="text-muted">Principal, DIET Namchi</small>
+                                </li>
+                                <li class="mb-2">
+                                    <strong>Address:</strong><br>
+                                    District Institute of Education & Training<br>
+                                    Namchi, South Sikkim - 737126
+                                </li>
+                                <li class="mb-2">
+                                    <strong>Phone:</strong> 03595-264521
+                                </li>
+                                <li class="mb-2">
+                                    <strong>Email:</strong> rtio@dietnamchi.org
+                                </li>
+                                <li>
+                                    <strong>Office Hours:</strong> Monday - Saturday, 10:00 AM - 5:00 PM
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- How to File RTI -->
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="feature-card h-100">
+                        <div class="feature-icon">
+                            <i class="bi bi-clipboard-check"></i>
+                        </div>
+                        <h4 class="feature-title">How to File RTI Application</h4>
+                        <p>Follow these simple steps to file your RTI application:</p>
+                        <div class="mt-3">
+                            <ol class="mb-0 ps-3">
+                                <li class="mb-2">
+                                    <strong>Write Application:</strong> Draft your request in writing (English, Hindi, or Nepali)
+                                </li>
+                                <li class="mb-2">
+                                    <strong>Pay Fee:</strong> Rs. 10/- through court fee stamp or demand draft
+                                </li>
+                                <li class="mb-2">
+                                    <strong>Submit:</strong> Send to RTI Officer via post or submit in person
+                                </li>
+                                <li class="mb-2">
+                                    <strong>Acknowledgment:</strong> You will receive acknowledgment within 7 days
+                                </li>
+                                <li>
+                                    <strong>Response:</strong> Information provided within 30 days
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Proactive Disclosure -->
+            <div class="mt-5" data-aos="fade-up">
+                <h3 class="mb-4">Proactive Disclosure - Section 4(1)(b)</h3>
+                <p class="mb-4">As per Section 4(1)(b) of RTI Act, DIET Namchi voluntarily discloses the following information:</p>
+
+                <div class="accordion" id="rtiAccordion">
+                    <!-- Item 1 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#rti1">
+                                <i class="bi bi-building me-2"></i>Particulars of Organization
+                            </button>
+                        </h2>
+                        <div id="rti1" class="accordion-collapse collapse show" data-bs-parent="#rtiAccordion">
+                            <div class="accordion-body">
+                                <ul class="list-unstyled mb-0">
+                                    <li><strong>Full Name:</strong> District Institute of Education & Training (DIET), Namchi</li>
+                                    <li><strong>Establishment Year:</strong> 2010</li>
+                                    <li><strong>Parent Organization:</strong> Department of Education, Government of Sikkim</li>
+                                    <li><strong>Recognition:</strong> NCTE (National Council for Teacher Education)</li>
+                                    <li><strong>Jurisdiction:</strong> South Sikkim District</li>
+                                    <li><strong>Programs Offered:</strong> D.El.Ed, B.Ed, In-Service Training</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#rti2">
+                                <i class="bi bi-power me-2"></i>Powers & Duties of Officers
+                            </button>
+                        </h2>
+                        <div id="rti2" class="accordion-collapse collapse" data-bs-parent="#rtiAccordion">
+                            <div class="accordion-body">
+                                <p><strong>Principal:</strong> Overall administrative and academic head</p>
+                                <p><strong>Vice Principal:</strong> Academic coordination and faculty management</p>
+                                <p><strong>Training Coordinator:</strong> In-service training programs</p>
+                                <p><strong>Administrative Officer:</strong> Finance, HR, and infrastructure</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#rti3">
+                                <i class="bi bi-currency-dollar me-2"></i>Budget & Expenditure
+                            </button>
+                        </h2>
+                        <div id="rti3" class="accordion-collapse collapse" data-bs-parent="#rtiAccordion">
+                            <div class="accordion-body">
+                                <ul class="list-unstyled mb-0">
+                                    <li><a href="#" class="text-decoration-none"><i class="bi bi-file-pdf text-danger me-2"></i>Budget 2025-26 (PDF)</a></li>
+                                    <li><a href="#" class="text-decoration-none"><i class="bi bi-file-pdf text-danger me-2"></i>Expenditure Statement Q3 2025-26 (PDF)</a></li>
+                                    <li><a href="#" class="text-decoration-none"><i class="bi bi-file-pdf text-danger me-2"></i>Audit Report 2024-25 (PDF)</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#rti4">
+                                <i class="bi bi-file-earmark-ruled me-2"></i>Rules & Regulations
+                            </button>
+                        </h2>
+                        <div id="rti4" class="accordion-collapse collapse" data-bs-parent="#rtiAccordion">
+                            <div class="accordion-body">
+                                <ul class="list-unstyled mb-0">
+                                    <li><a href="#" class="text-decoration-none"><i class="bi bi-file-pdf text-danger me-2"></i>Service Rules & Regulations</a></li>
+                                    <li><a href="#" class="text-decoration-none"><i class="bi bi-file-pdf text-danger me-2"></i>Financial Rules</a></li>
+                                    <li><a href="#" class="text-decoration-none"><i class="bi bi-file-pdf text-danger me-2"></i>Recruitment Rules</a></li>
+                                    <li><a href="#" class="text-decoration-none"><i class="bi bi-file-pdf text-danger me-2"></i>Code of Conduct</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 5 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#rti5">
+                                <i class="bi bi-calendar-check me-2"></i>Admission & Examination
+                            </button>
+                        </h2>
+                        <div id="rti5" class="accordion-collapse collapse" data-bs-parent="#rtiAccordion">
+                            <div class="accordion-body">
+                                <ul class="list-unstyled mb-0">
+                                    <li>Admission procedures and eligibility criteria</li>
+                                    <li>Examination schedules and patterns</li>
+                                    <li>Fee structure and payment methods</li>
+                                    <li>Reservation policy implementation</li>
+                                    <li>Student grievance redressal mechanism</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RTI Downloads -->
+            <div class="row g-4 mt-4">
+                <div class="col-md-6" data-aos="fade-up">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon mx-auto">
+                            <i class="bi bi-download"></i>
+                        </div>
+                        <h4 class="feature-title">RTI Application Form</h4>
+                        <p>Download the prescribed RTI application form</p>
+                        <a href="#" class="btn-apply">
+                            <i class="bi bi-file-pdf me-2"></i>Download PDF
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon mx-auto">
+                            <i class="bi bi-info-circle"></i>
+                        </div>
+                        <h4 class="feature-title">RTI Guidelines</h4>
+                        <p>Complete guidelines for filing RTI applications</p>
+                        <a href="#" class="btn-apply">
+                            <i class="bi bi-file-pdf me-2"></i>Download PDF
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div data-aos="fade-up">
+                <span class="section-subtitle mb-3">
+                    <i class="bi bi-question-circle"></i> Need Information?
+                </span>
+                <h2 class="mb-3">File Your RTI Application Today</h2>
+                <p class="mx-auto mb-4">Exercise your right to information. We are committed to providing timely and accurate information.</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="#" class="btn-apply">
+                        <i class="bi bi-file-earmark-text me-2"></i>File RTI Online
+                    </a>
+                    <a href="{{ path('app_contact') }}" class="btn btn-outline-primary px-4 py-2 rounded-pill">
+                        <i class="bi bi-telephone me-1"></i> Contact RTI Officer
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

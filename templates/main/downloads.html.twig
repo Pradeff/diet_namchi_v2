@@ -1,0 +1,304 @@
+{# main/downloads.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Downloads - DIET Namchi{% endblock %}
+
+{% block body %}
+    <!-- Compact Hero/Breadcrumb Section -->
+    <section class="compact-hero" style="background-image: url('{{ asset('images/dummy/2.jpg') }}');">
+        <div class="compact-hero-overlay"></div>
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="compact-hero-content">
+                        <span class="compact-hero-badge">
+                            <i class="bi bi-download"></i> Resources
+                        </span>
+                        <h1 class="compact-hero-title">Download Center</h1>
+                        <nav aria-label="breadcrumb" class="compact-breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="{{ path('app_main') }}" class="text-white">
+                                        <i class="bi bi-house-door"></i> Home
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active text-white-50" aria-current="page">Downloads</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Downloads Section -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-subtitle">
+                    <i class="bi bi-file-earmark-text"></i> Resources
+                </span>
+                <h2 class="section-title">Download Center</h2>
+                <p>Access important documents, forms, brochures, and academic resources.</p>
+            </div>
+
+            <div class="row g-4">
+                <!-- Admission Forms -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-file-earmark-text"></i>
+                        </div>
+                        <h4 class="feature-title">Admission Forms</h4>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>D.El.Ed Application Form 2026</span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>B.Ed Application Form 2026</span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>Admission Prospectus</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>Fee Structure Document</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Academic Resources -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-book"></i>
+                        </div>
+                        <h4 class="feature-title">Academic Resources</h4>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>D.El.Ed Syllabus 2026</span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>B.Ed Syllabus 2026</span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>Academic Calendar 2026</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>Examination Guidelines</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Training Materials -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-presentation"></i>
+                        </div>
+                        <h4 class="feature-title">Training Materials</h4>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>NEP 2020 Training Module</span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>ICT in Education Guide</span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>Inclusive Education Handbook</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>Assessment Techniques</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Official Documents -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-file-earmark-ruled"></i>
+                        </div>
+                        <h4 class="feature-title">Official Documents</h4>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>NCTE Recognition Certificate</span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>Affiliation Certificate</span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>Annual Report 2024-25</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>NAAC Accreditation</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Forms & Applications -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-clipboard-check"></i>
+                        </div>
+                        <h4 class="feature-title">Forms & Applications</h4>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>RTI Application Form</span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>Leave Application Form</span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>Certificate Request Form</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>Transcript Request Form</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Policies & Guidelines -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <h4 class="feature-title">Policies & Guidelines</h4>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>Privacy Policy</span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>Terms of Use</span>
+                                </a>
+                            </li>
+                            <li class="mb-2">
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>Code of Conduct</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="text-decoration-none d-flex align-items-center gap-2">
+                                    <i class="bi bi-file-pdf text-danger"></i>
+                                    <span>Anti-Ragging Policy</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Download Stats -->
+    <section class="section-padding bg-light-section">
+        <div class="container">
+            <div class="row g-4 text-center">
+                <div class="col-md-4" data-aos="zoom-in">
+                    <div class="stat-box">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Documents Available</span>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="stat-box">
+                        <span class="stat-number">10,000+</span>
+                        <span class="stat-label">Downloads Monthly</span>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="stat-box">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Access Available</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div data-aos="fade-up">
+                <h2 class="mb-3">Need Help Finding Something?</h2>
+                <p class="mx-auto mb-4">Can't find the document you're looking for? Contact our administrative office for assistance.</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{{ path('app_contact') }}" class="btn-apply">Contact Admin</a>
+                    <a href="{{ path('app_notices') }}" class="btn btn-outline-primary px-4 py-2 rounded-pill">View Notices</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

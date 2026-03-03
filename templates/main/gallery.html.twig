@@ -1,0 +1,252 @@
+{# main/gallery.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Gallery - DIET Namchi{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/fancybox.css') }}">
+{% endblock %}
+
+{% block body %}
+    <!-- Compact Hero/Breadcrumb Section -->
+    <section class="compact-hero" style="background-image: url('{{ asset('images/dummy/2.jpg') }}');">
+        <div class="compact-hero-overlay"></div>
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="compact-hero-content">
+                        <span class="compact-hero-badge">
+                            <i class="bi bi-images"></i> Moments
+                        </span>
+                        <h1 class="compact-hero-title">Photo Gallery</h1>
+                        <nav aria-label="breadcrumb" class="compact-breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="{{ path('app_main') }}" class="text-white">
+                                        <i class="bi bi-house-door"></i> Home
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active text-white-50" aria-current="page">Gallery</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Filter -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-subtitle">
+                    <i class="bi bi-collection"></i> Our Collection
+                </span>
+                <h2 class="section-title">Campus Life & Events</h2>
+                <p>Explore moments from our academic sessions, cultural events, workshops, and campus activities.</p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="text-center mb-5" data-aos="fade-up">
+                <div class="btn-group flex-wrap" role="group">
+                    <button type="button" class="btn btn-outline-primary active" data-filter="all">All</button>
+                    <button type="button" class="btn btn-outline-primary" data-filter="campus">Campus</button>
+                    <button type="button" class="btn btn-outline-primary" data-filter="events">Events</button>
+                    <button type="button" class="btn btn-outline-primary" data-filter="workshops">Workshops</button>
+                    <button type="button" class="btn btn-outline-primary" data-filter="sports">Sports</button>
+                </div>
+            </div>
+
+            <!-- Masonry Gallery -->
+            <div class="masonry-grid" data-aos="fade-up">
+                <!-- Image 1 -->
+                <div class="gallery-item" data-category="campus">
+                    <img src="{{ asset('images/dummy/2.jpg') }}" alt="DIET Namchi Campus Building" loading="lazy">
+                    <div class="gallery-overlay">
+                        <i class="bi bi-zoom-in"></i>
+                    </div>
+                </div>
+
+                <!-- Image 2 -->
+                <div class="gallery-item" data-category="events">
+                    <img src="{{ asset('images/dummy/2.jpg') }}" alt="Annual Day Celebration" loading="lazy">
+                    <div class="gallery-overlay">
+                        <i class="bi bi-zoom-in"></i>
+                    </div>
+                </div>
+
+                <!-- Image 3 -->
+                <div class="gallery-item" data-category="workshops">
+                    <img src="{{ asset('images/dummy/2.jpg') }}" alt="Teacher Training Workshop" loading="lazy">
+                    <div class="gallery-overlay">
+                        <i class="bi bi-zoom-in"></i>
+                    </div>
+                </div>
+
+                <!-- Image 4 -->
+                <div class="gallery-item" data-category="campus">
+                    <img src="{{ asset('images/dummy/2.jpg') }}" alt="Library Facilities" loading="lazy">
+                    <div class="gallery-overlay">
+                        <i class="bi bi-zoom-in"></i>
+                    </div>
+                </div>
+
+                <!-- Image 5 -->
+                <div class="gallery-item" data-category="sports">
+                    <img src="{{ asset('images/dummy/2.jpg') }}" alt="Sports Day Event" loading="lazy">
+                    <div class="gallery-overlay">
+                        <i class="bi bi-zoom-in"></i>
+                    </div>
+                </div>
+
+                <!-- Image 6 -->
+                <div class="gallery-item" data-category="workshops">
+                    <img src="{{ asset('images/dummy/2.jpg') }}" alt="NEP 2020 Training Session" loading="lazy">
+                    <div class="gallery-overlay">
+                        <i class="bi bi-zoom-in"></i>
+                    </div>
+                </div>
+
+                <!-- Image 7 -->
+                <div class="gallery-item" data-category="events">
+                    <img src="{{ asset('images/dummy/2.jpg') }}" alt="Cultural Program" loading="lazy">
+                    <div class="gallery-overlay">
+                        <i class="bi bi-zoom-in"></i>
+                    </div>
+                </div>
+
+                <!-- Image 8 -->
+                <div class="gallery-item" data-category="campus">
+                    <img src="{{ asset('images/dummy/2.jpg') }}" alt="Computer Lab" loading="lazy">
+                    <div class="gallery-overlay">
+                        <i class="bi bi-zoom-in"></i>
+                    </div>
+                </div>
+
+                <!-- Image 9 -->
+                <div class="gallery-item" data-category="workshops">
+                    <img src="{{ asset('images/dummy/2.jpg') }}" alt="Pedagogy Training" loading="lazy">
+                    <div class="gallery-overlay">
+                        <i class="bi bi-zoom-in"></i>
+                    </div>
+                </div>
+
+                <!-- Image 10 -->
+                <div class="gallery-item" data-category="sports">
+                    <img src="{{ asset('images/dummy/2.jpg') }}" alt="Basketball Tournament" loading="lazy">
+                    <div class="gallery-overlay">
+                        <i class="bi bi-zoom-in"></i>
+                    </div>
+                </div>
+
+                <!-- Image 11 -->
+                <div class="gallery-item" data-category="events">
+                    <img src="{{ asset('images/dummy/2.jpg') }}" alt="Graduation Ceremony" loading="lazy">
+                    <div class="gallery-overlay">
+                        <i class="bi bi-zoom-in"></i>
+                    </div>
+                </div>
+
+                <!-- Image 12 -->
+                <div class="gallery-item" data-category="campus">
+                    <img src="{{ asset('images/dummy/2.jpg') }}" alt="Auditorium" loading="lazy">
+                    <div class="gallery-overlay">
+                        <i class="bi bi-zoom-in"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More -->
+            <div class="text-center mt-5" data-aos="fade-up">
+                <button class="btn-apply">Load More Photos</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Gallery Section -->
+    <section class="section-padding bg-light-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-subtitle">
+                    <i class="bi bi-camera-video"></i> Videos
+                </span>
+                <h2 class="section-title">Video Gallery</h2>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="position-relative rounded-4 overflow-hidden shadow-soft" style="cursor: pointer;">
+                        <img src="{{ asset('images/dummy/2.jpg') }}" alt="Campus Tour" class="w-100" style="height: 240px; object-fit: cover;">
+                        <div class="position-absolute top-50 start-50 translate-middle">
+                            <div class="rounded-circle bg-white d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                <i class="bi bi-play-fill text-primary fs-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-center mt-2 mb-0"><strong>Campus Tour 2026</strong></p>
+                </div>
+
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="position-relative rounded-4 overflow-hidden shadow-soft" style="cursor: pointer;">
+                        <img src="{{ asset('images/dummy/2.jpg') }}" alt="Annual Function" class="w-100" style="height: 240px; object-fit: cover;">
+                        <div class="position-absolute top-50 start-50 translate-middle">
+                            <div class="rounded-circle bg-white d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                <i class="bi bi-play-fill text-primary fs-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-center mt-2 mb-0"><strong>Annual Function 2025</strong></p>
+                </div>
+
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="position-relative rounded-4 overflow-hidden shadow-soft" style="cursor: pointer;">
+                        <img src="{{ asset('images/dummy/2.jpg') }}" alt="Training Program" class="w-100" style="height: 240px; object-fit: cover;">
+                        <div class="position-absolute top-50 start-50 translate-middle">
+                            <div class="rounded-circle bg-white d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                <i class="bi bi-play-fill text-primary fs-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-center mt-2 mb-0"><strong>Training Highlights</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/fancybox.umd.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Fancybox
+            Fancybox.bind("[data-fancybox]", {
+                Hash: false,
+            });
+
+            // Gallery filter functionality
+            const filterButtons = document.querySelectorAll('[data-filter]');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    button.classList.add('active');
+
+                    const filterValue = button.getAttribute('data-filter');
+
+                    galleryItems.forEach(item => {
+                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}

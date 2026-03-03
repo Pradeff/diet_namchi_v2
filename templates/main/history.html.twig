@@ -1,0 +1,235 @@
+{# main/history.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}History - DIET Namchi{% endblock %}
+
+{% block body %}
+    <!-- Compact Hero/Breadcrumb Section -->
+    <section class="compact-hero" style="background-image: url('{{ asset('images/dummy/2.jpg') }}');">
+        <div class="compact-hero-overlay"></div>
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="compact-hero-content">
+                        <span class="compact-hero-badge">
+                            <i class="bi bi-clock-history"></i> Our Journey
+                        </span>
+                        <h1 class="compact-hero-title">Institutional History</h1>
+                        <nav aria-label="breadcrumb" class="compact-breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="{{ path('app_main') }}" class="text-white">
+                                        <i class="bi bi-house-door"></i> Home
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active text-white-50" aria-current="page">History</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- History Timeline -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-subtitle">
+                    <i class="bi bi-book"></i> Since 2010
+                </span>
+                <h2 class="section-title">Our Journey of Excellence</h2>
+                <p>From humble beginnings to becoming a leading teacher education institute in South Sikkim.</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <!-- Timeline Item 1 -->
+                    <div class="row g-4 align-items-center mb-5" data-aos="fade-right">
+                        <div class="col-md-4 text-md-end">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto ms-md-auto" style="width: 80px; height: 80px; font-size: 24px; font-weight: 700;">2010</div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="feature-card">
+                                <h4 class="mb-2">Foundation Year</h4>
+                                <p class="text-primary mb-3">DIET Namchi Established</p>
+                                <p>District Institute of Education & Training (DIET) Namchi was established in 2010 under the Department of Education, Government of Sikkim, with the mandate to improve the quality of elementary education in South Sikkim district.</p>
+                                <ul class="list-unstyled mb-0">
+                                    <li><i class="bi bi-check2 text-primary me-2"></i>NCTE Recognition Obtained</li>
+                                    <li><i class="bi bi-check2 text-primary me-2"></i>First Batch of 50 Students Enrolled</li>
+                                    <li><i class="bi bi-check2 text-primary me-2"></i>Initial Faculty of 8 Members</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 2 -->
+                    <div class="row g-4 align-items-center mb-5" data-aos="fade-left">
+                        <div class="col-md-8 order-md-2">
+                            <div class="feature-card">
+                                <h4 class="mb-2">Campus Expansion</h4>
+                                <p class="text-primary mb-3">Infrastructure Development</p>
+                                <p>The institute underwent significant infrastructure development with the construction of new academic blocks, library facilities, computer labs, and hostel accommodations to support growing student enrollment.</p>
+                                <ul class="list-unstyled mb-0">
+                                    <li><i class="bi bi-check2 text-primary me-2"></i>New Academic Block Inaugurated</li>
+                                    <li><i class="bi bi-check2 text-primary me-2"></i>Digital Library Established</li>
+                                    <li><i class="bi bi-check2 text-primary me-2"></i>Smart Classrooms Installed</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4 order-md-1 text-md-start">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto me-md-auto" style="width: 80px; height: 80px; font-size: 24px; font-weight: 700;">2015</div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 3 -->
+                    <div class="row g-4 align-items-center mb-5" data-aos="fade-right">
+                        <div class="col-md-4 text-md-end">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto ms-md-auto" style="width: 80px; height: 80px; font-size: 24px; font-weight: 700;">2018</div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="feature-card">
+                                <h4 class="mb-2">Program Diversification</h4>
+                                <p class="text-primary mb-3">New Courses Introduced</p>
+                                <p>DIET Namchi expanded its academic offerings to include specialized in-service training programs, workshops for practicing teachers, and professional development courses aligned with national education frameworks.</p>
+                                <ul class="list-unstyled mb-0">
+                                    <li><i class="bi bi-check2 text-primary me-2"></i>In-Service Training Programs Launched</li>
+                                    <li><i class="bi bi-check2 text-primary me-2"></i>Partnership with SCERT Sikkim</li>
+                                    <li><i class="bi bi-check2 text-primary me-2"></i>50,000+ Teachers Trained Milestone</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 4 -->
+                    <div class="row g-4 align-items-center mb-5" data-aos="fade-left">
+                        <div class="col-md-8 order-md-2">
+                            <div class="feature-card">
+                                <h4 class="mb-2">NEP 2020 Alignment</h4>
+                                <p class="text-primary mb-3">Curriculum Modernization</p>
+                                <p>Following the National Education Policy 2020, DIET Namchi undertook comprehensive curriculum revision to incorporate competency-based education, multidisciplinary approach, and holistic development frameworks.</p>
+                                <ul class="list-unstyled mb-0">
+                                    <li><i class="bi bi-check2 text-primary me-2"></i>Curriculum Updated as per NEP 2020</li>
+                                    <li><i class="bi bi-check2 text-primary me-2"></i>Faculty Development Programs Conducted</li>
+                                    <li><i class="bi bi-check2 text-primary me-2"></i>New Assessment Methods Implemented</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4 order-md-1 text-md-start">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto me-md-auto" style="width: 80px; height: 80px; font-size: 24px; font-weight: 700;">2020</div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 5 -->
+                    <div class="row g-4 align-items-center mb-5" data-aos="fade-right">
+                        <div class="col-md-4 text-md-end">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto ms-md-auto" style="width: 80px; height: 80px; font-size: 24px; font-weight: 700;">2023</div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="feature-card">
+                                <h4 class="mb-2">Digital Transformation</h4>
+                                <p class="text-primary mb-3">Technology Integration</p>
+                                <p>DIET Namchi embraced digital transformation with the launch of online learning platforms, digital resource repositories, and virtual training capabilities to ensure continuity of education during challenging times.</p>
+                                <ul class="list-unstyled mb-0">
+                                    <li><i class="bi bi-check2 text-primary me-2"></i>Online Learning Platform Launched</li>
+                                    <li><i class="bi bi-check2 text-primary me-2"></i>Digital Resource Library Created</li>
+                                    <li><i class="bi bi-check2 text-primary me-2"></i>Virtual Training Programs Initiated</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 6 -->
+                    <div class="row g-4 align-items-center" data-aos="fade-left">
+                        <div class="col-md-8 order-md-2">
+                            <div class="feature-card">
+                                <h4 class="mb-2">Present & Future</h4>
+                                <p class="text-primary mb-3">Continuing Excellence</p>
+                                <p>Today, DIET Namchi stands as a premier teacher education institute in South Sikkim, committed to nurturing the next generation of educators through innovative programs, experienced faculty, and state-of-the-art facilities.</p>
+                                <ul class="list-unstyled mb-0">
+                                    <li><i class="bi bi-check2 text-primary me-2"></i>100+ Faculty Members</li>
+                                    <li><i class="bi bi-check2 text-primary me-2"></i>5000+ Alumni Network</li>
+                                    <li><i class="bi bi-check2 text-primary me-2"></i>Continuous Quality Improvement</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4 order-md-1 text-md-start">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto me-md-auto" style="width: 80px; height: 80px; font-size: 24px; font-weight: 700;">2026</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section class="section-padding bg-light-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-subtitle">
+                    <i class="bi bi-trophy"></i> Recognition
+                </span>
+                <h2 class="section-title">Key Achievements</h2>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon mx-auto">
+                            <i class="bi bi-award"></i>
+                        </div>
+                        <h5 class="mb-2">NCTE Accredited</h5>
+                        <p class="small text-muted mb-0">National Council for Teacher Education Recognition</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon mx-auto">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <h5 class="mb-2">50,000+ Teachers</h5>
+                        <p class="small text-muted mb-0">Trained Through Various Programs</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon mx-auto">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                        <h5 class="mb-2">14+ Years</h5>
+                        <p class="small text-muted mb-0">Of Educational Excellence</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon mx-auto">
+                            <i class="bi bi-book"></i>
+                        </div>
+                        <h5 class="mb-2">2,000+ Workshops</h5>
+                        <p class="small text-muted mb-0">Conducted Across Sikkim</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div data-aos="fade-up">
+                <span class="section-subtitle mb-3">
+                    <i class="bi bi-hand-thumbs-up"></i> Be Part of Our Legacy
+                </span>
+                <h2 class="mb-3">Join Our Continuing Journey</h2>
+                <p class="mx-auto mb-4">Become part of DIET Namchi's legacy of educational excellence and contribute to shaping Sikkim's future.</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{{ path('app_admission') }}" class="btn-apply">Apply Now</a>
+                    <a href="{{ path('app_about') }}" class="btn btn-outline-primary px-4 py-2 rounded-pill">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
