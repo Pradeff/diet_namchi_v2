@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {{ render(controller( 'App\\Controller\\VcontactController::SiteTitle' )) }}
+    </title>
+    <meta name="description"
+          content="{{ render(controller( 'App\\Controller\\VcontactController::SiteDesc' )) }}">
+    <meta name="keywords"
+          content="{{ render(controller('App\\Controller\\VcontactController::SiteKeyword' )) }}">
+    <meta name="author" content=""/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <link rel="icon" class="js-site-favicon" type="image/svg+xml"
+          href="{{ render(controller( 'App\\Controller\\VcontactController::PgFavicon')) }}">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="{{ asset('dashboard/css/bootstrap.min.css') }}" rel="stylesheet">
+    {#<link href="{{ asset('dashboard/css/_bootstrapant.css') }}" rel="stylesheet">#}
+
+    <!-- Bootstrap Icons -->
+    <link
+        href="{{ asset('dashboard/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+
+    <!-- Custom CSS Files -->
+    <link rel="stylesheet" href="{{ asset('dashboard/css/_dash.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard/css/_content.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard/css/_sidebar.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard/css/_header.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard/css/_footer.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard/css/_auth.css') }}">
+    <link
+        rel="stylesheet" href="{{ asset('dashboard/vendor/fonts/font.css') }}">
+
+    {# Plugiins CSS #}
+    <link rel="stylesheet" href="{{ asset('dashboard/vendor/summernote/summernote-lite.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard/vendor/bootstrap-select/bootstrap-select.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard/vendor/select2/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard/vendor/select2/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard/vendor/datatables/dataTables.bootstrap5.min.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/vendor/dropify/dropify.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/vendor/iziToast/iziToast.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard/css/theme-customizer.css') }}">
+    {#<link rel="stylesheet" href="{{ asset('dashboard/css/_override.css') }}">#}
+
+    {# Cropper #}
+    <link  href="{{ asset('dashboard/vendor/cropperjs/cropper.min.css') }}" rel="stylesheet"/>
+
+
+
+    <link  href="{{ asset('dashboard/vendor/dropzone/dropzone.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('dashboard/vendor/tagify/tagify.css') }}" rel="stylesheet"/>
+
+    <link href="{{ asset('dashboard/vendor/glightbox/glightbox.min.css') }}" rel="stylesheet"/>
+    <style>
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 3fr));
+            gap: 20px;
+        }
+        .gallery-item {
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        .cover-badge-large {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);
+        }
+        .breadcrumb-custom {
+            background: rgba(255,255,255,0.9);
+            border-radius: 25px;
+            padding: 10px 20px;
+            margin-bottom: 2rem;
+        }
+        .no-images {
+            text-align: center;
+            padding: 3rem;
+            background: #f8f9fa;
+            border-radius: 15px;
+            color: #6c757d;
+        }
+        .no-images i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #dee2e6;
+        }
+        .glightbox-image {
+            text-decoration: none;
+            color: inherit;
+        }
+        .glightbox-image:hover {
+            text-decoration: none;
+            color: inherit;
+        }
+        /* Upload Progress Styles - Force visibility */
+        #uploadProgressWrap {
+            margin-top: 1rem;
+        }
+
+        #uploadProgressWrap .progress {
+            height: 25px;
+            background-color: #e9ecef;
+            border-radius: 0.375rem;
+            overflow: hidden;
+        }
+
+        #uploadProgressWrap .progress-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #fff;
+            background-color: #0d6efd;
+            transition: width 0.3s ease;
+        }
+
+        #uploadProgressWrap .progress-bar.bg-success {
+            background-color: #198754 !important;
+        }
+
+        #uploadProgressWrap .progress-bar.bg-danger {
+            background-color: #dc3545 !important;
+        }
+
+        #uploadProgressWrap .progress-bar-animated {
+            animation: progress-bar-stripes 1s linear infinite;
+        }
+
+        #uploadProgressWrap .progress-bar-striped {
+            background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+            background-size: 1rem 1rem;
+        }
+
+        @keyframes progress-bar-stripes {
+            0% { background-position: 1rem 0; }
+            100% { background-position: 0 0; }
+        }
+
+        /* Spinner styles */
+        .spinner-border-sm {
+            width: 1rem;
+            height: 1rem;
+            border-width: 0.2em;
+        }
+
+        .spinner-border {
+            display: inline-block;
+            vertical-align: text-bottom;
+            border: 0.25em solid currentColor;
+            border-right-color: transparent;
+            border-radius: 50%;
+            animation: spinner-border 0.75s linear infinite;
+        }
+
+        @keyframes spinner-border {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Upload text styles */
+        #uploadProgressText {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+    </style>
+    <script src="{{ asset('dashboard/js/_pre_theme_render.js') }}"></script>
+</head>
+<body>
+<div
+    class="dashboard-wrapper">
+
+    <!-- Sidebar overlay (mobile) -->
+    <div class="side_sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Include Sidebar -->
+    {{ include('dashboard/_sidebar.html.twig') }}
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Include Header -->
+        {{ include('dashboard/_header.html.twig') }}
+
+        <!-- Content Area -->
+        <div class="content-area"> {% block body %}{% endblock %}
+        </div>
+
+        <!-- Include Footer -->
+{#        {{ include('dashboard/_footer.html.twig') }}#}
+    </div>
+</div>
+
+<!-- Sidebar Overlay for Mobile -->
+{#<div class="sidebar-overlay" id="sidebarOverlay"></div>#}
+
+<!-- Bootstrap 5 JS -->
+<script src="{{ asset('dashboard/js/bootstrap.bundle.min.js') }}"></script>
+
+<!-- jQuery -->
+<script src="{{ asset('dashboard/js/jquery-3.7.1.min.js') }}"></script>
+<script src="{{ asset('dashboard/js/jquery-ui.min.js') }}"></script>
+
+{# Plugin #}
+<script src="{{ asset('dashboard/vendor/summernote/summernote-lite.js') }}"></script>
+<script src="{{ asset('dashboard/vendor/bootstrap-select/bootstrap-select.js') }}"></script>
+<script src="{{ asset('dashboard/vendor/select2/select2.js') }}"></script>
+<script src="{{ asset('dashboard/vendor/datatables/dataTables.min.js') }}"></script>
+<script src="{{ asset('dashboard/vendor/datatables/dataTables.bootstrap5.min.js') }}"></script>
+<script src="{{ asset('dashboard/vendor/sweetalert2/sweetalert2.all.min.js') }}"></script>
+<script src="{{ asset('dashboard/js/btn_loading.js') }}"></script>
+<script src="{{ asset('dashboard/js/_sidebar.js') }}"></script>
+
+{# DROPIFY #}
+<script src="{{ asset('dashboard/vendor/dropify/dropify.min.js') }}"></script>
+
+
+{#Dropify svg preview#}
+<script>
+    $('.dropify_file_input').dropify();
+
+    // Manually inject SVG preview
+    $('.dropify_file_input').each(function () {
+        var input = $(this);
+        var defaultFile = input.data('default-file');
+
+        if (defaultFile && defaultFile.endsWith('.svg')) {
+            var dropifyWrapper = input.closest('.dropify-wrapper');
+            dropifyWrapper.addClass('has-preview');
+            dropifyWrapper.find('.dropify-render').html(
+                '<img src="' + defaultFile + '" style="max-height: 120px;" alt="SVG Preview">'
+            );
+        }
+    });
+</script>
+
+
+
+{#Sortable#}
+{#<script>
+    $(function () {
+        $("#sortable").sortable({
+            handle: ".drag-handle",
+            update: function () {
+                let order = [];
+                $("#sortable tr").each(function (index) {
+                    order.push({
+                        id: $(this).data("id"),
+                        position: index + 1
+                    });
+                });
+
+                $.ajax({
+                    url: "{{ path('app_vteam_sort') }}",
+                    method: "POST",
+                    data: { order: order },
+                    success: function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Order Saved',
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+            }
+        });
+    });
+</script>#}
+
+<script>
+    $(document).ready(function() {
+        // Initialize dropify with file size and type restrictions
+        $('.dropify_file_input').dropify({
+            messages: {
+                'default': 'Drag and drop an image here or click',
+                'replace': 'Drag and drop or click to replace',
+                'remove':  'Remove',
+                'error':   'Ooops, something wrong happened.'
+            },
+            error: {
+                'fileSize': 'The file size is too big (Max: 2MB).',
+                'imageFormat': 'The image format is not allowed (only JPEG, PNG, GIF, WEBP).'
+            }
+        });
+
+        // Handle form submission
+        /*$('#vherohome-form').on('submit', function(event) {
+            event.preventDefault();
+
+            let formData = new FormData(this);
+
+            let submitBtn = $(this).find('button[type="submit"]');
+            let originalText = submitBtn.html();
+            submitBtn.html('<i class="bi bi-hourglass-split"></i> Saving...').prop('disabled', true);
+
+            $.ajax({
+                url: '{#{{ path("app_vherohome") }}#}',
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    submitBtn.html(originalText).prop('disabled', false);
+
+                    if(response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Saved!',
+                            text: 'Hero section updated successfully.',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+
+                        // Update preview
+                        if(response.data && response.data.image) {
+                            $('#preview').html(
+                                `<img src="${response.data.image}" alt="Hero Image" class="img-fluid rounded border" style="max-width: 100%; max-height: 200px;">`
+                            );
+                        }
+                    }
+                },
+                error: function(xhr) {
+                    submitBtn.html(originalText).prop('disabled', false);
+
+                    let errorMessage = 'An unknown error occurred';
+                    if (xhr.responseJSON) {
+                        if (xhr.responseJSON.errors && Array.isArray(xhr.responseJSON.errors)) {
+                            errorMessage = xhr.responseJSON.errors.join('<br>');
+                        } else if (xhr.responseJSON.message) {
+                            errorMessage = xhr.responseJSON.message;
+                        }
+                    }
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        html: errorMessage
+                    });
+                }
+            });
+        });*/
+    });
+</script>
+
+
+{# Notification #}
+<script src="{{ asset('dashboard/vendor/izitoast/iziToast.min.js') }}"></script>
+{% set successMessage = app.flashes('success') %}
+{% if successMessage is not empty %}
+    <script>
+        $(document).ready(function () {
+            iziToast.success({
+                title: 'Success',
+                message: "{{ successMessage[0] }}",
+                position: 'bottomCenter', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter, center
+                timeout: 5000, // Adjust timeout as needed
+                drag: true,
+                pauseOnHover: true
+            });
+        });
+    </script>
+{% endif %}
+
+{% set errorMessage = app.flashes('error') %}
+{% if errorMessage is not empty %}
+    <script>
+        $(document).ready(function () {
+            iziToast.error({
+                title: 'Error',
+                message: "{{ errorMessage[0] }}",
+                position: 'bottomCenter', // bottomRight, bottomLeft, topRight, topLeft, topCenter, bottomCenter, center
+                timeout: 5000, // Adjust timeout as needed
+                drag: true,
+                pauseOnHover: true
+            });
+        });
+    </script>
+{% endif %}
+
+<!-- Custom JavaScript -->
+<script src="{{ asset('dashboard/js/_dash.js') }}"></script>
+<script>
+
+    $(document).ready(function () {
+        initializeSummernote();
+
+        $('#multiSelect').select2({
+            tags: true,
+            tokenSeparators: [
+                ',', ' '
+            ],
+            placeholder: "Select or type to add",
+            width: '100%'
+        });
+
+        $('#duration').select2({theme: 'bootstrap-5', allowClear: true, placeholder: $(this).data('placeholder')});
+
+        $('#d_table').DataTable({
+            "pageLength": 5,
+            "lengthMenu": [
+                [5, 10, 25, 50, -1],
+                [5, 10, 25, 50, "All"]
+            ],
+            "order": [
+                [3, "asc"]
+            ],
+            "columnDefs": [
+                {
+                    "orderable": false,
+                    "targets": 4 // Correct: Action column index
+                }
+            ],
+            "language": {
+                "lengthMenu": "_MENU_ entries per page",
+                "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                "paginate": {
+                    "previous": "‹",
+                    "next": "›"
+                }
+            },
+            "dom": '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>'
+        });
+
+
+    });
+
+    function initializeSummernote() {
+        $('.summernote,#vhike_form_description,#vevents_description,#vpage_content,#vitinerary_form_description,#vitinerary_form_highlight,#vtrek_form_description,#vtrek_form_highlights,#vtrek_form_termsandcondition,#vevents_description1,#vblog_description,#vadventure_description,#vdestination_form_description,#vplace_description, #advactivity_description,#vdestination_description,#vitinerary_description,#vitinerary_description1,#vitinerary_inclusion,#vitinerary_exclusion,#vtrekking_description,#vtrekking_inclusion,#vtrekking_exclusion,#vtrekking_placecover,#vhomestay_description,#vhomestay_amenities,#vhomestay_address,#vreviews_message,#vpages_description,#vabout_description').summernote({
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['insert', ['picture', 'link', 'table']],
+                ['view', ['codeview',]]
+            ],
+            tabsize: 2,
+            height: 200,
+            disableDragAndDrop: true
+        });
+    }
+</script>
+
+
+<script src="{{ asset('dashboard/vendor/cropperjs/cropper.min.js') }}"></script>
+
+
+<script src="{{ asset('dashboard/vendor/dropzone/dropzone.min.js') }}"></script>
+<script>
+    if (typeof Dropzone !== 'undefined') {
+
+        Dropzone.autoDiscover = false;
+    }
+</script>
+
+<!-- GLightbox JS -->
+<script src="{{ asset('dashboard/vendor/glightbox/glightbox.min.js') }}"></script>
+<script>
+    const lightbox = GLightbox({
+        selector: '.glightbox',
+        touchNavigation: true,
+        loop: true,
+        zoomable: true,
+        autoplayVideos: false,
+
+        // ✅ Thumbnail support
+        moreLength: 0,
+        preload: true,
+        slideEffect: 'fade',
+        thumbnails: true   // 👈 enables thumbnail strip
+    });
+</script>
+
+<!-- Include Tagify CSS and JS -->
+<script src="{{ asset('dashboard/vendor/tagify/tagify.js') }}"></script>
+
+<script src="{{ asset('dashboard/js/user-form.js') }}"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    });
+</script>
+<script src="{{ asset('dashboard/js/theme-customizer.js') }}"></script>
+</body>
+</html>

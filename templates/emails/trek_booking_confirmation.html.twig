@@ -1,0 +1,124 @@
+{# templates/emails/trek_booking_confirmation.html.twig #}
+{% extends 'emails/base_email.html.twig' %}
+
+{% block email_title %}Trek Booking Confirmation - {{ bookingReference }}{% endblock %}
+
+{% block header_icon %}🏔️{% endblock %}
+
+{% block header_title %}Trek Booking Received!{% endblock %}
+
+{% block header_subtitle %}Thank you for choosing Lets Go Sikkim Travels for your adventure{% endblock %}
+
+{% block email_content %}
+    <!-- Greeting -->
+    <div style="margin-bottom: 30px;">
+        <h2 style="color: #333; margin: 0 0 15px 0;">Dear {{ fullName }},</h2>
+        <p style="color: #666; font-size: 16px; line-height: 1.6; margin: 0;">
+            Thank you for your interest in our trek! We have successfully received your booking request and our team will review it shortly.
+        </p>
+    </div>
+
+    <!-- Booking Reference -->
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 10px; margin-bottom: 30px; text-align: center;">
+        <h3 style="color: white; margin: 0 0 15px 0; font-size: 18px;">Your Booking Reference</h3>
+        <div style="background: rgba(255,255,255,0.2); padding: 15px 20px; border-radius: 25px; margin: 0; display: inline-block;">
+            <span style="color: white; font-size: 20px; font-weight: bold; letter-spacing: 1px;">{{ bookingReference }}</span>
+        </div>
+        <p style="color: rgba(255,255,255,0.9); margin: 15px 0 0 0; font-size: 14px;">
+            Please keep this reference number for your records
+        </p>
+    </div>
+
+    <!-- Trek Summary -->
+    <div style="background: #f0f8f0; border-left: 5px solid #28a745; padding: 20px; margin-bottom: 25px; border-radius: 5px;">
+        <h3 style="color: #28a745; margin: 0 0 15px 0; display: flex; align-items: center;">
+            🏔️ Your Trek Details
+        </h3>
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #ddd; font-weight: bold; width: 130px; color: #666;">Trek Name:</td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #ddd; color: #333; font-weight: bold;">{{ trekTitle }}</td>
+            </tr>
+            {% if trekDuration %}
+                <tr>
+                    <td style="padding: 8px 0; border-bottom: 1px solid #ddd; font-weight: bold; color: #666;">Duration:</td>
+                    <td style="padding: 8px 0; border-bottom: 1px solid #ddd; color: #333;">{{ trekDuration }} days</td>
+                </tr>
+            {% endif %}
+            {% if trekGrade %}
+                <tr>
+                    <td style="padding: 8px 0; border-bottom: 1px solid #ddd; font-weight: bold; color: #666;">Difficulty:</td>
+                    <td style="padding: 8px 0; border-bottom: 1px solid #ddd; color: #333;">
+                <span style="background: #ffc107; color: #333; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold;">
+                    {{ trekGrade|upper }}
+                </span>
+                    </td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #ddd; font-weight: bold; color: #666;">Arrival Date:</td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #ddd; color: #333;">{{ arrivalDate.format('d M Y') }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #ddd; font-weight: bold; color: #666;">Departure Date:</td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #ddd; color: #333;">{{ departureDate.format('d M Y') }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #ddd; font-weight: bold; color: #666;">Travelers:</td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #ddd; color: #333;">
+                    {{ adults }} Adult{{ adults > 1 ? 's' : '' }}{% if children > 0 %}, {{ children }} Child{{ children > 1 ? 'ren' : '' }}{% endif %}
+                </td>
+            </tr>
+            {% if specialRequests != 'No special requests' %}
+                <tr>
+                    <td style="padding: 8px 0; font-weight: bold; color: #666; vertical-align: top;">Special Requests:</td>
+                    <td style="padding: 8px 0; color: #333;">{{ specialRequests|nl2br }}</td>
+                </tr>
+            {% endif %}
+        </table>
+    </div>
+
+    <!-- What Happens Next -->
+    <div style="background: #f8f9ff; border-left: 5px solid #667eea; padding: 20px; margin-bottom: 25px; border-radius: 5px;">
+        <h3 style="color: #667eea; margin: 0 0 15px 0;">📋 What Happens Next?</h3>
+        <ol style="color: #333; line-height: 1.8; margin: 0; padding-left: 20px;">
+            <li><strong>Review & Confirmation:</strong> Our team will review your request and check availability for your preferred dates.</li>
+            <li><strong>Contact Within 24 Hours:</strong> We will contact you within 24 hours via phone or email to confirm your booking.</li>
+            <li><strong>Detailed Itinerary:</strong> Once confirmed, we'll send you a detailed itinerary, packing list, and payment details.</li>
+            <li><strong>Pre-Trek Briefing:</strong> We'll provide a comprehensive briefing before your trek begins.</li>
+        </ol>
+    </div>
+
+    <!-- Contact Information -->
+    <div style="background: #fffbf0; border-left: 5px solid #ffc107; padding: 20px; margin-bottom: 25px; border-radius: 5px;">
+        <h3 style="color: #856404; margin: 0 0 15px 0;">📞 Need to Reach Us?</h3>
+        <div style="color: #333; line-height: 1.6;">
+            {% if contact %}
+                <p style="margin: 0 0 10px 0;"><strong>Phone:</strong> <a href="tel:+91{{ contact.phone1 }}" style="color: #667eea; text-decoration: none;">+91 {{ contact.phone1 }}</a></p>
+                <p style="margin: 0 0 10px 0;"><strong>Email:</strong> <a href="mailto:{{ contact.email1 }}" style="color: #667eea; text-decoration: none;">{{ contact.email1 }}</a></p>
+                <p style="margin: 0;"><strong>WhatsApp:</strong> <a href="https://wa.me/91{{ contact.phone1 }}" style="color: #667eea; text-decoration: none;">+91 {{ contact.phone1 }}</a></p>
+            {% else %}
+                <p style="margin: 0 0 10px 0;"><strong>Phone:</strong> <a href="tel:+919832142988" style="color: #667eea; text-decoration: none;">+91 98321 42988</a></p>
+                <p style="margin: 0 0 10px 0;"><strong>Email:</strong> <a href="mailto:info@easetourandtreks.com" style="color: #667eea; text-decoration: none;">info@easetourandtreks.com</a></p>
+                <p style="margin: 0;"><strong>WhatsApp:</strong> <a href="https://wa.me/919832142988" style="color: #667eea; text-decoration: none;">+91 98321 42988</a></p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Important Note -->
+    <div style="background: linear-gradient(135deg, #ff7675 0%, #d63031 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; margin-bottom: 20px;">
+        <h3 style="margin: 0 0 10px 0; font-size: 16px;">⚡ Important Note</h3>
+        <p style="margin: 0; font-size: 14px; opacity: 0.9;">
+            This is a booking request confirmation. Your trek is not yet confirmed.
+            We will contact you shortly to finalize your booking and provide payment details.
+        </p>
+    </div>
+
+    <!-- Footer Message -->
+    {#<div style="text-align: center; margin: 30px 0; padding: 20px; background: #f8f9fa; border-radius: 5px;">
+        <p style="margin: 0; color: #666; font-size: 16px; line-height: 1.6;">
+            We're excited to help you create unforgettable memories in the mountains! 🏔️<br>
+            <strong>Thank you for choosing Lets Go Sikkim Travels!</strong>
+        </p>
+    </div>#}
+{% endblock %}

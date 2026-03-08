@@ -1,0 +1,18 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}Edit About Page{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h6 class="fw-bold"><i class="bi bi-pencil me-2"></i> Edit About Page</h6>
+            <a href="{{ path('app_vabout_show', {'id': vabout.id}) }}" class="btn btn-light-primary">
+                <i class="bi bi-eye"></i> Preview Page
+            </a>
+        </div>
+
+
+        {{ include('vabout/_form.html.twig') }}
+    </div>
+{% endblock %}

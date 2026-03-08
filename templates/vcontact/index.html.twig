@@ -1,0 +1,414 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}Vcontact index{% endblock %}
+
+{% block body %}
+
+    <div class="row mb-4">
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 text_color_default">
+                    <i class="bi bi-envelope-at me-2"></i>
+                    Contact Details
+                </h5>
+            </div>
+        </div>
+    </div>
+
+    {% for vcontact in vcontacts %}
+        <div class="col">
+            <div class="card mb-6">
+                <div class="bg_color_default px-0 pt-0">
+                    <div class="nav-align-top">
+                        <ul class="tab_nav-menu nav nav-tabs" role="tablist">
+                            <li class="tab_nav-item nav-item">
+                                <button type="button" class="tab_nav-link nav-link active"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#form-tabs-a1"
+                                        aria-controls="form-tabs-a1"
+                                        role="tab"
+                                        aria-selected="true">
+                                    <i class="bi bi-phone me-2"></i>
+                                    <span class="d-none d-sm-block">Contact Detail</span>
+                                </button>
+                            </li>
+                            <li class="tab_nav-item nav-item">
+                                <button type="button" class="tab_nav-link nav-link"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#form-tabs-a2"
+                                        aria-controls="form-tabs-a2"
+                                        role="tab"
+                                        aria-selected="false">
+                                    <i class="bi bi-geo-alt me-2"></i>
+                                    <span class="d-none d-sm-block">Address</span>
+                                </button>
+                            </li>
+                            <li class="tab_nav-item nav-item">
+                                <button type="button" class="tab_nav-link nav-link"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#form-tabs-a3"
+                                        aria-controls="form-tabs-a3"
+                                        role="tab"
+                                        aria-selected="false">
+                                    <i class="bi bi-share me-2"></i>
+                                    <span class="d-none d-sm-block">Social Links</span>
+                                </button>
+                            </li>
+                            <li class="tab_nav-item nav-item">
+                                <button type="button" class="tab_nav-link nav-link"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#form-tabs-a4"
+                                        aria-controls="form-tabs-a4"
+                                        role="tab"
+                                        aria-selected="false">
+                                    <i class="bi bi-gear me-2"></i>
+                                    <span class="d-none d-sm-block">Site Setting</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="tab-content p-0">
+                        <!-- Contact Detail Tab -->
+                        <div class="tab-pane fade show active" id="form-tabs-a1" role="tabpanel">
+                            <div class="row g-6">
+                                <!-- Phone Numbers -->
+                                <div class="col-md-6">
+                                    <fieldset class="p-3 rounded-2 mb-4 mt-2">
+                                        <legend class="float-none w-auto px-2 fs-6">
+                                            <i class="bi bi-phone me-2"></i>
+                                            Phone Numbers
+                                        </legend>
+                                        <div class="row g-4">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Phone 1</label>
+                                                {{ vcontact.phone1 }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">
+                                                    <i class="bi bi-whatsapp text-success me-1"></i>
+                                                    Phone 2 (WhatsApp)
+                                                </label>
+                                                {{ vcontact.phone2 }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Phone 3</label>
+                                                {{ vcontact.phone3 }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Phone 4</label>
+                                                {{ vcontact.phone4 }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Phone 5</label>
+                                                {{ vcontact.phone5 }}
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+
+                                <!-- Email Addresses -->
+                                <div class="col-md-6">
+                                    <fieldset class="p-3 rounded-2 mb-4 mt-2">
+                                        <legend class="float-none w-auto px-2 fs-6">
+                                            <i class="bi bi-envelope me-2"></i>
+                                            Email Addresses
+                                        </legend>
+                                        <div class="row g-4">
+                                            <div class="col-md-6">
+                                                <label class="form-label">
+                                                    <i class="bi bi-envelope-fill text-danger me-1"></i>
+                                                    Primary Email
+                                                </label>
+                                                <div class="input-group input-group-merge">
+                                                    {{ vcontact.email1 }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Email 2</label>
+                                                <div class="input-group input-group-merge">
+                                                    {{ vcontact.email2 }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Email 3</label>
+                                                <div class="input-group input-group-merge">
+                                                    {{ vcontact.email3 }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Email 4</label>
+                                                <div class="input-group input-group-merge">
+                                                    {{ vcontact.email4 }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Email 5</label>
+                                                <div class="input-group input-group-merge">
+                                                    {{ vcontact.email5 }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Address Tab -->
+                        <div class="tab-pane fade" id="form-tabs-a2" role="tabpanel">
+                            <div class="row g-6">
+                                <!-- Full Address -->
+                                <div class="col-md-6">
+                                    <fieldset class="p-3 rounded-2 mb-4 mt-2">
+                                        <legend class="float-none w-auto px-2 fs-6">
+                                            <i class="bi bi-geo-alt me-2"></i>
+                                            Full Address
+                                        </legend>
+                                        <div class="row g-4">
+                                            <div class="col-12">
+                                                {{ vcontact.address|raw }}
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+
+                                <!-- Google Map -->
+                                <div class="col-md-6">
+                                    <fieldset class="p-3 rounded-2 mb-4 mt-2">
+                                        <legend class="float-none w-auto px-2 fs-6">
+                                            <i class="bi bi-geo-alt-fill me-2"></i>
+                                            Google Map Link
+                                        </legend>
+                                        <div class="row g-4">
+                                            <div class="col-12">
+                                                {{ vcontact.map|raw }}
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Social Links Tab -->
+                        <div class="tab-pane fade" id="form-tabs-a3" role="tabpanel">
+                            <div class="row g-6">
+                                <div class="col-md-6 pb-4">
+                                    <label class="form-label">
+                                        <i class="bi bi-facebook text-primary me-2"></i>
+                                        Facebook
+                                    </label>
+                                    {{ vcontact.fb }}
+                                </div>
+
+                                <div class="col-md-6 pb-4">
+                                    <label class="form-label">
+                                        <i class="bi bi-instagram text-danger me-2"></i>
+                                        Instagram
+                                    </label>
+                                    {{ vcontact.insta }}
+                                </div>
+
+                                <div class="col-md-6 pb-4">
+                                    <label class="form-label">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                            <path fill="#32D99C" d="M12.006 4.295c-2.67 0-5.338.784-7.645 2.353H0l1.963 2.135a5.997 5.997 0 0 0 4.04 10.43a5.98 5.98 0 0 0 4.075-1.6L12 19.705l1.922-2.09a5.97 5.97 0 0 0 4.072 1.598a6 6 0 0 0 6-5.998a5.98 5.98 0 0 0-1.957-4.432L24 6.648h-4.35a13.57 13.57 0 0 0-7.644-2.353M12 6.255c1.531 0 3.063.303 4.504.903C13.943 8.138 12 10.43 12 13.1c0-2.671-1.942-4.962-4.504-5.942A11.7 11.7 0 0 1 12 6.256zM6.002 9.157a4.059 4.059 0 1 1 0 8.118a4.059 4.059 0 0 1 0-8.118m11.992.002a4.057 4.057 0 1 1 .003 8.115a4.057 4.057 0 0 1-.003-8.115m-11.992 1.93a2.128 2.128 0 0 0 0 4.256a2.128 2.128 0 0 0 0-4.256m11.992 0a2.128 2.128 0 0 0 0 4.256a2.128 2.128 0 0 0 0-4.256" />
+                                        </svg>
+                                        TripAdvisor
+                                    </label>
+                                    {{ vcontact.tripadv }}
+                                </div>
+
+                                <div class="col-md-6 pb-4">
+                                    <label class="form-label">
+                                        <i class="bi bi-twitter text-info me-2"></i>
+                                        Twitter
+                                    </label>
+                                    {{ vcontact.tw }}
+                                </div>
+
+                                <div class="col-md-6 pb-4">
+                                    <label class="form-label">
+                                        <i class="bi bi-youtube text-danger me-2"></i>
+                                        YouTube
+                                    </label>
+                                    {{ vcontact.yt }}
+                                </div>
+
+                                <div class="col-md-6 pb-4">
+                                    <label class="form-label">
+                                        <i class="bi bi-linkedin text-primary me-2"></i>
+                                        LinkedIn
+                                    </label>
+                                    {{ vcontact.linkedin }}
+                                </div>
+
+                                <div class="col-md-6 pb-4">
+                                    <label class="form-label">
+                                        <i class="bi bi-telegram text-info me-2"></i>
+                                        Telegram
+                                    </label>
+                                    {{ vcontact.telegram }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Site Settings Tab -->
+                        <div class="tab-pane fade" id="form-tabs-a4" role="tabpanel">
+                            <div class="row g-6">
+                                <!-- Site Description -->
+                                <div class="col-md-6">
+                                    <fieldset class="p-3 rounded-2 mb-4 mt-2">
+                                        <legend class="float-none w-auto px-2 fs-6">
+                                            <i class="bi bi-pencil-square me-2"></i>
+                                            Site Description
+                                        </legend>
+                                        <div class="row g-4">
+                                            <div class="col-12">
+                                                <label class="form-label">Site Title</label>
+                                                {{ vcontact.sitetitle|raw }}
+                                            </div>
+
+                                            <div class="col-12">
+                                                <label class="form-label">Site Link</label>
+                                                {{ vcontact.sitelink|raw }}
+                                            </div>
+
+                                            <div class="col-12">
+                                                <label class="form-label">Site Keywords</label>
+                                                {{ vcontact.sitekeyword }}
+                                            </div>
+
+                                            <div class="col-12">
+                                                <label class="form-label">Site Description</label>
+                                                {{ vcontact.sitedescription|raw }}
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+
+                                <!-- Site Media -->
+                                <div class="col-md-6">
+                                    <fieldset class="p-3 rounded-2 mb-4 mt-2">
+                                        <legend class="float-none w-auto px-2 fs-6">
+                                            <i class="bi bi-images me-2"></i>
+                                            Site Media
+                                        </legend>
+                                        <div class="row g-4">
+                                            <div class="col-md-6">
+                                                <div class="col-12 bg-light py-1 px-3 border border-warning rounded-4">
+                                                    <div class="mb-4">
+                                                        <label class="form-label">
+                                                            Favicon
+                                                        </label>
+                                                        {% if vcontact.favicon %}
+                                                            <img
+                                                                src="{{ asset('/images/WebsiteAssets/' ~ vcontact.favicon) }}"
+                                                                width="100" class="" alt="">
+                                                        {% else %}
+                                                            <img src="{{ asset('images/no-image.jpg') }}"
+                                                                 class="w-100" alt="">
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="col-12 bg-light py-1 px-3 border border-success rounded-4">
+                                                    <div class="mb-4">
+                                                        <label class="form-label">
+                                                            Logo 1
+                                                            <span class="badge bg-light text-dark">Light Square</span>
+                                                        </label>
+                                                        {% if vcontact.logo1 %}
+                                                            <img
+                                                                src="{{ asset('/images/WebsiteAssets/' ~ vcontact.logo1) }}"
+                                                                width="100" class="" alt="">
+                                                        {% else %}
+                                                            <img src="{{ asset('images/no-image.jpg') }}"
+                                                                 class="w-100" alt="">
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="col-12 bg-light py-1 px-3 border border-primary rounded-4">
+                                                    <div class="mb-4">
+                                                        <label class="form-label">
+                                                            Logo 2
+                                                            <span class="badge bg-dark">Dark Square</span>
+                                                        </label>
+                                                        {% if vcontact.logo2 %}
+                                                            <img
+                                                                src="{{ asset('/images/WebsiteAssets/' ~ vcontact.logo2) }}"
+                                                                width="100" class="" alt="">
+                                                        {% else %}
+                                                            <img src="{{ asset('images/no-image.jpg') }}"
+                                                                 class="w-100" alt="">
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="col-12 bg-light py-1 px-3 border border-danger rounded-4">
+                                                    <div class="mb-4">
+                                                        <label class="form-label">
+                                                            Logo 3
+                                                            <span
+                                                                class="badge bg-light text-dark">Light Horizontal</span>
+                                                        </label>
+                                                        {% if vcontact.logo3 %}
+                                                            <img
+                                                                src="{{ asset('/images/WebsiteAssets/' ~ vcontact.logo3) }}"
+                                                                width="100" class="" alt="">
+                                                        {% else %}
+                                                            <img src="{{ asset('images/no-image.jpg') }}"
+                                                                 class="w-100" alt="">
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="col-12 bg-light py-1 px-3 border border-info rounded-4">
+                                                    <div class="mb-4">
+                                                        <label class="form-label">
+                                                            Logo 4
+                                                            <span class="badge bg-dark">Dark Horizontal</span>
+                                                        </label>
+                                                        {% if vcontact.logo4 %}
+                                                            <img
+                                                                src="{{ asset('/images/WebsiteAssets/' ~ vcontact.logo4) }}"
+                                                                width="100" class="" alt="">
+                                                        {% else %}
+                                                            <img src="{{ asset('images/no-image.jpg') }}"
+                                                                  class="w-100" alt="">
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Footer -->
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="pt-1">
+                            <a href="{{ path('app_vcontact_edit', {'id': vcontact.id}) }}" class="btn btn-light-info me-4">
+                                <i class="bi bi-pencil"></i>
+                                Edit
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+

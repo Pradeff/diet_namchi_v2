@@ -1,0 +1,217 @@
+{# templates/v_about/show.html.twig #}
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}{{ vabout.title }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h6><i class="bi bi-eye"></i> <strong>Preview: </strong>{{ vabout.title }}</h6>
+
+            <a href="{{ path('app_vabout_edit', {'id': vabout.id}) }}" class="btn btn-success">
+                <i class="bi bi-pencil"></i> Edit Page
+            </a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card mb-4"> {# Added margin bottom for spacing #}
+                    <div class="card-body p-4">
+                        <!-- Title and Subtitle -->
+                        <header class="mb-4">
+                            <h5 class="mb-2">{{ vabout.title }}</h5>
+                            {% if vabout.subtitle %}
+                                <p class="">{{ vabout.subtitle }}</p>
+                            {% endif %}
+                        </header>
+
+                        <!-- Cover Image -->
+                        {% if vabout.coverImage %}
+                            <div class="mb-4 text-center">
+                                <img src="/uploads/image/{{ vabout.coverImage }}"
+                                     alt="{{ vabout.title }}"
+                                     class="img-fluid rounded shadow-sm"
+                                     loading="lazy">
+                            </div>
+                        {% endif %}
+
+                        <!-- Description Sections -->
+                        {% if vabout.description1 %}
+                            <section class="mb-4">
+                                <div class="content-section">
+                                    {{ vabout.description1|raw }}
+                                </div>
+                            </section>
+                        {% endif %}
+
+                        {% if vabout.description2 %}
+                            <section class="mb-4">
+                                <div class="content-section">
+                                    {{ vabout.description2|raw }}
+                                </div>
+                            </section>
+                        {% endif %}
+
+                        {% if vabout.description3 %}
+                            <section class="mb-4">
+                                <div class="content-section">
+                                    {{ vabout.description3|raw }}
+                                </div>
+                            </section>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+
+                <!-- Images Gallery Card -->
+                {% if vabout.images is not empty %}
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h6 class="card-title mb-0">
+                                <i class="bi bi-images"></i> Award Images
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3"> {# Adjusted gutter size #}
+                                {% for image in vabout.images %}
+                                    <div class="col-md-6 col-lg-4 col-6"> {# Responsive columns #}
+                                        <div class="position-relative">
+                                            {% if vabout.coverImage == image.filename %}
+                                                <span class="position-absolute top-0 start-0 m-1 badge bg-success">
+                                                    <i class="bi bi-star-fill"></i> Cover
+                                                </span>
+                                            {% endif %}
+                                            <img src="/uploads/image/{{ image.filename }}"
+                                                {# Use title or filename for alt #}
+                                                 alt="{{ image.title ?: 'Image ' ~ loop.index }}"
+                                                 class="img-thumbnail w-100" {# Full width of column #}
+                                                 style="height: 120px; object-fit: cover;" {# Increased height and maintained cover #}
+                                                 data-bs-toggle="modal"
+                                                 data-bs-target="#imageModal{{ loop.index }}"
+                                                 role="button"
+                                                 loading="lazy"> {# Lazy loading #}
+                                        </div>
+                                        {# Display title below image, truncate if too long #}
+                                        {% if image.title %}
+                                            <small class="text-muted d-block mt-1 text-truncate"
+                                                   title="{{ image.title }}">{{ image.title }}</small>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Image Modal -->
+                                    <div class="modal fade" id="imageModal{{ loop.index }}" tabindex="-1"
+                                         aria-labelledby="imageModalLabel{{ loop.index }}" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="imageModalLabel{{ loop.index }}">
+                                                        {# Default title if image title is empty #}
+                                                        {{ image.title ?: 'Image ' ~ loop.index }}
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-center">
+                                                    <img src="/uploads/image/{{ image.filename }}"
+                                                        {# Use title or filename for alt #}
+                                                         alt="{{ image.title ?: 'Image ' ~ loop.index }}"
+                                                         class="img-fluid"
+                                                         loading="lazy"> {# Lazy loading #}
+                                                </div>
+                                                {# Optional: Display filename in modal footer #}
+                                                {#
+                                                <div class="modal-footer">
+                                                    <small class="text-muted">{{ image.filename }}</small>
+                                                </div>
+                                                #}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if vabout.video %}
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h6 class="card-title mb-0">
+                                <i class="bi bi-youtube text-danger"></i> Video
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="ratio ratio-16x9">
+                                {% set video_id = '' %}
+                                {% if 'youtube.com/watch?v=' in vabout.video %}
+                                    {% set video_id = vabout.video|split('v=')[1]|split('&')[0] %}
+                                    <iframe src="https://www.youtube.com/embed/{{ video_id }}" {# Fixed spacing #}
+                                            allowfullscreen
+                                            class="rounded"
+                                            title="Embedded YouTube Video"></iframe>
+                                {% elseif 'youtu.be/' in vabout.video %}
+                                    {% set video_id = vabout.video|split('youtu.be/')[1]|split('?')[0] %}
+                                    <iframe src="https://www.youtube.com/embed/{{ video_id }}" {# Fixed spacing #}
+                                            allowfullscreen
+                                            class="rounded"
+                                            title="Embedded YouTube Video"></iframe>
+                                {% elseif 'vimeo.com/' in vabout.video %}
+                                    {% set video_id = vabout.video|split('vimeo.com/')[1]|split('?')[0] %}
+                                    <iframe src="https://player.vimeo.com/video/{{ video_id }}" {# Fixed spacing #}
+                                            allowfullscreen
+                                            class="rounded"
+                                            title="Embedded Vimeo Video"></iframe>
+                                {% else %}
+                                    <div class="d-flex align-items-center justify-content-center bg-light rounded p-3">
+                                        <p class="text-muted mb-0">
+                                            <i class="bi bi-exclamation-triangle"></i>
+                                            Invalid video URL format
+                                        </p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Page Info Card -->
+                {#<div class="card mb-4">
+                    <div class="card-header">
+                        <stong>
+                            <i class="bi bi-info-circle"></i> Page Information
+                        </stong>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row mb-0">
+                            <dt class="col-sm-4">Slug:</dt>
+                            <dd class="col-sm-8">
+                                <code>/{{ vabout.slug }}</code>
+                            </dd>
+
+                            <dt class="col-sm-4">Created:</dt>
+                            <dd class="col-sm-8">
+                                {{ vabout.createdAt ? vabout.createdAt|date('M d, Y') : 'Not set' }}
+                            </dd>
+
+                            <dt class="col-sm-4">Updated:</dt>
+                            <dd class="col-sm-8">
+                                {{ vabout.updatedAt ? vabout.updatedAt|date('M d, Y') : 'Not set' }}
+                            </dd>
+
+                            <dt class="col-sm-4">Images:</dt>
+                            <dd class="col-sm-8">
+                                <span class="badge bg-secondary">
+                                    {{ vabout.images|length }} image(s)
+                                </span>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>#}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

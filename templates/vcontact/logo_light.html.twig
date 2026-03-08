@@ -1,0 +1,5 @@
+{% for logo_2 in logo_2 %}
+    {% if logo_2.logo2 %}
+        {{ asset('/images/WebsiteAssets/' ~ logo_2.logo2) }}
+    {% endif %}
+{% endfor %}

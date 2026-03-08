@@ -1,0 +1,186 @@
+{# templates/emails/booking_confirmation.html.twig #}
+{% extends 'emails/base_email.html.twig' %}
+
+{% block email_title %}Booking Confirmation - {{ bookingReference }}{% endblock %}
+
+{% block header_icon %}✅{% endblock %}
+
+{% block header_title %}Tour Booking Confirmation{% endblock %}
+
+{% block header_subtitle %}Thank you for choosing Lets Go Sikkim Travels!{% endblock %}
+
+{% block email_content %}
+
+    <!-- Greeting -->
+    <p style="margin: 0 0 20px 0; font-size: 18px; color: #1e293b; font-family: Arial, sans-serif;">
+        Dear {{ fullName }},
+    </p>
+
+    <p style="margin: 0 0 25px 0; font-size: 16px; color: #333333; line-height: 1.6; font-family: Arial, sans-serif;">
+        Thank you for your tour booking request! We have received your booking and our team will contact you soon with confirmation details and payment information.
+    </p>
+
+    <!-- Booking Reference Highlight -->
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 25px 0; background: linear-gradient(135deg, #10b981, #059669); background-color: #10b981; border-radius: 8px;" bgcolor="#10b981">
+        <tr>
+            <td style="padding: 25px; text-align: center; color: #ffffff;" align="center">
+                <h2 style="margin: 0 0 8px 0; font-size: 20px; font-weight: bold; color: #ffffff; font-family: Arial, sans-serif;">
+                    🔖 Booking Reference
+                </h2>
+                <p style="margin: 0; font-size: 18px; font-weight: bold; color: #ffffff; font-family: Arial, sans-serif;">
+                    {{ bookingReference }}
+                </p>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Booking Summary -->
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 25px 0; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;" bgcolor="#f8fafc">
+        <tr>
+            <td style="padding: 25px;">
+
+                <!-- Section Title -->
+                <h3 style="margin: 0 0 20px 0; font-size: 18px; font-weight: bold; color: #1e293b; padding-bottom: 10px; border-bottom: 2px solid #e2e8f0; font-family: Arial, sans-serif;">
+                    📋 Your Booking Summary
+                </h3>
+
+                <!-- Info Table -->
+                <table cellpadding="8" cellspacing="0" border="0" width="100%" style="border-collapse: collapse;">
+                    {% if tourTitle %}
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="font-weight: bold; color: #475569; font-size: 14px; font-family: Arial, sans-serif; width: 40%;">🎯 Tour Package:</td>
+                            <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">{{ tourTitle }}</td>
+                        </tr>
+                    {% endif %}
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="font-weight: bold; color: #475569; font-size: 14px; font-family: Arial, sans-serif; width: 40%;">📅 Arrival Date:</td>
+                        <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">{{ arrivalDate|date('l, F j, Y') }}</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="font-weight: bold; color: #475569; font-size: 14px; font-family: Arial, sans-serif; width: 40%;">📅 Departure Date:</td>
+                        <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">{{ departureDate|date('l, F j, Y') }}</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="font-weight: bold; color: #475569; font-size: 14px; font-family: Arial, sans-serif; width: 40%;">⏱️ Duration:</td>
+                        <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">{{ duration }} days</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="font-weight: bold; color: #475569; font-size: 14px; font-family: Arial, sans-serif; width: 40%;">👥 Adults:</td>
+                        <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">{{ adults }}</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="font-weight: bold; color: #475569; font-size: 14px; font-family: Arial, sans-serif; width: 40%;">👶 Children:</td>
+                        <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">{{ children }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; color: #475569; font-size: 14px; font-family: Arial, sans-serif; width: 40%;">👨‍👩‍👧‍👦 Total Guests:</td>
+                        <td style="color: #1e293b; font-size: 14px; font-weight: bold; font-family: Arial, sans-serif;">{{ adults + children }}</td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+    <!-- Next Steps -->
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 25px 0; background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px;" bgcolor="#eff6ff">
+        <tr>
+            <td style="padding: 25px;">
+
+                <h3 style="margin: 0 0 15px 0; font-size: 18px; font-weight: bold; color: #1e40af; font-family: Arial, sans-serif;">
+                    ✅ What's Next?
+                </h3>
+
+                <table cellpadding="3" cellspacing="0" border="0" width="100%">
+                    <tr>
+                        <td style="color: #10b981; font-weight: bold; font-size: 16px; width: 20px;">✓</td>
+                        <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">Our travel expert will contact you within 24 hours</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #10b981; font-weight: bold; font-size: 16px; width: 20px;">✓</td>
+                        <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">We'll provide detailed itinerary and pricing</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #10b981; font-weight: bold; font-size: 16px; width: 20px;">✓</td>
+                        <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">Confirm your booking with advance payment</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #10b981; font-weight: bold; font-size: 16px; width: 20px;">✓</td>
+                        <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">Receive complete travel documentation</td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+    <!-- Contact Information -->
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 25px 0; background-color: #1f2937; border-radius: 8px;" bgcolor="#1f2937">
+        <tr>
+            <td style="padding: 25px; color: #ffffff;" align="center">
+
+                <h3 style="margin: 0 0 20px 0; font-size: 18px; font-weight: bold; color: #ffffff; text-align: center; font-family: Arial, sans-serif;">
+                    📞 Need Immediate Assistance?
+                </h3>
+
+                <!-- Contact Grid -->
+                <table cellpadding="10" cellspacing="0" border="0" width="100%">
+                    <tr>
+                        <td width="50%" align="center" style="color: #ffffff; font-family: Arial, sans-serif;">
+                            <div style="font-size: 20px; margin-bottom: 5px;">📞</div>
+                            <div style="font-size: 12px; opacity: 0.8; margin-bottom: 3px;">Phone</div>
+                            <div style="font-size: 14px; font-weight: bold;">
+                                {{ contact ? contact.phone1 : '+91 95932 67846' }}
+                            </div>
+                        </td>
+                        <td width="50%" align="center" style="color: #ffffff; font-family: Arial, sans-serif;">
+                            <div style="font-size: 20px; margin-bottom: 5px;">📧</div>
+                            <div style="font-size: 12px; opacity: 0.8; margin-bottom: 3px;">Email</div>
+                            <div style="font-size: 14px; font-weight: bold;">
+                                {{ contact ? contact.email1 : 'adventuresikkim@gmail.com' }}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50%" align="center" style="color: #ffffff; font-family: Arial, sans-serif;">
+                            <div style="font-size: 20px; margin-bottom: 5px;">💬</div>
+                            <div style="font-size: 12px; opacity: 0.8; margin-bottom: 3px;">WhatsApp</div>
+                            <div style="font-size: 14px; font-weight: bold;">
+                                {{ contact ? contact.phone2 : '+91 95932 67846' }}
+                            </div>
+                        </td>
+                        <td width="50%" align="center" style="color: #ffffff; font-family: Arial, sans-serif;">
+                            <div style="font-size: 20px; margin-bottom: 5px;">🕒</div>
+                            <div style="font-size: 12px; opacity: 0.8; margin-bottom: 3px;">Office Hours</div>
+                            <div style="font-size: 14px; font-weight: bold;">Mon-Sat, 9 AM-6 PM</div>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </td>
+        </tr>
+    </table>
+
+    <!-- Important Notice -->
+    {#<table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 25px 0; background-color: #fef2f2; border-left: 4px solid #ef4444; border-radius: 0 8px 8px 0;" bgcolor="#fef2f2">
+        <tr>
+            <td style="padding: 20px;">
+                <p style="margin: 0; font-size: 14px; color: #7f1d1d; font-weight: bold; font-family: Arial, sans-serif;">
+                    <span style="color: #ef4444; font-size: 18px; margin-right: 10px;">⏰</span>
+                    <strong>Important:</strong> This booking request is valid for 48 hours. Please confirm with payment to secure your dates.
+                </p>
+            </td>
+        </tr>
+    </table>#}
+
+    <p style="margin: 30px 0 20px 0; font-size: 16px; color: #333333; font-family: Arial, sans-serif;">
+        We're excited to help you create unforgettable memories with Lets Go Sikkim Travels!
+    </p>
+
+    <p style="margin: 20px 0 0 0; font-size: 16px; font-weight: bold; color: #1e293b; font-family: Arial, sans-serif;">
+        Best regards,<br>
+        <strong>The Lets Go Sikkim Travels Team</strong>
+    </p>
+
+{% endblock %}

@@ -1,0 +1,618 @@
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true,'id': 'form'}}) }}
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <strong><i class="bi bi-info-circle"></i> About Page Information</strong>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    {{ form_row(form.title) }}
+                    {% if form.title.vars.errors|length > 0 %}
+                        <div class="alert alert-danger mt-2">
+                            {% for error in form.title.vars.errors %}
+                                <small>{{ error.message }}</small><br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_row(form.subtitle) }}
+                    {% if form.subtitle.vars.errors|length > 0 %}
+                        <div class="alert alert-danger mt-2">
+                            {% for error in form.subtitle.vars.errors %}
+                                <small>{{ error.message }}</small><br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <strong><i class="bi bi-textarea"></i> Content Sections</strong>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    {{ form_row(form.description1, {
+                        label: 'Description 1',
+                        label_attr: { class: 'fw-bold mb-2' }
+                    }) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_row(form.description2) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_row(form.description3) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+
+        {# Image #}
+        <div class="card mb-4">
+            <div class="card-header">
+                <strong><i class="bi bi-image"></i> About Cover Image</strong>
+            </div>
+            <div class="card-body">
+                <div class="custom-file w-100">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                    {% if image_url is defined %}
+                        {{ form_widget(form.cover_image, {
+                            'attr': {
+                                'class': 'dropify_file_input',
+                                'data-max-file-size': '1M',
+                                'data-allowed-file-extensions': 'jpg jpeg gif png svg',
+                                'data-show-loader': 'true',
+                                'data-show-remove': 'false',
+                                'data-default-file': image_url is defined and image_url ? asset('uploads/image/' ~ image_url) : asset('images/no-image.jpg')
+                            }
+                        }) }}
+                    {% else %}
+                        {{ form_widget(form.cover_image, {'attr': {
+                            'class': 'dropify_file_input',
+                            'data-max-file-size': '1M',
+                            'data-allowed-file-extensions': 'jpg jpeg gif svg png',
+                            'data-show-loader': 'true',
+                        }}) }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4 shadow">
+            <div class="card-header">
+                <strong><i class="bi bi-gear-wide"></i> Actions</strong>
+            </div>
+            <div class="card-body">
+                <button class="btn btn-light-info" id="submitBtn" type="submit">
+                    <span id="submitText">{{ button_label|default('Save') }}</span>
+                    <span id="submitSpinner" class="spinner-border spinner-border-sm ms-2 d-none" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </span>
+                </button>
+                {#<a href="{{ path('app_vabout_index') }}" class="btn btn-light-secondary w-100">
+                    <i class="bi bi-arrow-left"></i> Back to Dashboard
+                </a>#}
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <strong><i class="bi bi-youtube text-danger"></i> Video</strong>
+            </div>
+            <div class="card-body">
+                {{ form_row(form.video) }}
+                {% if form.video.vars.errors|length > 0 %}
+                    <div class="alert alert-danger mt-2">
+                        {% for error in form.video.vars.errors %}
+                            <small>{{ error.message }}</small><br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if vabout.id %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <strong><i class="bi bi-images"></i> Awards Images</strong>
+                    <small class="text-muted">Max file size: {{ max_file_size }}</small>
+                </div>
+                <div class="card-body">
+                    <!-- Upload Area -->
+                    <div class="upload-area border-dashed border-2 border-secondary rounded p-4 text-center mb-4"
+                         id="uploadArea"
+                         style="min-height: 120px; cursor: pointer; background-color: #f8f9fa; transition: all 0.3s ease;"
+                         ondrop="dropHandler(event)"
+                         ondragover="dragOverHandler(event)"
+                         ondragleave="dragLeaveHandler(event)">
+                        <div class="upload-content" id="uploadContent">
+                            <i class="bi bi-cloud-arrow-up display-4 text-muted mb-3"></i>
+                            <p class="mb-1"><strong>Drop images here or click to upload</strong></p>
+                            <small class="text-muted">PNG, JPG, GIF, WEBP up to {{ max_file_size }}</small>
+                        </div>
+                        <div class="upload-loading d-none" id="uploadLoading">
+                            <div class="spinner-border text-primary mb-3" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mb-1"><strong>Uploading images...</strong></p>
+                            <small class="text-muted">Please wait while we process your files</small>
+                        </div>
+                        <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+                    </div>
+
+                    <!-- Images Grid -->
+                    <div id="imagesGrid" class="row g-3">
+                        {% if vabout.images is not empty %}
+                            {% for image in vabout.images %}
+                                <div class="col-md-3 mb-3" data-image="{{ image.filename }}">
+                                    <div class="card position-relative h-100">
+                                        <img src="/uploads/image/{{ image.filename }}" class="card-img-top"
+                                             style="height: 150px; object-fit: cover;" alt="">
+                                        <div class="card-body p-2">
+                                            <div class="input-group input-group-sm mb-2">
+                                                <input type="text" class="form-control image-title-input"
+                                                       placeholder="Image title..."
+                                                       value="{{ image.title }}"
+                                                       data-image="{{ image.filename }}"
+                                                       data-original-value="{{ image.title }}">
+                                                <button class="btn btn-outline-secondary save-title-btn d-none"
+                                                        type="button"
+                                                        data-image="{{ image.filename }}">
+                                                    <i class="bi bi-check-lg"></i>
+                                                </button>
+                                            </div>
+                                            <button class="btn btn-sm btn-outline-danger w-100 delete-btn" type="button"
+                                                    onclick="deleteImage('{{ image.filename }}')">
+                                                <span class="delete-icon"><i class="bi bi-trash"></i></span>
+                                                <span class="delete-spinner spinner-border spinner-border-sm d-none"
+                                                      role="status"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="col-12" id="noImagesMessage">
+                                <div class="text-center text-muted py-4">
+                                    <i class="bi bi-images display-4 mb-3"></i>
+                                    <p>This about page doesn't have any images uploaded yet.</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Define all variables at the top
+        const uploadArea = document.getElementById('uploadArea');
+        const uploadContent = document.getElementById('uploadContent');
+        const uploadLoading = document.getElementById('uploadLoading');
+        const fileInput = document.getElementById('fileInput');
+        const imagesGrid = document.getElementById('imagesGrid');
+        const saveBtn = document.getElementById('saveBtn');
+        const saveSpinner = document.getElementById('saveSpinner');
+        const form = document.querySelector('form');
+
+        // CSRF Tokens (removed set_cover token)
+        const csrfToken = '{{ csrf_token('upload_images') }}';
+        const deleteToken = '{{ csrf_token('delete_image') }}';
+        const updateTitleToken = '{{ csrf_token('update_title') }}';
+
+        // About ID for AJAX requests
+        const aboutId = {{ vabout.id }};
+
+        let isUploading = false;
+        let titleUpdateTimeout = {};
+
+        // ✅ Attach click handler once, persistently
+        uploadArea.addEventListener('click', function () {
+            if (!isUploading) {
+                fileInput.click();
+            }
+        });
+
+        // Prevent form submission when clicking action buttons
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('.delete-btn') || e.target.closest('.save-title-btn')) {
+                e.stopPropagation();
+                e.preventDefault();
+            }
+        });
+
+        // Form submission handling
+        form.addEventListener('submit', function (e) {
+            if (this.checkValidity()) {
+                saveSpinner.classList.remove('d-none');
+                saveBtn.disabled = true;
+            }
+        });
+
+        // Image title input handling
+        document.addEventListener('input', function (e) {
+            if (e.target.classList.contains('image-title-input')) {
+                const imageName = e.target.dataset.image;
+                const originalValue = e.target.dataset.originalValue;
+                const currentValue = e.target.value;
+                const saveBtn = e.target.parentElement.querySelector('.save-title-btn');
+
+                if (currentValue !== originalValue) {
+                    saveBtn.classList.remove('d-none');
+                } else {
+                    saveBtn.classList.add('d-none');
+                }
+
+                if (titleUpdateTimeout[imageName]) {
+                    clearTimeout(titleUpdateTimeout[imageName]);
+                }
+
+                titleUpdateTimeout[imageName] = setTimeout(function () {
+                    updateImageTitle(imageName, currentValue, e.target);
+                }, 1500);
+            }
+        });
+
+        // Manual save button click
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('.save-title-btn')) {
+                e.preventDefault();
+                e.stopPropagation();
+                const btn = e.target.closest('.save-title-btn');
+                const imageName = btn.dataset.image;
+                const input = btn.parentElement.querySelector('.image-title-input');
+                updateImageTitle(imageName, input.value, input);
+            }
+        });
+
+        function dragOverHandler(ev) {
+            ev.preventDefault();
+            if (!isUploading) {
+                uploadArea.style.borderColor = '#0d6efd';
+                uploadArea.style.backgroundColor = '#e7f1ff';
+            }
+        }
+
+        function dragLeaveHandler(ev) {
+            ev.preventDefault();
+            if (!isUploading) {
+                uploadArea.style.borderColor = '#6c757d';
+                uploadArea.style.backgroundColor = '#f8f9fa';
+            }
+        }
+
+        function dropHandler(ev) {
+            ev.preventDefault();
+            if (isUploading) return;
+
+            uploadArea.style.borderColor = '#6c757d';
+            uploadArea.style.backgroundColor = '#f8f9fa';
+
+            const files = ev.dataTransfer.files;
+            uploadFiles(files);
+        }
+
+        // Listen to file input change
+        fileInput.addEventListener('change', function (e) {
+            if (isUploading) return;
+            uploadFiles(e.target.files);
+        });
+
+        function showUploadLoading() {
+            isUploading = true;
+            uploadContent.classList.add('d-none');
+            uploadLoading.classList.remove('d-none');
+            uploadArea.style.cursor = 'default';
+        }
+
+        function hideUploadLoading() {
+            isUploading = false;
+            uploadContent.classList.remove('d-none');
+            uploadLoading.classList.add('d-none');
+            uploadArea.style.cursor = 'pointer';
+        }
+
+        function uploadFiles(files) {
+            if (files.length === 0) return;
+
+            const maxSize = {{ max_file_size_mb }} *
+            1024 * 1024;
+            let oversizedFiles = [];
+
+            for (let i = 0; i < files.length; i++) {
+                if (files[i].size > maxSize) {
+                    oversizedFiles.push(files[i].name + ' (' + formatFileSize(files[i].size) + ')');
+                }
+            }
+
+            if (oversizedFiles.length > 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'File Size Error!',
+                    html: '<p>The following files exceed the maximum size of {{ max_file_size }}:</p><ul class="text-start"><li>' +
+                        oversizedFiles.join('</li><li>') + '</li></ul>',
+                    confirmButtonText: 'OK'
+                });
+                fileInput.value = '';
+                return;
+            }
+
+            showUploadLoading();
+
+            const formData = new FormData();
+            for (let i = 0; i < files.length; i++) {
+                formData.append('file[]', files[i]);
+            }
+
+            fetch('{{ path('app_vabout_upload_images', {'id': vabout.id}) }}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-Token': csrfToken
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    hideUploadLoading();
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: data.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        let errorMessage = data.error;
+                        if (data.details && Array.isArray(data.details)) {
+                            errorMessage += ':<br><ul class="text-start"><li>' + data.details.join('</li><li>') + '</li></ul>';
+                        }
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Upload Failed!',
+                            html: errorMessage
+                        });
+                    }
+                })
+                .catch(error => {
+                    hideUploadLoading();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Upload Failed!',
+                        text: 'An error occurred during upload'
+                    });
+                });
+
+            fileInput.value = '';
+        }
+
+        function deleteImage(imageName) {
+            event?.preventDefault();
+            event?.stopPropagation();
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This image will be permanently deleted!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: '<i class="bi bi-trash"></i> Yes, delete it!',
+                cancelButtonText: '<i class="bi bi-x-circle"></i> Cancel',
+                allowOutsideClick: false,
+                allowEscapeKey: true,
+                buttonsStyling: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    performImageDelete(imageName);
+                }
+            });
+        }
+
+        function performImageDelete(imageName) {
+            const deleteBtn = document.querySelector(`[data-image="${imageName}"] .delete-btn`);
+            const deleteIcon = deleteBtn?.querySelector('.delete-icon');
+            const deleteSpinner = deleteBtn?.querySelector('.delete-spinner');
+
+            if (deleteBtn && deleteIcon && deleteSpinner) {
+                deleteIcon.classList.add('d-none');
+                deleteSpinner.classList.remove('d-none');
+                deleteBtn.disabled = true;
+            }
+
+            const deleteUrl = '{{ path('app_vabout_delete_image', {'id': vabout.id}) }}';
+
+            fetch(deleteUrl, {
+                method: 'POST',
+                body: new URLSearchParams({
+                    'image': imageName
+                }),
+                headers: {
+                    'X-CSRF-Token': deleteToken,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        const imageCard = document.querySelector(`[data-image="${imageName}"]`);
+                        if (imageCard) {
+                            imageCard.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                            imageCard.style.opacity = '0';
+                            imageCard.style.transform = 'scale(0.8)';
+
+                            setTimeout(() => {
+                                imageCard.remove();
+
+                                const remainingImages = document.querySelectorAll('#imagesGrid [data-image]');
+                                if (remainingImages.length === 0) {
+                                    document.getElementById('imagesGrid').innerHTML = `
+                                        <div class="col-12" id="noImagesMessage">
+                                            <div class="text-center text-muted py-4">
+                                                <i class="bi bi-images display-4 mb-3"></i>
+                                                <p>This about page doesn't have any images uploaded yet.</p>
+                                            </div>
+                                        </div>
+                                    `;
+                                }
+                            }, 300);
+                        }
+
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Image deleted successfully!',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer);
+                                toast.addEventListener('mouseleave', Swal.resumeTimer);
+                            }
+                        });
+                    } else {
+                        throw new Error(data.error || 'Failed to delete image');
+                    }
+                })
+                .catch(error => {
+                    console.error('Delete error:', error);
+
+                    if (deleteBtn && deleteIcon && deleteSpinner) {
+                        deleteIcon.classList.remove('d-none');
+                        deleteSpinner.classList.add('d-none');
+                        deleteBtn.disabled = false;
+                    }
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: error.message || 'Failed to delete image',
+                        confirmButtonText: 'OK'
+                    });
+                });
+        }
+
+        function updateImageTitle(imageName, title, inputElement) {
+            fetch('{{ path('app_vabout_update_image_title', {'id': vabout.id}) }}', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    'image': imageName,
+                    'title': title
+                }),
+                headers: {
+                    'X-CSRF-Token': updateTitleToken,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        inputElement.dataset.originalValue = title;
+                        const saveBtn = inputElement.parentElement.querySelector('.save-title-btn');
+                        saveBtn.classList.add('d-none');
+
+                        inputElement.style.borderColor = '#198754';
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer);
+                                toast.addEventListener('mouseleave', Swal.resumeTimer);
+                            }
+                        });
+                        Toast.fire({icon: 'success', title: 'Image title updated!'});
+
+                        setTimeout(() => {
+                            inputElement.style.borderColor = '';
+                        }, 2000);
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: data.error
+                        });
+                    }
+                })
+                .catch(() => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Failed to update image title'
+                    });
+                });
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+    </script>
+{% endif %}
+
+{{ form_end(form) }}
+
+<style>
+    .border-dashed {
+        border-style: dashed !important;
+    }
+
+    .upload-area:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .image-title-input {
+        transition: border-color 0.3s ease;
+    }
+
+    .image-title-input:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+
+    .btn-group button, .delete-btn {
+        pointer-events: auto;
+    }
+
+    .swal2-toast .swal2-title {
+        font-size: 14px;
+    }
+
+    [data-image] {
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+</style>

@@ -1,0 +1,24 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}New Slider Media{% endblock %}
+
+{% block body %}
+
+    <div class="row mb-4">
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 text_color_default">Add new Slider Media</h5>
+                <nav class="breadcrumb-nav">
+                    <a href="{{ path('app_dashboard') }}">Home</a>
+                    <i class="bi bi-chevron-right mx-2"></i>
+                    <a href="{{ path('app_vslider_index') }}">Slider</a>
+                    <i class="bi bi-chevron-right mx-2"></i>
+                    <span>Add Slider</span>
+                </nav>
+            </div>
+        </div>
+    </div>
+    {{ include('vslider/_form.html.twig') }}
+
+{% endblock %}
+

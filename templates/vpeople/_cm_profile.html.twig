@@ -1,0 +1,34 @@
+{# vpeople/_cm_profile.html.twig #}
+{% if cm %}
+    <div class="cm-card-profile mb-4" data-aos="fade-left">
+        <div class="cm-cover-wrapper">
+            <img src="{{ asset(cm.image ? 'uploads/image/' ~ cm.image : 'images/no-image.webp') }}"
+                 class="cm-cover-img"
+                 alt="{{ cm.title ?? '' }}">
+            <div class="cm-cover-overlay"></div>
+        </div>
+
+        <div class="cm-profile-inner">
+            <div class="cm-avatar-wrapper">
+                <div class="cm-avatar-ring">
+                    <img src="{{ asset(cm.image ? 'uploads/image/' ~ cm.image : 'images/no-image.webp') }}"
+                         class="cm-avatar-img"
+                         alt="{{ cm.title ?? '' }}">
+                </div>
+            </div>
+
+            <button class="cm-chip-role">
+                <i class="bi bi-star-fill"></i>
+                {{ cm.designation ?? "" }}
+            </button>
+
+            <h3 class="cm-profile-name">
+                {{ cm.title ?? '' }}
+            </h3>
+
+            <p class="cm-profile-title">
+                {{ cm.extra1 ?? '' }}
+            </p>
+        </div>
+    </div>
+{% endif %}

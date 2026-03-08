@@ -1,0 +1,38 @@
+{% for contactside in contactside %}
+    <div class="contact-info">
+        <h2>Contact Info</h2>
+        <ul class="list-style-two">
+            <li>
+                <span class="icon fa fa-phone-alt"></span>
+                <a href="tel:{{ contactside.phone1 }}">{{ contactside.phone1 }}</a></li>
+            <li>
+                <span class="icon fa fa-envelope-open"></span>
+                <a href="mailto:{{ contactside.email1 }}">{{ contactside.email1 }}</a>
+            </li>
+            <li>
+                <span class="icon fa fa-map-marker-alt"></span>
+                {{ contactside.address }}
+            </li>
+        </ul>
+    </div>
+    <div class="social-links">
+        <ul class="clearfix hvsocialfle">
+            <li>
+                <a href="{{ contactside.twitterurl }}" target="_blank">
+                    <span class="sl-icon-social-twitter"></span>
+                </a>
+            </li>
+            <li><a href="{{ contactside.facebookurl }}"><span class="sl-icon-social-facebook"></span></a></li>
+            <li>
+                <a href="{{ contactside.instagramurl }}" target="_blank">
+                    <span class="sl-icon-social-instagram"></span>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.tripadvisor.in/Attraction_Review-g659796-d15773070-Reviews-Ease_Tours_Treks-Gangtok_East_Sikkim_Sikkim.html" target="_blank">
+                    <span class="fab fa-tripadvisor"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+{% endfor %}

@@ -1,0 +1,174 @@
+{# templates/emails/tour_booking.html.twig #}
+{% extends 'emails/base_email.html.twig' %}
+
+{% block email_title %}New Tour Booking - {{ fullName }}{% endblock %}
+
+{% block header_icon %}🎒{% endblock %}
+
+{% block header_title %}New Tour Booking Request{% endblock %}
+
+{% block header_subtitle %}You have received a new tour booking request through your website{% endblock %}
+
+{% block email_content %}
+
+    <!-- Booking Reference Highlight -->
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 25px 0; background: linear-gradient(135deg, #10b981, #059669); background-color: #10b981; border-radius: 8px;" bgcolor="#10b981">
+        <tr>
+            <td style="padding: 25px; text-align: center; color: #ffffff;" align="center">
+                <h2 style="margin: 0 0 8px 0; font-size: 20px; font-weight: bold; color: #ffffff; font-family: Arial, sans-serif;">
+                    🔖 Booking Reference
+                </h2>
+                <p style="margin: 0; font-size: 18px; font-weight: bold; color: #ffffff; font-family: Arial, sans-serif;">
+                    {{ bookingReference }}
+                </p>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Status Badge -->
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 20px 0;">
+        <tr>
+            <td align="center">
+                <span style="display: inline-block; padding: 8px 20px; background-color: #fef3c7; color: #92400e; border-radius: 20px; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; font-family: Arial, sans-serif;">
+                    PENDING
+                </span>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Customer Information -->
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 25px 0; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;" bgcolor="#f8fafc">
+        <tr>
+            <td style="padding: 25px;">
+
+                <h3 style="margin: 0 0 20px 0; font-size: 18px; font-weight: bold; color: #1e293b; padding-bottom: 10px; border-bottom: 2px solid #e2e8f0; font-family: Arial, sans-serif;">
+                    👤 Customer Information
+                </h3>
+
+                <table cellpadding="8" cellspacing="0" border="0" width="100%" style="border-collapse: collapse;">
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="font-weight: bold; color: #475569; font-size: 14px; font-family: Arial, sans-serif; width: 40%;">👤 Name:</td>
+                        <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">{{ fullName }}</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="font-weight: bold; color: #475569; font-size: 14px; font-family: Arial, sans-serif; width: 40%;">📧 Email:</td>
+                        <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">
+                            <a href="mailto:{{ email }}" style="color: #3b82f6; text-decoration: none;">{{ email }}</a>
+                        </td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="font-weight: bold; color: #475569; font-size: 14px; font-family: Arial, sans-serif; width: 40%;">📱 Phone:</td>
+                        <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">
+                            <a href="tel:{{ phone }}" style="color: #3b82f6; text-decoration: none;">{{ phone }}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; color: #475569; font-size: 14px; font-family: Arial, sans-serif; width: 40%;">🕒 Submitted:</td>
+                        <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">{{ submittedAt|date('d M Y, h:i A') }}</td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+    <!-- Travel Details -->
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 25px 0; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;" bgcolor="#f8fafc">
+        <tr>
+            <td style="padding: 25px;">
+
+                <h3 style="margin: 0 0 20px 0; font-size: 18px; font-weight: bold; color: #1e293b; padding-bottom: 10px; border-bottom: 2px solid #e2e8f0; font-family: Arial, sans-serif;">
+                    🗓️ Travel Details
+                </h3>
+
+                <table cellpadding="8" cellspacing="0" border="0" width="100%" style="border-collapse: collapse;">
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="font-weight: bold; color: #475569; font-size: 14px; font-family: Arial, sans-serif; width: 40%;">📅 Arrival Date:</td>
+                        <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">{{ arrivalDate|date('l, F j, Y') }}</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="font-weight: bold; color: #475569; font-size: 14px; font-family: Arial, sans-serif; width: 40%;">📅 Departure Date:</td>
+                        <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">{{ departureDate|date('l, F j, Y') }}</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="font-weight: bold; color: #475569; font-size: 14px; font-family: Arial, sans-serif; width: 40%;">⏱️ Duration:</td>
+                        <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">{{ duration }} days</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="font-weight: bold; color: #475569; font-size: 14px; font-family: Arial, sans-serif; width: 40%;">👥 Adults:</td>
+                        <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">{{ adults }}</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="font-weight: bold; color: #475569; font-size: 14px; font-family: Arial, sans-serif; width: 40%;">👶 Children:</td>
+                        <td style="color: #1e293b; font-size: 14px; font-family: Arial, sans-serif;">{{ children }}</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                        <td style="font-weight: bold; color: #475569; font-size: 14px; font-family: Arial, sans-serif; width: 40%;">👨‍👩‍👧‍👦 Total Guests:</td>
+                        <td style="color: #1e293b; font-size: 14px; font-weight: bold; font-family: Arial, sans-serif;">{{ adults + children }}</td>
+                    </tr>
+                    {% if tourTitle %}
+                        <tr>
+                            <td style="font-weight: bold; color: #475569; font-size: 14px; font-family: Arial, sans-serif; width: 40%;">🎯 Tour Package:</td>
+                            <td style="color: #1e293b; font-size: 14px; font-weight: bold; font-family: Arial, sans-serif;">{{ tourTitle }}</td>
+                        </tr>
+                    {% endif %}
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+    {% if specialRequests %}
+        <!-- Special Requests -->
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 25px 0; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;" bgcolor="#f8fafc">
+            <tr>
+                <td style="padding: 25px;">
+
+                    <h3 style="margin: 0 0 15px 0; font-size: 18px; font-weight: bold; color: #1e293b; padding-bottom: 10px; border-bottom: 2px solid #e2e8f0; font-family: Arial, sans-serif;">
+                        💬 Special Requests
+                    </h3>
+
+                    <div style="background-color: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0; color: #333333; font-size: 14px; line-height: 1.6; font-family: Arial, sans-serif;">
+                        {{ specialRequests|nl2br }}
+                    </div>
+
+                </td>
+            </tr>
+        </table>
+    {% endif %}
+
+    <!-- Action Required -->
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 25px 0; background-color: #fef2f2; border-left: 4px solid #ef4444; border-radius: 0 8px 8px 0;" bgcolor="#fef2f2">
+        <tr>
+            <td style="padding: 20px;">
+                <p style="margin: 0; font-size: 14px; color: #7f1d1d; font-weight: bold; font-family: Arial, sans-serif;">
+                    <span style="color: #ef4444; font-size: 18px; margin-right: 10px;">⚡</span>
+                    <strong>Action Required:</strong> Please contact the customer within 24 hours to confirm availability and provide booking details.
+                </p>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Quick Actions -->
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 30px 0;">
+        <tr>
+            <td align="center">
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td style="padding: 0 10px;">
+                            <a href="mailto:{{ email }}" style="display: inline-block; background-color: #3b82f6; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-family: Arial, sans-serif;">
+                                📧 Email Customer
+                            </a>
+                        </td>
+                        <td style="padding: 0 10px;">
+                            <a href="tel:{{ phone }}" style="display: inline-block; background-color: #10b981; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; font-family: Arial, sans-serif;">
+                                📞 Call Customer
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+{% endblock %}

@@ -2,12 +2,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% set site_title = global_contact and global_contact.sitetitle ? global_contact.sitetitle : 'Lets Go Sikkim Travel Agency' %}
+    {% set site_description = global_contact and global_contact.sitedescription ? global_contact.sitedescription|slice(0, 160) : 'Discover Sikkim with curated travel packages – adventure, family, honeymoon, cultural & more.' %}
+    {% set site_url = global_contact and global_contact.sitelink ? global_contact.sitelink : 'https://letsgosikkim.com/' %}
+    {% set site_image = global_contact and global_contact.logo1 ? asset('images/WebsiteAssets/' ~ global_contact.logo1) : asset('images/og-image.jpg') %}
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    <link rel="icon"
-          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+    <title>
+        {% block title %}{{ site_title }}{% endblock %}
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="{% block meta_description %}{{ site_description }}{% endblock %}">
+
+    <meta name="keywords" content="{% block meta_keywords %}{{ global_contact.sitekeyword }}{% endblock %}">
+
+    <meta name="author"
+          content="{% if global_contact and global_contact.sitetitle %}{{ global_contact.sitetitle }}{% else %}Lets Go Sikkim{% endif %}">
+
+    <link rel="canonical" href="{% block canonical %}{{ app.request ? app.request.uri : site_url }}{% endblock %}">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% block og_title %}{{ site_title }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ site_description }}{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}{{ app.request ? app.request.uri : site_url }}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{{ site_image }}{% endblock %}">
+    <meta property="og:site_name" content="{{ site_title }}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}{{ site_title }}{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{{ site_description }}{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ site_image }}{% endblock %}">
+    <meta name="twitter:site"
+          content="{% if global_contact and global_contact.tw %}{{ global_contact.tw|replace({'https://twitter.com/': '@', 'https://x.com/': '@'}) }}{% else %}@LetsGoSikkim{% endif %}">
+
+    {% if global_contact and global_contact.favicon %}
+        <link rel="icon" href="{{ asset('images/WebsiteAssets/' ~ global_contact.favicon) }}">
+        <link rel="apple-touch-icon" sizes="180x180"
+              href="{{ asset('images/WebsiteAssets/' ~ global_contact.favicon) }}">
+    {% else %}
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/logo.png') }}">
+    {% endif %}
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "EducationInstitution",
+            "name": "{% if global_contact and global_contact.sitetitle %}{{ global_contact.sitetitle|e('js') }}{% else %}Lets Go Sikkim{% endif %}",
+        {% if global_contact and global_contact.sitedescription %}"description": "{{ global_contact.sitedescription|e('js') }}",{% endif %}
+        {% if global_contact and global_contact.sitelink %}"url": "{{ global_contact.sitelink|e('js') }}",{% endif %}
+        {% if global_contact and global_contact.phone1 %}"telephone": "+91{{ global_contact.phone1|e('js') }}",{% endif %}
+        {% if global_contact and global_contact.email1 %}"email": "{{ global_contact.email1|e('js') }}",{% endif %}
+        {% if global_contact and global_contact.address %}"address": {
+            "@type": "PostalAddress",
+            "streetAddress": "{{ global_contact.address|e('js') }}"
+        },{% endif %}
+        "sameAs": [
+        {% set social_links = [] %}
+            {% if global_contact %}
+        {% if global_contact.fb %}{% set social_links = social_links|merge(['"' ~ global_contact.fb|e('js') ~ '"']) %}{% endif %}
+        {% if global_contact.insta %}{% set social_links = social_links|merge(['"' ~ global_contact.insta|e('js') ~ '"']) %}{% endif %}
+        {% if global_contact.tw %}{% set social_links = social_links|merge(['"' ~ global_contact.tw|e('js') ~ '"']) %}{% endif %}
+        {% if global_contact.yt %}{% set social_links = social_links|merge(['"' ~ global_contact.yt|e('js') ~ '"']) %}{% endif %}
+        {% if global_contact.linkedin %}{% set social_links = social_links|merge(['"' ~ global_contact.linkedin|e('js') ~ '"']) %}{% endif %}
+        {% endif %}
+            {{ social_links|join(', ')|raw }}
+        ]
+    }
+    </script>
+
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('css/fonts.css') }}">
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
@@ -181,7 +244,7 @@
 {% block body %}{% endblock %}
 
 
-<footer class="main-footer">
+{#<footer class="main-footer">
 
 
 
@@ -273,6 +336,250 @@
                     <a href="{{ path('app_main') }}">Privacy Policy</a>
                     <a href="{{ path('app_main') }}">Terms of Use</a>
                     <a href="{{ path('app_main') }}">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</footer>#}
+{#<footer class="main-footer pt-5 pb-0">
+    <div class="container mb-5">
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="footer-brand">
+                    <div class="footer-brand-logo mb-3">
+                        <img src="{{ asset('images/logo.png') }}" alt="DIET Namchi">
+                        <div>
+                            <h3 class="mb-0">D.I.E.T Namchi</h3>
+                            <span class="text-uppercase fw-bold text-primary">Est. 2010</span>
+                        </div>
+                    </div>
+                    <p class="mb-4">District Institute of Education & Training, Namchi. Dedicated to fostering pedagogical innovation and teacher excellence across Sikkim.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="row">
+                    <div class="col-6">
+                        <h5 class="footer-column-title mb-4">Platform</h5>
+                        <ul class="footer-column-links">
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Admission</a></li>
+                            <li><a href="#">Programs</a></li>
+                            <li><a href="#">Gallery</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <h5 class="footer-column-title mb-4">Support</h5>
+                        <ul class="footer-column-links">
+                            <li><a href="#">Notices</a></li>
+                            <li><a href="#">Downloads</a></li>
+                            <li><a href="#">Privacy</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card border-0 bg-light p-4 rounded-4 shadow-sm">
+                    <h5 class="footer-column-title mb-3">Get in Touch</h5>
+                    <ul class="footer-contact-list m-0">
+                        <li class="d-flex gap-3 mb-3">
+                            <i class="bi bi-geo-alt-fill text-primary mt-1"></i>
+                            <span class="text-secondary small">Namchi, South Sikkim<br>Pin: 737126</span>
+                        </li>
+                        <li class="d-flex gap-3 mb-3">
+                            <i class="bi bi-telephone text-primary"></i>
+                            <a href="tel:03595264521" class="text-dark fw-bold">03595-264521</a>
+                        </li>
+                        <li class="d-flex gap-3">
+                            <i class="bi bi-envelope text-primary"></i>
+                            <a href="mailto:dietnamchi12@gmail.com" class="text-dark fw-bold">dietnamchi12@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom py-4 bg-white border-top">
+        <div class="container text-center text-md-start d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+            <p class="small text-muted mb-0">&copy; 2026 DIET Namchi. All Rights Reserved.</p>
+            <div class="d-flex gap-4">
+                <a href="#" class="small text-muted">Privacy Policy</a>
+                <a href="#" class="small text-muted">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>#}
+
+<footer class="main-footer">
+
+    <!-- Animated accent bar -->
+    <div class="footer-accent-bar"></div>
+
+    <!-- Background circle geometry -->
+    <div class="footer-geo"></div>
+
+    <!-- ── Newsletter Band ── -->
+    <div class="footer-newsletter">
+        <div class="container">
+            <div class="newsletter-label">
+                <div class="newsletter-icon">
+                    <i class="bi bi-envelope-paper-fill"></i>
+                </div>
+                <div>
+                    <h5>Stay Connected</h5>
+                    <p>Receive notices, circulars &amp; event updates directly.</p>
+                </div>
+            </div>
+            <form class="newsletter-form" onsubmit="return false">
+                <input type="email" placeholder="Your email address…" aria-label="Email address">
+                <button type="submit">Subscribe <i class="bi bi-arrow-right-short"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ── Main Body ── -->
+    <div class="footer-body">
+        <div class="container">
+            <div class="footer-grid">
+
+                <!-- Brand Column -->
+                <div class="footer-brand">
+                    <div class="brand-lockup">
+                        <div class="brand-emblem">
+                            <img src="{{ asset('images/logo.png') }}" alt="DIET Namchi">
+                        </div>
+                        <div class="brand-title">
+                            <h3>D.I.E.T Namchi</h3>
+                            <span>Est. 2010 &middot; South Sikkim</span>
+                        </div>
+                    </div>
+                    <p class="brand-desc">
+                        District Institute of Education &amp; Training — nurturing educators,
+                        transforming classrooms, and advancing professional excellence across South Sikkim.
+                    </p>
+                    <div class="brand-badges">
+                        <span class="badge-chip"><i class="bi bi-award-fill"></i> NCTE Recognised</span>
+                        <span class="badge-chip"><i class="bi bi-building-fill"></i> Govt. of Sikkim</span>
+                        <span class="badge-chip"><i class="bi bi-mortarboard-fill"></i> SCERT Affiliated</span>
+                    </div>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" aria-label="Twitter X"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h5 class="footer-col-title">Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>About Us</a></li>
+                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>Admission</a></li>
+                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>Training Programs</a></li>
+                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>Notices &amp; Circulars</a></li>
+                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>Downloads</a></li>
+                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>Photo Gallery</a></li>
+                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Programs -->
+                <div>
+                    <h5 class="footer-col-title">Programs</h5>
+                    <ul class="footer-links">
+                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>D.El.Ed</a></li>
+                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>B.Ed</a></li>
+                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>In-Service Training</a></li>
+                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>Bridge Course</a></li>
+                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>Orientation Program</a></li>
+                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>Research &amp; Dev.</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Column -->
+                <div>
+                    <h5 class="footer-col-title">Contact &amp; Location</h5>
+                    <ul class="contact-list">
+                        <li class="contact-item">
+                            <div class="contact-icon"><i class="bi bi-geo-alt-fill"></i></div>
+                            <div class="contact-info">
+                                <span class="contact-label">Address</span>
+                                <span>Namchi, South Sikkim – 737126<br>State of Sikkim, India</span>
+                            </div>
+                        </li>
+                        <li class="contact-item">
+                            <div class="contact-icon"><i class="bi bi-telephone-fill"></i></div>
+                            <div class="contact-info">
+                                <span class="contact-label">Phone</span>
+                                <a href="tel:03595264521">03595 – 264521</a>
+                            </div>
+                        </li>
+                        <li class="contact-item">
+                            <div class="contact-icon"><i class="bi bi-envelope-fill"></i></div>
+                            <div class="contact-info">
+                                <span class="contact-label">Email</span>
+                                <a href="mailto:dietnamchi12@gmail.com">dietnamchi12@gmail.com</a>
+                            </div>
+                        </li>
+                        {#<li class="contact-item">
+                            <div class="contact-icon"><i class="bi bi-clock-fill"></i></div>
+                            <div class="contact-info">
+                                <span class="contact-label">Office Hours</span>
+                                <span>Mon – Fri: 9:00 AM – 5:00 PM</span>
+                            </div>
+                        </li>#}
+                    </ul>
+                    {#<div class="map-card">
+                        <div class="map-card-inner">
+                            <i class="bi bi-geo-alt-fill"></i>
+                            Namchi, South Sikkim, India
+                        </div>
+                    </div>#}
+                </div>
+
+            </div><!-- /footer-grid -->
+        </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="footer-divider">
+        <div class="footer-divider-icon"><i class="bi bi-asterisk"></i></div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="footer-bottom-inner">
+                <div class="footer-bottom-left">
+                    <p class="footer-copyright">
+                        &copy; 2026 <strong>DIET Namchi</strong>. All Rights Reserved.
+                    </p>
+                    {#<div class="footer-bottom-sep"></div>
+                    <nav class="footer-bottom-nav">
+                        <a href="{{ path('app_main') }}">Privacy Policy</a>
+                        <a href="{{ path('app_main') }}">Terms of Use</a>
+                        <a href="{{ path('app_main') }}">Sitemap</a>
+                        <a href="{{ path('app_main') }}">RTI</a>
+                    </nav>#}
+                </div>
+                <div class="footer-bottom-right">
+          <span class="govt-badge">
+            <i class="bi bi-shield-fill-check"></i> Govt. of Sikkim
+          </span>
+                    <span class="footer-made-with">
+            Made with <i class="bi bi-heart-fill"></i> for education
+          </span>
                 </div>
             </div>
         </div>

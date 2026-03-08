@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Admin Dashboard</title>
+    <link rel="icon" href="{{ asset('dashboard/images/user.jpg') }}" type="image/x-icon">
+    <link href="{{ asset('dashboard/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('dashboard/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('dashboard/css/_dash.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard/css/_auth.css') }}">
+    <link rel="stylesheet" href="{{ asset('dashboard/vendor/fonts/font.css') }}">
+</head>
+<body class="bg-light">
+{% block body %} {% endblock %}
+<script src="{{ asset('dashboard/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('dashboard/js/jquery-3.7.1.min.js') }}"></script>
+<script src="{{ asset('dashboard/vendor/sweetalert2/sweetalert2.all.min.js') }}"></script>
+<script src="{{ asset('dashboard/js/_dash.js') }}"></script>
+</body>
+</html>

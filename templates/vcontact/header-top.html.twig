@@ -1,0 +1,106 @@
+{% for topcon in toptactdetails %}
+
+    <div class="header-top d-none d-sm-block">
+        <div class="container">
+
+            <div class="header-top-bar-wrap d-sm-flex justify-content-between">
+
+                <div class="header-top-bar-wrap__info">
+                    <ul class="header-top-bar-wrap__info-list">
+                        {% if(topcon.phone1) %}
+                            <li>
+                                <a href="tel:{{ topcon.phone1 }}">
+                                    <i class="fas fa-phone"></i>
+                                    <span class="info-text">{{ topcon.phone1 }}</span></a>
+                            </li>
+                        {% endif %}
+                        {% if(topcon.email1) %}
+                            <li>
+                                <a href="mailto:{{ topcon.email1 }}">
+                                    <i class="far fa-envelope"></i>
+                                    <span class="info-text">{{ topcon.email1 }}</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if(topcon.address) %}
+                            <li>
+                                <a href="mailto:{{ topcon.address }}">
+                                    <i class="far fa-map"></i>
+                                    <span class="info-text">{{ topcon.address }}</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div class="header-top-bar-wrap__info d-sm-flex">
+
+                    {# <ul class="header-top-bar-wrap__info-list d-none d-lg-flex">
+                        <li>
+                            <button data-bs-toggle="modal" data-bs-target="#loginModal">Log in</button>
+                        </li>
+                        <li>
+                            <button data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
+                        </li>
+                    </ul> #}
+                    <ul class="header-top-bar-wrap__info-social">
+                        <li>
+                        {% if topcon.fb %}
+                            <a class="facebook" href="{{ topcon.fb }}" target="_blank">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        {% endif %}
+                        </li>
+
+                        <li>
+                        {% if topcon.yt %}
+                            <a class="youtube" href="{{ topcon.yt }}" target="_blank">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        {% endif %}
+                        </li>
+
+                        <li>
+                        {% if topcon.insta %}
+                            <a href="{{ topcon.insta }}" target="_blank">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        {% endif %}
+                        </li>
+
+                        <li>
+                        {% if topcon.tw %}
+                            <a href="{{ topcon.tw }}" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24">
+                                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m13.081 10.712l-4.786-6.71a.6.6 0 0 0-.489-.252H5.28a.6.6 0 0 0-.488.948l6.127 8.59m2.162-2.576l6.127 8.59a.6.6 0 0 1-.488.948h-2.526a.6.6 0 0 1-.489-.252l-4.786-6.71m2.162-2.576l5.842-6.962m-8.004 9.538L5.077 20.25"></path>
+                                </svg>
+                            </a>
+                        {% endif %}
+                        </li>
+
+                        <li>
+                        {% if topcon.telegram %}
+                            <a class="facebook" href="{{ topcon.telegram }}" target="_blank">
+                                <i class="fab fa-telegram"></i>
+                            </a>
+                        {% endif %}
+                        </li>
+
+                        <li>
+                        {% if topcon.linkedin %}
+                            <a class="linkedin" href="{{ topcon.linkedin }}" target="_blank">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                        {% endif %}
+                        </li>
+
+
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endfor %}

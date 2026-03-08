@@ -1,0 +1,7 @@
+{% for emailone in email1 %}
+    {% if(emailone.email1) %}
+        <a href="mailto:{{ emailone.email1 }}"><span>{{ emailone.email1}} </span></a>
+    {% endif %}
+{% endfor %}
+
+

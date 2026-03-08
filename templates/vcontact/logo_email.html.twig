@@ -1,0 +1,5 @@
+{% for emaillogo in emaillogo %}
+    {% if emaillogo.logosquare %}
+        {{ asset('/images/WebsiteAssets/' ~ emaillogo.logosquare) }}
+    {% endif %}
+{% endfor %}

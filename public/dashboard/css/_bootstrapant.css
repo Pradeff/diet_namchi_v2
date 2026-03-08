@@ -1,0 +1,363 @@
+/* _bootstrapheroui.css */
+/* Place this after Bootstrap's CSS to override */
+
+/* === Ant Design Core Design Tokens === */
+:root {
+    --ant-color-primary: #1677ff;
+    --ant-color-success: #52c41a;
+    --ant-color-warning: #faad14;
+    --ant-color-error: #ff4d4f;
+    --ant-color-info: #1677ff;
+    --ant-color-bg-base: #fff;
+    --ant-color-bg-secondary: #f5f5f5;
+    --ant-color-border: #d9d9d9;
+    --ant-color-border-secondary: #f0f0f0;
+    --ant-color-text-base: rgba(0,0,0,0.88);
+    --ant-color-text-secondary: rgba(0,0,0,0.65);
+    --ant-color-text-tertiary: rgba(0,0,0,0.45);
+    --ant-radius: 6px;
+    --ant-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --ant-box-shadow: 0 6px 16px 0 rgba(0,0,0,0.08), 0 3px 6px -4px rgba(0,0,0,0.12);
+}
+
+/* === Typography === */
+body, .form-control, .btn {
+    font-family: var(--ant-font-family) !important;
+    font-size: 14px !important;
+    color: var(--ant-color-text-base) !important;
+    background-color: var(--ant-color-bg-base) !important;
+    line-height: 1.57;
+}
+
+h1, .h1 { font-size: 38px !important; font-weight: 600; }
+h2, .h2 { font-size: 30px !important; font-weight: 600; }
+h3, .h3 { font-size: 24px !important; font-weight: 600; }
+h4, .h4 { font-size: 20px !important; font-weight: 600; }
+h5, .h5 { font-size: 16px !important; font-weight: 600; }
+h6, .h6 { font-size: 14px !important; font-weight: 600; }
+
+/* === Buttons === */
+.btn, .btn-primary, .btn-secondary, .btn-success, .btn-danger, .btn-warning, .btn-info, .btn-light, .btn-dark, .btn-link {
+    border-radius: var(--ant-radius) !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+    font-weight: 500 !important;
+    box-shadow: none !important;
+    transition: all 0.2s;
+    padding: 0 15px !important;
+    height: 32px !important;
+    font-size: 14px !important;
+    outline: none !important;
+}
+
+.btn, .btn-light, .btn-default {
+    background: var(--ant-color-bg-base) !important;
+    color: var(--ant-color-text-base) !important;
+    border-color: var(--ant-color-border) !important;
+}
+.btn-primary {
+    background: var(--ant-color-primary) !important;
+    color: #fff !important;
+    border-color: var(--ant-color-primary) !important;
+}
+.btn-primary:hover, .btn-primary:focus {
+    background: #4096ff !important;
+    border-color: #4096ff !important;
+}
+.btn-success {
+    background: var(--ant-color-success) !important;
+    color: #fff !important;
+    border-color: var(--ant-color-success) !important;
+}
+.btn-danger {
+    background: var(--ant-color-error) !important;
+    color: #fff !important;
+    border-color: var(--ant-color-error) !important;
+}
+.btn-warning {
+    background: var(--ant-color-warning) !important;
+    color: #fff !important;
+    border-color: var(--ant-color-warning) !important;
+}
+.btn-info {
+    background: var(--ant-color-info) !important;
+    color: #fff !important;
+    border-color: var(--ant-color-info) !important;
+}
+.btn-link, .btn-link:active {
+    color: var(--ant-color-primary) !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.btn:active, .btn:focus, .btn-primary:active, .btn-primary:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(22,119,255,0.2) !important;
+}
+
+/* Disabled buttons */
+.btn:disabled, .btn.disabled, fieldset:disabled .btn, .btn[aria-disabled="true"] {
+    background: #f5f5f5 !important;
+    color: var(--ant-color-text-tertiary) !important;
+    border-color: var(--ant-color-border-secondary) !important;
+    opacity: 1 !important;
+}
+
+/* === Forms === */
+.form-control, input, textarea, select {
+    border-radius: var(--ant-radius) !important;
+    background: var(--ant-color-bg-base) !important;
+    border: 1px solid var(--ant-color-border) !important;
+    font-size: 14px !important;
+    color: var(--ant-color-text-base) !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    padding: 6.5px 12px !important;
+    height: 32px !important;
+    box-shadow: none !important;
+}
+.form-control:focus, input:focus, textarea:focus, select:focus {
+    border-color: var(--ant-color-primary) !important;
+    box-shadow: 0 0 0 2px rgba(22,119,255,0.2) !important;
+    outline: none !important;
+}
+.form-label, label {
+    font-size: 14px !important;
+    color: var(--ant-color-text-secondary) !important;
+    font-weight: 400;
+}
+
+/* === Tables === */
+.table, .table-bordered, .table-striped {
+    background: var(--ant-color-bg-base) !important;
+    color: var(--ant-color-text-base) !important;
+    border-collapse: separate !important;
+    border-radius: var(--ant-radius) !important;
+    border-color: var(--ant-color-border) !important;
+}
+.table th, .table td {
+    border-color: var(--ant-color-border) !important;
+    padding: 12px !important;
+    font-size: 14px !important;
+}
+.table thead th {
+    background: #fafafa !important;
+    color: var(--ant-color-text-secondary) !important;
+    font-weight: 500 !important;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background: #f5f5f5 !important;
+}
+.table-hover tbody tr:hover {
+    background: #e6f4ff !important;
+}
+
+/* === Cards & Modals === */
+.card, .modal-content {
+    border-radius: 8px !important;
+    box-shadow: var(--ant-box-shadow) !important;
+    border: 1px solid var(--ant-color-border) !important;
+    background: var(--ant-color-bg-base) !important;
+}
+
+/* === Navs & Tabs === */
+.nav-link, .nav-tabs .nav-link {
+    color: var(--ant-color-text-secondary) !important;
+    background: transparent !important;
+    font-size: 14px !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    border-radius: 0 !important;
+    transition: color 0.2s, border-color 0.2s;
+}
+.nav-link.active, .nav-tabs .nav-link.active {
+    color: var(--ant-color-primary) !important;
+    border-bottom-color: var(--ant-color-primary) !important;
+    background: transparent !important;
+    font-weight: 500;
+}
+.nav-tabs {
+    border-bottom: 1px solid var(--ant-color-border) !important;
+}
+
+/* === Alerts === */
+.alert {
+    border-radius: var(--ant-radius) !important;
+    padding: 14px 18px !important;
+    font-size: 14px !important;
+    border-width: 1px !important;
+}
+.alert-primary, .alert-info {
+    background: #e6f4ff !important;
+    color: var(--ant-color-primary) !important;
+    border-color: #91caff !important;
+}
+.alert-success {
+    background: #f6ffed !important;
+    color: var(--ant-color-success) !important;
+    border-color: #b7eb8f !important;
+}
+.alert-danger {
+    background: #fff2f0 !important;
+    color: var(--ant-color-error) !important;
+    border-color: #ffccc7 !important;
+}
+.alert-warning {
+    background: #fffbe6 !important;
+    color: var(--ant-color-warning) !important;
+    border-color: #ffe58f !important;
+}
+
+/* === Dropdowns === */
+.dropdown-menu {
+    border-radius: var(--ant-radius) !important;
+    box-shadow: var(--ant-box-shadow) !important;
+    border: 1px solid var(--ant-color-border) !important;
+    background: var(--ant-color-bg-base) !important;
+    font-size: 14px !important;
+}
+.dropdown-item {
+    color: var(--ant-color-text-base) !important;
+    padding: 8px 16px !important;
+    border-radius: 4px !important;
+    transition: background 0.2s;
+}
+.dropdown-item:hover, .dropdown-item:focus, .dropdown-item.active {
+    background: #e6f4ff !important;
+    color: var(--ant-color-primary) !important;
+}
+
+/* === Pagination === */
+.pagination {
+    display: flex !important;
+    gap: 8px;
+}
+.page-link {
+    font-size: 14px !important;
+    color: var(--ant-color-text-base) !important;
+    border-radius: var(--ant-radius) !important;
+    border: 1px solid var(--ant-color-border) !important;
+    background: #fff !important;
+    margin: 0 2px;
+    padding: 0 10px;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    min-width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.page-item.active .page-link, .page-link:focus {
+    background: var(--ant-color-primary) !important;
+    color: #fff !important;
+    border-color: var(--ant-color-primary) !important;
+    z-index: 2;
+}
+
+/* === Badges === */
+.badge, .badge-pill {
+    padding: 0 7px;
+    font-size: 12px;
+    line-height: 20px;
+    border-radius: 12px !important;
+    background: #e6f4ff !important;
+    color: var(--ant-color-primary) !important;
+}
+
+/* === Avatars === */
+.avatar, .rounded-circle, .img-thumbnail {
+    border-radius: 50% !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* === Progress bars === */
+.progress {
+    height: 8px !important;
+    background: #f5f5f5 !important;
+    border-radius: 4px !important;
+}
+.progress-bar {
+    background: var(--ant-color-primary) !important;
+    box-shadow: none !important;
+}
+
+/* === Tooltips === */
+.tooltip-inner {
+    background: rgba(0,0,0,0.85) !important;
+    color: #fff !important;
+    font-size:12px !important;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+}
+
+/* === Accordions & Collapse === */
+.accordion-item, .collapse, .accordion-collapse {
+    border-radius: var(--ant-radius) !important;
+    background: var(--ant-color-bg-base) !important;
+    border: 1px solid var(--ant-color-border) !important;
+    box-shadow: none !important;
+}
+.accordion-button {
+    border-radius: var(--ant-radius) !important;
+    color: var(--ant-color-text-base) !important;
+    background: #fafafa !important;
+    font-weight: 500 !important;
+}
+
+/* === Breadcrumbs === */
+.breadcrumb {
+    font-size: 14px !important;
+}
+.breadcrumb-item + .breadcrumb-item::before {
+    color: var(--ant-color-border) !important;
+}
+
+/* === List Groups === */
+.list-group, .list-group-item {
+    background: var(--ant-color-bg-base) !important;
+    border: 1px solid var(--ant-color-border) !important;
+    border-radius: 6px !important;
+    color: var(--ant-color-text-base) !important;
+    font-size: 14px !important;
+}
+.list-group-item.active {
+    background: #e6f4ff !important;
+    color: var(--ant-color-primary) !important;
+    border-color: var(--ant-color-primary) !important;
+}
+
+/* === Grids (Containers/Spacing) === */
+.container, .container-fluid {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+}
+.row, .col {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.col {
+    padding: 0 12px !important;
+}
+.g-0, [class*="g-0"] { gap: 0 !important; }
+.g-1, [class*="g-1"] { gap: 4px !important; }
+.g-2, [class*="g-2"] { gap: 8px !important; }
+.g-3, [class*="g-3"] { gap: 16px !important; }
+.g-4, [class*="g-4"] { gap: 24px !important; }
+.g-5, [class*="g-5"] { gap: 32px !important; }
+
+/* === Miscellaneous (spinners, close, etc.) === */
+.spinner-border, .spinner-grow {
+    color: var(--ant-color-primary) !important;
+}
+.close {
+    color: var(--ant-color-text-secondary) !important;
+    opacity: 1 !important;
+    font-size: 24px !important;
+}
+
+::-webkit-input-placeholder { color: var(--ant-color-text-tertiary) !important; }
+::-moz-placeholder { color: var(--ant-color-text-tertiary) !important; }
+:-ms-input-placeholder { color: var(--ant-color-text-tertiary) !important; }
+::placeholder { color: var(--ant-color-text-tertiary) !important; }
+

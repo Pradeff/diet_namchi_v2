@@ -1,0 +1,83 @@
+{{ form_start(form, {'attr': {'id': 'userForm', 'novalidate': 'novalidate'}}) }}
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        {{ form_label(form.email, 'Email Address') }}
+        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.email) }}
+    </div>
+    <div class="col-md-6 mb-3">
+        {{ form_label(form.fullName, 'Full Name') }}
+        {{ form_widget(form.fullName, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.fullName) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        {{ form_label(form.phone, 'Phone Number') }}
+        {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.phone) }}
+    </div>
+    {% if form.password is defined %}
+        <div class="col-md-6 mb-3">
+            {% if form.password.first is defined %}
+                {{ form_label(form.password.first, 'Password') }}
+                {{ form_widget(form.password.first, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.password.first) }}
+                <div class="mt-2">
+                    {{ form_label(form.password.second, 'Confirm Password') }}
+                    {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.password.second) }}
+                </div>
+            {% else %}
+                {{ form_label(form.password, 'Password') }}
+                {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.password) }}
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+
+{% if form.roles is defined %}
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            {{ form_label(form.roles, 'Roles') }}
+            <div class="mt-2">
+                {{ form_widget(form.roles) }}
+            </div>
+            {{ form_errors(form.roles) }}
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="form-check mt-4">
+                {{ form_widget(form.isActive, {'attr': {'class': 'form-check-input'}}) }}
+                {{ form_label(form.isActive, 'Active Account', {'label_attr': {'class': 'form-check-label'}}) }}
+            </div>
+            {{ form_errors(form.isActive) }}
+        </div>
+    </div>
+{% endif %}
+
+<div class="d-flex justify-content-between">
+    <a href="{{ path('admin_users') }}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Users
+    </a>
+    <button type="submit" class="btn btn-primary" id="submitBtn">
+        <span class="spinner-border spinner-border-sm me-2 d-none" id="submitSpinner" role="status"></span>
+        <span id="submitText">{{ button_label|default('Save User') }}</span>
+    </button>
+</div>
+
+{{ form_end(form) }}
+
+<script>
+    document.getElementById('userForm').addEventListener('submit', function(e) {
+        const btn = document.getElementById('submitBtn');
+        const spinner = document.getElementById('submitSpinner');
+        const text = document.getElementById('submitText');
+
+        btn.disabled = true;
+        spinner.classList.remove('d-none');
+        text.textContent = '{{ button_label|default('Save User')|replace({'Save': 'Saving', 'Create': 'Creating', 'Update': 'Updating'}) }}...';
+    });
+</script>

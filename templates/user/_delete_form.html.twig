@@ -1,0 +1,88 @@
+{# templates/user/_delete_form.html.twig #}
+<button type="button"
+        class="btn btn-sm btn-light-danger delete-user-btn"
+        data-user-id="{{ user.id }}"
+        data-user-name="{{ user.name }}"
+        data-delete-url="{{ path('app_user_delete', {'id': user.id}) }}"
+        data-csrf-token="{{ csrf_token('delete' ~ user.id) }}">
+    <i class="bi bi-trash"></i> Delete User
+</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle delete with confirmation
+        document.querySelectorAll('.delete-user-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const userId = this.dataset.userId;
+                const userName = this.dataset.userName;
+                const deleteUrl = this.dataset.deleteUrl;
+                const csrfToken = this.dataset.csrfToken;
+
+                Swal.fire({
+                    title: 'Delete User',
+                    html: `Are you sure you want to delete user <strong>"${userName}"</strong>?<br><br><small class="text-danger">This action cannot be undone!</small>`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel',
+                    focusCancel: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Show loading
+                        Swal.fire({
+                            title: 'Deleting User...',
+                            text: 'Please wait while we delete the user',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+
+                        // Create form data
+                        const formData = new FormData();
+                        formData.append('_token', csrfToken);
+
+                        fetch(deleteUrl, {
+                            method: 'POST',
+                            body: formData
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'User Deleted!',
+                                        text: data.message,
+                                        timer: 2000,
+                                        showConfirmButton: false
+                                    }).then(() => {
+                                        // Redirect to users list
+                                        window.location.href = '{{ path("app_user_index") }}';
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error!',
+                                        text: data.message || 'Failed to delete user'
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error!',
+                                    text: 'Network error occurred'
+                                });
+                            });
+                    }
+                });
+            });
+        });
+    });
+</script>

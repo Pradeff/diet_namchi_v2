@@ -1,0 +1,38 @@
+{# templates/emails/hike_booking.html.twig #}
+{% extends 'emails/base_email.html.twig' %}
+
+{% block email_title %}New Hike Booking - {{ hikeTitle }}{% endblock %}
+
+{% block header_icon %}🥾{% endblock %}
+
+{% block header_title %}New Hike Booking{% endblock %}
+
+{% block header_subtitle %}
+    You have received a new hike booking request through your website
+{% endblock %}
+
+{% block email_content %}
+    {# Hike Details #}
+    **🏔️ Hike Information**
+
+    | Field | Details |
+    |-------|---------|
+    | **🥾 Hike:** | {{ hikeTitle }} |
+    | **🔗 Hike URL:** | [View Hike Details]({{ hikeUrl }}) |
+
+    {# Customer Details #}
+    **👤 Customer Information**
+
+    | Field | Details |
+    |-------|---------|
+    | **👤 Full Name:** | {{ fullname }} |
+    | **📧 Email:** | {{ email }} |
+    | **📱 Phone:** | {{ phone }} |
+    | **📅 Check-in Date:** | {{ checkindate }} |
+    | **🕒 Submitted:** | {{ submittedAt|date('d M Y, h:i A') }} |
+
+    **💬 Customer Message:**
+    {{ message|nl2br }}
+
+    **⚡ Action Required:** Please respond to this customer within 24 hours to confirm their hike booking and provide detailed itinerary information.
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends 'base_dashboard.html.twig' %}
+{% block title %}People{% endblock %}
+
+{% block body %}
+    <div class="row mb-4">
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 text_color_default">
+                    <i class="bi bi-people-fill"></i>
+                    People
+                </h5>
+                <a href="{{ path('app_vpeople_new') }}" class="btn btn-sm btn-primary">
+                    <i class="bi bi-plus-lg"></i>
+                    Add New
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive table-container p-2">
+        <table id="d_table" class="table" style="width:100%">
+            <thead>
+            <tr>
+                <th style="width: 40px;"><i class="bi bi-grip-vertical"></i></th>
+                <th>Position</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Designation</th>
+                <th>##</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody id="sortable">
+            {% for vpeople in vpeoples %}
+                <tr data-id="{{ vpeople.id }}">
+                    <td class="drag-handle"><i class="bi bi-grip-vertical"></i> </td>
+                    <td>{{ vpeople.position}} </td>
+                    <td>
+                        {% if vpeople.image %}
+                            {% set imagePath = asset('uploads/image/' ~ vpeople.image) %}
+                            <img src="{{ imagePath }}" alt="Profile" class="rounded-circle object-fit-cover" width="40" height="40">
+                        {% else %}
+                            <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                <i class="bi bi-person text-white"></i>
+                            </div>
+                        {% endif %}
+                    </td>
+                    <td>{{ vpeople.title|striptags|slice(0, 30) ~ (vpeople.title|length > 30 ? '...' : '') }}</td>
+                    <td>{{ vpeople.designation|striptags|slice(0, 30) ~ (vpeople.designation|length > 30 ? '...' : '') }}</td>
+                    <td>{{ vpeople.extra1 ?? 'N/A' }}</td>
+                    <td>
+                        <a href="{{ path('app_vpeople_edit', {'id': vpeople.id}) }}" class="btn btn-xs btn-light-info">
+                            <i class="bi bi-pencil me-1"></i> Edit
+                        </a>
+                    </td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function () {
+            $("#sortable").sortable({
+                handle: ".drag-handle",
+                update: function () {
+                    let order = [];
+                    $("#sortable tr").each(function (index) {
+                        order.push({
+                            id: $(this).data("id"),
+                            position: index + 1
+                        });
+                    });
+
+                    $.ajax({
+                        url: "{{ path('app_vpeople_sort') }}",
+                        method: "POST",
+                        data: {
+                            order: order,
+                            _token: '{{ csrf_token("vpeople_sort") }}' // ✅ CSRF token
+                        },
+                        success: function () {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Order Saved',
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        },
+                        error: function () {
+                            Swal.fire('Error', 'Failed to save order.', 'error');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

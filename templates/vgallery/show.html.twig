@@ -1,0 +1,125 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}{{ vgallery.title }} - Gallery Details{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5><i class="bi bi-collection"></i> {{ vgallery.title }}</h5>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title mb-0">
+                            <i class="bi bi-images"></i> Gallery Images ({{ vgallery.images|length }})
+                        </strong>
+                    </div>
+                    <div class="card-body">
+                        {% if vgallery.images is not empty %}
+                            <div class="row">
+                                {% for image in vgallery.images %}
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card">
+                                            {% if vgallery.coverImage == image.filename %}
+                                                <div class="position-absolute top-0 start-0 m-2">
+                                        <span class="badge bg-success">
+                                            <i class="bi bi-star-fill"></i> Cover
+                                        </span>
+                                                </div>
+                                            {% endif %}
+                                            <img src="/uploads/image/{{ image.filename }}" class="card-img-top"
+                                                 style="height: 200px; object-fit: cover;">
+                                            {% if image.title %}
+                                                <div class="card-body p-2">
+                                                    <p class="card-text small">{{ image.title }}</p>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="text-center text-muted py-4">
+                                <i class="bi bi-images display-4 mb-3"></i>
+                                <p>This gallery doesn't have any images uploaded yet.</p>
+                                <a href="{{ path('app_vgallery_edit', {'id': vgallery.id}) }}" class="btn btn-primary">
+                                    <i class="bi bi-plus-circle"></i> Add Images
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <strong class="card-title mb-0">
+                            <i class="bi bi-info-circle"></i> Actions
+                        </strong>
+                    </div>
+                    <div class="card-body">
+                        <a href="{{ path('app_vgallery_edit', {'id': vgallery.id}) }}"
+                           class="btn btn-light-primary me-2">
+                            <i class="bi bi-pencil"></i> Edit
+                        </a>
+                        <a href="{{ path('app_vgallery_index') }}" class="btn btn-light-secondary">
+                            <i class="bi bi-arrow-left"></i> Back to List
+                        </a>
+
+                        {{ include('vgallery/_delete_form.html.twig') }}
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title mb-0">
+                            <i class="bi bi-info-circle"></i> Gallery Details
+                        </strong>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row g-0">
+                            <dt class="col-sm-5"><i class="bi bi-calendar-plus"></i> Created:</dt>
+                            <dd class="col-sm-7">
+                                {% if vgallery.createdAt %}
+                                    {{ vgallery.createdAt|date('F j, Y \\a\\t g:i A') }}
+                                    <br><small class="text-muted">{{ vgallery.createdAt|date('D, M j, Y') }}</small>
+                                {% else %}
+                                    <span class="text-muted">Not available</span>
+                                {% endif %}
+                            </dd>
+
+                            <dt class="col-sm-5"><i class="bi bi-calendar-check"></i> Updated:</dt>
+                            <dd class="col-sm-7">
+                                {% if vgallery.updatedAt %}
+                                    {{ vgallery.updatedAt|date('F j, Y \\a\\t g:i A') }}
+                                    <br><small class="text-muted">{{ vgallery.updatedAt|date('D, M j, Y') }}</small>
+                                {% else %}
+                                    <span class="text-muted">Never updated</span>
+                                {% endif %}
+                            </dd>
+
+                            <dt class="col-sm-5"><i class="bi bi-star"></i> Cover Image:</dt>
+                            <dd class="col-sm-7">
+                                {% if vgallery.coverImage %}
+                                    <img src="/uploads/image/{{ vgallery.coverImage }}"
+                                         alt="Cover" class="img-thumbnail"
+                                         style="width: 80px; height: 60px; object-fit: cover;">
+                                {% else %}
+                                    <span class="text-muted">No cover image set</span>
+                                {% endif %}
+                            </dd>
+
+                            <dt class="col-sm-5"><i class="bi bi-link-45deg"></i> Slug:</dt>
+                            <dd class="col-sm-7">
+                                <code>{{ vgallery.slug }}</code>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,206 @@
+{{ form_start(form, { 'attr': {'id': 'form'} }) }}
+
+<div class="row">
+    <div class="col-xl-8">
+        {# Main Content Card #}
+        <div class="card">
+            <div class="card-body">
+
+                <div class="form-group mb-3">
+                    <h6><label>Title</label></h6>
+                    {{ form_widget(form.title, {
+                        'attr': {
+                            'class': 'form-control border-input' ~ (form.title.vars.errors|length ? ' is-invalid' : '')
+                        }
+                    }) }}
+                    {{ form_errors(form.title) }}
+                </div>
+
+                <div class="form-group mb-3">
+                    <h6><label>Description</label></h6>
+                    {{ form_errors(form.description) }}
+                    {{ form_widget(form.description, {
+                        'attr': {
+                            'class': 'form-control border-input' ~ (form.description.vars.errors|length ? ' is-invalid' : ''),
+                            'rows': 4
+                        }
+                    }) }}
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <h6><label>Media Type</label></h6>
+                            {{ form_widget(form.mediaType, {
+                                'attr': {
+                                    'class': 'form-select border-input' ~ (form.mediaType.vars.errors|length ? ' is-invalid' : '')
+                                }
+                            }) }}
+                            {{ form_errors(form.mediaType) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <h6><label>Sort Order</label></h6>
+                            {{ form_widget(form.sortOrder, {
+                                'attr': {
+                                    'class': 'form-control border-input' ~ (form.sortOrder.vars.errors|length ? ' is-invalid' : '')
+                                }
+                            }) }}
+                            {{ form_errors(form.sortOrder) }}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {# Current Media Preview Card (only for edit mode) #}
+        {% if vslider is defined and vslider.mediaPath %}
+            <div class="card mt-3">
+                <div class="card-header">
+                    <strong>Current Media</strong>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        {% if vslider.mediaType == 'video' %}
+                            <video controls style="max-width: 100%; max-height: 400px; border-radius: 8px;">
+                                <source src="{{ asset('uploads/media/' ~ vslider.mediaPath) }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        {% else %}
+                            <img src="{{ asset('uploads/media/' ~ vslider.mediaPath) }}"
+                                 alt="{{ vslider.title }}"
+                                 class="img-fluid rounded shadow-sm"
+                                 style="max-height: 400px; object-fit: contain;">
+                        {% endif %}
+                    </div>
+                    <div class="mt-2 text-center">
+                        <small class="text-muted">
+                            <i class="bi bi-info-circle"></i> Upload a new file below to replace this media
+                        </small>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+
+    <div class="col-xl-4">
+
+        {# Media File Upload Card #}
+        <div class="card">
+            <div class="card-header">
+                <strong>Banner Slide Media</strong>
+            </div>
+            <div class="card-body">
+                <div class="custom-file w-100">
+                    <label class="custom-file-label" for="mediaFileInput">Choose file</label>
+                    {% if vslider is defined and vslider.mediaPath %}
+                        {{ form_widget(form.mediaFile, {
+                            'attr': {
+                                'id': 'mediaFileInput',
+                                'class': 'dropify_file_input',
+                                'data-max-file-size': '20M',
+                                'data-allowed-file-extensions': 'jpg jpeg gif png svg mp4 webm',
+                                'data-show-loader': 'true',
+                                'data-show-remove': 'false',
+                                'data-default-file': asset('uploads/media/' ~ vslider.mediaPath)
+                            }
+                        }) }}
+                    {% else %}
+                        {{ form_widget(form.mediaFile, {
+                            'attr': {
+                                'id': 'mediaFileInput',
+                                'class': 'dropify_file_input',
+                                'data-max-file-size': '20M',
+                                'data-allowed-file-extensions': 'jpg jpeg gif png svg mp4 webm',
+                                'data-show-loader': 'true',
+                            }
+                        }) }}
+                    {% endif %}
+                    {{ form_errors(form.mediaFile) }}
+                </div>
+                <div class="mt-3">
+                    <small class="text-muted d-block">
+                        <i class="bi bi-image"></i> Images: JPG, JPEG, PNG, GIF, SVG
+                    </small>
+                    <small class="text-muted d-block">
+                        <i class="bi bi-film"></i> Videos: MP4, WebM
+                    </small>
+                    <small class="text-muted d-block">
+                        <i class="bi bi-hdd"></i> Max size: 20MB
+                    </small>
+                </div>
+
+                {# Upload Progress Bar #}
+                <div id="uploadProgressWrap" class="mt-3" style="display: none;">
+                    <div class="progress" style="height: 25px;">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated"
+                             role="progressbar"
+                             id="uploadProgressBar"
+                             style="width: 0%;"
+                             aria-valuenow="0"
+                             aria-valuemin="0"
+                             aria-valuemax="100">
+                            0%
+                        </div>
+                    </div>
+                    <small id="uploadProgressText" class="text-muted d-block mt-2">Preparing upload...</small>
+                </div>
+            </div>
+        </div>
+
+        {# Status Card #}
+        <div class="card mt-3">
+            <div class="card-header">
+                <strong>Status</strong>
+            </div>
+            <div class="card-body">
+                <div class="form-check form-switch">
+                    {{ form_widget(form.isActive, {
+                        'attr': {
+                            'class': 'form-check-input',
+                            'role': 'switch'
+                        }
+                    }) }}
+                    {{ form_label(form.isActive, 'Active Status', {
+                        'label_attr': {
+                            'class': 'form-check-label'
+                        }
+                    }) }}
+                    {{ form_errors(form.isActive) }}
+                </div>
+                <small class="text-muted d-block mt-2">
+                    <i class="bi bi-info-circle"></i> Only active slides will be displayed on the homepage
+                </small>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{# Action Buttons Card #}
+<div class="mt-4">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{{ path('app_vslider_index') }}" class="btn btn-light" id="backBtn">
+                            <i class="bi bi-arrow-left"></i> Back to list
+                        </a>
+                        <button class="btn btn-light-info" id="submitBtn" type="submit">
+                            <span id="submitText">{{ button_label|default('Save') }}</span>
+                            <span id="submitSpinner" class="spinner-border spinner-border-sm ms-2 d-none" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ form_end(form) }}

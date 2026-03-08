@@ -1,0 +1,547 @@
+
+:root {
+    /* Primary theme colors */
+    --theme-color: #066FD1;
+    --theme-color_rgb: 6, 111, 209;
+    --theme-color-hover: #0554a6;
+    --theme-color-light: rgba(6, 111, 209, 0.1);
+    --theme-color-subtle: rgba(6, 111, 209, 0.05);
+
+    /* Animation variables */
+    --animation-duration: 0.3s;
+    --animation-speed: var(--animation-duration);
+
+    /* Border radius variables */
+    --border-radius-sm: 0.25rem;
+    --border-radius: 0.375rem;
+    --border-radius-lg: 0.5rem;
+    --border-radius-xl: 1rem;
+    --border-radius-2xl: 1.5rem;
+}
+
+/* Dark theme overrides */
+[data-theme="dark"] {
+    --bs-body-bg: #1a1a1a;
+    --bs-body-color: #ffffff;
+    --bs-border-color: #495057;
+}
+
+/* Flat corners utility */
+.flat-corners,
+.flat-corners * {
+    --border-radius-sm: 0 !important;
+    --border-radius: 0 !important;
+    --border-radius-lg: 0 !important;
+    --border-radius-xl: 0 !important;
+    --border-radius-2xl: 0 !important;
+    border-radius: 0 !important;
+}
+
+/* Reduced motion utility */
+.reduced-motion *,
+.reduced-motion *::before,
+.reduced-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+}
+
+/* Theme Customizer Floating Button */
+.theme-customizer-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--theme-color);
+    border: none;
+    box-shadow: 0 8px 25px rgba(var(--theme-color_rgb), 0.25);
+    color: white;
+    font-size: 20px;
+    z-index: 1060;
+    transition: all var(--animation-duration) ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+}
+
+.theme-customizer-btn:hover {
+    background: var(--theme-color-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(var(--theme-color_rgb), 0.35);
+    color: white;
+}
+
+.theme-customizer-btn:focus {
+    outline: 2px solid var(--theme-color);
+    outline-offset: 2px;
+}
+
+.theme-customizer-btn i {
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Pause animation on hover */
+.theme-customizer-btn:hover i {
+    animation-play-state: paused;
+}
+
+/* Theme Customizer Panel */
+.theme-customizer {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 380px;
+    height: 100vh;
+    background: var(--bs-body-bg);
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+    z-index: 1055;
+    transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid var(--bs-border-color);
+    backdrop-filter: blur(10px);
+}
+
+[data-theme="dark"] .theme-customizer {
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.theme-customizer.open {
+    right: 0;
+}
+
+/* Customizer Header */
+.customizer-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--bs-border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bs-body-bg);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.customizer-header h5 {
+    margin: 0;
+    font-weight: 600;
+    color: var(--bs-body-color);
+    font-size: 1.125rem;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    color: var(--bs-body-color);
+    opacity: 0.6;
+    cursor: pointer;
+    transition: all var(--animation-duration);
+    padding: 0.5rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius);
+}
+
+.btn-close:hover {
+    opacity: 1;
+    background: rgba(var(--theme-color_rgb), 0.1);
+    transform: rotate(90deg);
+}
+
+.btn-close::before {
+    content: "×";
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+/* Customizer Body */
+.customizer-body {
+    flex: 1;
+    padding: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--theme-color) transparent;
+}
+
+.customizer-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.customizer-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.customizer-body::-webkit-scrollbar-thumb {
+    background: var(--theme-color);
+    border-radius: 3px;
+}
+
+.customizer-section {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(var(--theme-color_rgb), .2);
+}
+
+[data-theme="dark"] .customizer-section {
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+.section-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--bs-body-color);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--theme-color) 0%, transparent 100%);
+}
+
+/* Theme Mode Buttons */
+.btn-group .btn {
+    flex: 1;
+    padding: 0.75rem 0.5rem;
+    font-size: 0.875rem;
+    border-color: var(--bs-border-color);
+    transition: all var(--animation-duration);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-group .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s;
+}
+
+.btn-group .btn:hover::before {
+    left: 100%;
+}
+
+.btn-check:checked + .btn-outline-primary {
+    background: var(--theme-color);
+    border-color: var(--theme-color);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(var(--theme-color_rgb), 0.3);
+}
+
+/* Color Options Grid */
+.color-options {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.color-option {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: all var(--animation-duration) ease;
+    position: relative;
+    outline: none;
+    background-clip: padding-box;
+}
+
+.color-option::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+    opacity: 0;
+    transition: opacity var(--animation-duration);
+}
+
+.color-option:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.color-option:hover::before {
+    opacity: 1;
+}
+
+.color-option.active {
+    border-color: var(--bs-body-color);
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.color-option.active::after {
+    content: "✓";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+    animation: checkmark 0.3s ease-in-out;
+}
+
+@keyframes checkmark {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+/* UI Options Switches */
+
+
+/* Customizer Footer */
+.customizer-footer {
+    padding: 1.5rem;
+    border-top: 1px solid var(--bs-border-color);
+    background: var(--bs-body-bg);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+}
+
+.btn-primary {
+    background: var(--theme-color);
+    border-color: var(--theme-color);
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    transition: all var(--animation-duration) ease;
+    border-radius: var(--border-radius);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:hover {
+    background: var(--theme-color-hover);
+    border-color: var(--theme-color-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(var(--theme-color_rgb), 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Layout Utilities */
+.boxed-layout {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    transition: all var(--animation-duration) ease;
+}
+
+/* Sidebar Compact Mode */
+.side_sidebar.compact {
+    width: 70px;
+    transition: width var(--animation-duration) ease;
+}
+
+.side_sidebar.compact .side_logo-text,
+.side_sidebar.compact .side_nav-link span,
+.side_sidebar.compact .side_menu-label {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.side_sidebar.compact:hover {
+    width: 250px;
+}
+
+.side_sidebar.compact:hover .side_logo-text,
+.side_sidebar.compact:hover .side_nav-link span,
+.side_sidebar.compact:hover .side_menu-label {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease 0.1s;
+}
+
+/* Sticky Header */
+.header.sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: 1050;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .theme-customizer {
+        width: 100vw;
+        right: -100vw;
+    }
+
+    .theme-customizer-btn {
+        bottom: 15px;
+        right: 15px;
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+    }
+
+    .customizer-section {
+        padding: 1rem;
+    }
+
+    .color-options {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .color-option {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+@media (max-width: 576px) {
+    .theme-customizer {
+        width: 100vw;
+    }
+
+    .color-options {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .btn-group .btn {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Animation Enhancements */
+@media (prefers-reduced-motion: no-preference) {
+    .theme-customizer.open {
+        animation: slideInRight 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .color-option:hover {
+        animation: pulse 0.6s ease-in-out infinite alternate;
+    }
+
+    .theme-customizer-btn:hover {
+        animation: bounce 0.6s ease-in-out infinite alternate;
+    }
+}
+
+@keyframes slideInRight {
+    from { right: -400px; opacity: 0; }
+    to { right: 0; opacity: 1; }
+}
+
+@keyframes pulse {
+    from { box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); }
+    to { box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25); }
+}
+
+@keyframes bounce {
+    from { transform: translateY(-2px); }
+    to { transform: translateY(-4px); }
+}
+
+/* Focus Management for Accessibility */
+.theme-customizer.open .customizer-header h5 {
+    outline: none;
+}
+
+.color-option:focus-visible {
+    outline: 2px solid var(--theme-color);
+    outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+    .theme-customizer,
+    .theme-customizer-btn {
+        display: none !important;
+    }
+}
+
+.ui-toggle input[type="checkbox"] {
+    display: none;
+}
+
+.ui-toggle .toggleSwitch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 50px;
+    height: 28px;
+    background-color: rgb(82, 82, 82);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color .2s;
+}
+
+.ui-toggle .toggleSwitch::after {
+    content: "";
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    left: 5px;
+    background-color: transparent;
+    border-radius: 50%;
+    transition: .2s;
+    box-shadow: 5px 2px 7px rgba(8, 8, 8, 0.26);
+    border: 5px solid white;
+}
+
+.ui-toggle input[type="checkbox"]:checked + .toggleSwitch::after {
+    transform: translateX(100%);
+    background-color: white;
+}
+
+.ui-toggle input[type="checkbox"]:checked + .toggleSwitch {
+    background-color: rgb(148, 118, 255);
+}

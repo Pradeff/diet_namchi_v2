@@ -1,0 +1,359 @@
+<!-- Header -->
+<header class="header">
+    <div class="header-left">
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+            <i class="bi bi-list"></i>
+        </button>
+        <div class="greeting d-none d-md-block">
+            <span id="greetingText">Hello, {{ app.user.name ?? 'User' }}</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const greetingSpan = document.getElementById('greetingText');
+            const hours = new Date().getHours();
+            let greeting = "Hello";
+
+            if (hours >= 5 && hours < 12) {
+                greeting = "Good Morning";
+            } else if (hours >= 12 && hours < 17) {
+                greeting = "Good Afternoon";
+            } else if (hours >= 17 && hours < 22) {
+                greeting = "Good Evening";
+            } else {
+                greeting = "Good Evening";
+            }
+
+            const currentText = greetingSpan.textContent;
+            const name = currentText.split(',')[1]?.trim() ?? '';
+            greetingSpan.textContent = `${greeting}, ${name}`;
+        });
+    </script>
+
+    {# <div class="header-center d-none d-md-block">
+        <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="text" placeholder="Search..." class="form-control">
+        </div>
+    </div> #}
+
+    <div class="header-right">
+        {#<a href="{{ path('app_main') }}" class="btn btn-outline-secondary btn-sm" target="_blank"
+           title="View your Website">
+            <i class="bi bi-globe2 me-1"></i>
+            View Website
+        </a>#}
+        <a href="{{ path('app_main') }}" target="_blank"
+           class="fullscreen-toggle"
+           title="View your Website"
+           data-bs-toggle="tooltip"
+           data-bs-custom-class="tooltip-dark"
+           data-bs-placement="bottom">
+            <i class="bi bi-globe-americas"></i>
+        </a>
+
+        <button class="theme-toggle d-none d-lg-block"
+                id="themeToggle"
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                data-bs-custom-class="tooltip-dark"
+                title="Toggle Theme">
+            <i class="bi bi-sun-fill"></i>
+        </button>
+
+        <!-- Fullscreen Button -->
+        <button class="fullscreen-toggle d-none d-lg-block"
+                id="fullscreenToggle"
+                aria-label="Toggle fullscreen"
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                data-bs-custom-class="tooltip-dark"
+                title="Fullscreen">
+            <i class="bi bi-fullscreen"></i>
+        </button>
+
+
+
+        <!-- Notification Dropdown -->
+        {#<div class="dropdown">
+            <button class="notification-btn" data-bs-toggle="dropdown">
+                <i class="bi bi-bell"></i>
+                <span class="notification-badge">33</span>
+            </button>
+
+            <div class="dropdown-menu dropdown-menu-end p-0 shadow border-0 rounded-3 notification-dropdown"
+                 aria-labelledby="notificationDropdown">
+
+                <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
+                    <h6 class="mb-0 fw-semibold">Notifications</h6>
+                    <span class="badge bg-success rounded-pill">2 New</span>
+                </div>
+
+                <div class="list-group list-group-flush">
+
+                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 align-items-start">
+                        <img src="{{ asset('images/logo.svg') }}" class="rounded-circle" width="28" height="28" alt="">
+                        <div class="flex-grow-1">
+                            <small>Won the monthly bestseller gold badge</small>
+                            <div><small class="text-muted">1h ago</small></div>
+                        </div>
+                        <span class="badge bg-primary p-1 rounded-circle small">ss</span>
+                    </a><a href="#" class="list-group-item list-group-item-action d-flex gap-3 align-items-start">
+                        <img src="{{ asset('images/logo.svg') }}" class="rounded-circle" width="28" height="28" alt="">
+                        <div class="flex-grow-1">
+                            <small>Won the monthly bestseller gold badge</small>
+                            <div><small class="text-muted">1h ago</small></div>
+                        </div>
+                        <span class="badge bg-primary p-1 rounded-circle small">ss</span>
+                    </a><a href="#" class="list-group-item list-group-item-action d-flex gap-3 align-items-start">
+                        <img src="{{ asset('images/logo.svg') }}" class="rounded-circle" width="28" height="28" alt="">
+                        <div class="flex-grow-1">
+                            <small>Won the monthly bestseller gold badge</small>
+                            <div><small class="text-muted">1h ago</small></div>
+                        </div>
+                        <span class="badge bg-primary p-1 rounded-circle small">ss</span>
+                    </a>
+
+                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 align-items-start">
+                        <div class="rounded-circle bg-light d-flex justify-content-center align-items-center"
+                             style="width:28px; height:28px;">CB
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="fw-semibold text-dark">Cecilia Becker</div>
+                            <small class="text-muted">Accepted your connection</small>
+                            <div><small class="text-muted">12h ago</small></div>
+                        </div>
+                        <span class="badge bg-primary p-1 rounded-circle">&nbsp;</span>
+                    </a>
+
+                </div>
+
+                <div class="border-top text-center">
+                    <a href="#" class="btn btn-primary btn-sm w-100 rounded-0">View All Notifications</a>
+                </div>
+            </div>
+        </div>#}
+
+        <!-- User Dropdown -->
+        <div class="dropdown">
+            <button class="btn btn-close-white d-flex align-items-center gap-2 px-3 py-2"
+                    type="button" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                {% if app.user and app.user.profilePhoto %}
+                    <img src="{{ asset('uploads/image/' ~ app.user.profilePhoto) }}" alt="{{ app.user.name }}"
+                         class="rounded-circle border border-2 border-white object-fit-cover" width="32" height="32">
+                {% else %}
+                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; font-size: 14px; font-weight: bold;">
+                        {{ app.user ? app.user.name|first|upper : 'U' }}
+                    </div>
+                {% endif %}
+                {# <span class="d-none d-sm-inline fw-semibold">{{ app.user.name ?? 'User' }}</span> #}
+                <i class="bi bi-three-dots-vertical"></i>
+            </button>
+
+
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 mt-2" aria-labelledby="userMenuButton">
+                <li><a class="dropdown-item d-flex align-items-center gap-2" href="{{ path('app_profile') }}">
+                        <i class="bi bi-person"></i> View Profile</a></li>
+
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <a
+                        id="logoutLink"
+                        class="dropdown-item d-flex align-items-center gap-2 text-danger"
+                        href="{{ path('app_logout') }}"
+                    >
+                        <i class="bi bi-box-arrow-right"></i> Sign Out
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- Settings Gear Button -->
+         {#<button class="setting-toggle d-none d-lg-block" id="settingsToggle" aria-label="Open settings" data-bs-toggle="offcanvas" data-bs-target="#settingsOffcanvas">
+            <i class="bi bi-gear"></i>
+        </button>#}
+
+         <button class="btn setting-toggle d-none d-lg-block" type="button" data-bs-toggle="offcanvas" data-bs-target="#themeCustomizer" aria-controls="themeCustomizer" aria-label="Theme Customizer">
+            <i class="bi bi-gear-fill"></i>
+        </button>
+
+        {#<button id="customizerBtn"
+                class="btn setting-toggle d-none d-lg-block"
+                type="button"
+                data-bs-target="#themeCustomizer"
+                aria-controls="themeCustomizer"
+                aria-label="Theme Customizer"
+                title="Theme Customizer"
+                data-bs-toggle="tooltip"
+                data-bs-placement="bottom"
+                data-bs-custom-class="tooltip-dark">
+            <i class="bi bi-gear-fill"></i>
+        </button>#}
+
+
+
+    </div>
+</header>
+
+<!-- Theme Customizer Offcanvas -->
+<div class="offcanvas offcanvas-end shadow-lg" tabindex="-1" id="themeCustomizer"
+     aria-labelledby="themeCustomizerLabel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="themeCustomizerLabel">Theme Settings</h5>
+        <button type="button" class="btn-close text-reset btn-sm" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body">
+        <!-- Theme Mode -->
+        <div class="customizer-section mb-4">
+            <h6 class="section-title">Theme Mode</h6>
+            <div class="btn-group w-100" role="group">
+                <input type="radio" class="btn-check" name="themeMode" id="customizerLight" autocomplete="off"
+                       value="light">
+                <label class="btn btn-outline-primary" for="customizerLight">
+                    <i class="bi bi-sun me-1"></i> Light
+                </label>
+
+                <input type="radio" class="btn-check" name="themeMode" id="customizerDark" autocomplete="off"
+                       value="dark">
+                <label class="btn btn-outline-primary" for="customizerDark">
+                    <i class="bi bi-moon me-1"></i> Dark
+                </label>
+
+                <input type="radio" class="btn-check" name="themeMode" id="customizerAuto" autocomplete="off"
+                       value="auto">
+                <label class="btn btn-outline-primary" for="customizerAuto">
+                    <i class="bi bi-laptop me-1"></i> Auto
+                </label>
+            </div>
+        </div>
+
+        <!-- Primary Color -->
+        <div class="customizer-section mb-4">
+            <h6 class="section-title">Primary Color</h6>
+            <div class="d-flex flex-wrap gap-2">
+                <button class="color-option rounded-circle border-0" data-color="#066FD1"
+                        style="width:32px; height:32px; background-color: #066FD1;"></button>
+                <button class="color-option rounded-circle border-0" data-color="#7367f0"
+                        style="width:32px; height:32px; background-color: #7367f0;"></button>
+                <button class="color-option rounded-circle border-0" data-color="#28c76f"
+                        style="width:32px; height:32px; background-color: #28c76f;"></button>
+                <button class="color-option rounded-circle border-0" data-color="#ea5455"
+                        style="width:32px; height:32px; background-color: #ea5455;"></button>
+                <button class="color-option rounded-circle border-0" data-color="#ff9f43"
+                        style="width:32px; height:32px; background-color: #ff9f43;"></button>
+                <button class="color-option rounded-circle border-0" data-color="#1e9ff2"
+                        style="width:32px; height:32px; background-color: #1e9ff2;"></button>
+                <button class="color-option rounded-circle border-0" data-color="#82868b"
+                        style="width:32px; height:32px; background-color: #82868b;"></button>
+            </div>
+        </div>
+
+        <!-- UI Options -->
+        <div class="card shadow-sm border-0 rounded-3">
+            <div class="card-body p-4">
+                <h6 class="section-title mb-3">
+                    <i class="bi bi-sliders2-vertical me-2 text-primary"></i> UI Options
+                </h6>
+
+                <!-- Reduced Motion -->
+                {# <label class="sw_switch d-flex align-items-center justify-content-between mb-3 py-2 px-3" for="reducedMotion">
+                    <input type="checkbox" id="reducedMotion" checked>
+                    <div class="sw_slider">
+                        <div class="sw_circle">
+                            <svg class="sw_cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.696 365.696" width="6" height="6">
+                                <path fill="currentColor" d="M243.188 182.86 356.32 69.726c12.5-12.5 12.5-32.766 0-45.247L341.238 9.398c-12.504-12.503-32.77-12.503-45.25 0L182.86 122.528 69.727 9.374c-12.5-12.5-32.766-12.5-45.247 0L9.375 24.457c-12.5 12.504-12.5 32.77 0 45.25l113.152 113.152L9.398 295.99c-12.503 12.503-12.503 32.769 0 45.25L24.48 356.32c12.5 12.5 32.766 12.5 45.247 0l113.132-113.132L295.99 356.32c12.503 12.5 32.769 12.5 45.25 0l15.081-15.082c12.5-12.504 12.5-32.77 0-45.25z"/>
+                            </svg>
+                            <svg class="sw_checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="10" height="10">
+                                <path fill="currentColor" d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <span class="switch-label">Reduced Motion</span>
+                </label> #}
+
+                <!-- Rounded Corners -->
+                <label class="sw_switch d-flex align-items-center justify-content-between mb-3 py-2 px-3"
+                       for="roundedCorners">
+                    <input type="checkbox" id="roundedCorners" checked>
+                    <div class="sw_slider">
+                        <div class="sw_circle">
+                            <svg class="sw_cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.696 365.696"
+                                 width="6" height="6">
+                                <path fill="currentColor"
+                                      d="M243.188 182.86 356.32 69.726c12.5-12.5 12.5-32.766 0-45.247L341.238 9.398c-12.504-12.503-32.77-12.503-45.25 0L182.86 122.528 69.727 9.374c-12.5-12.5-32.766-12.5-45.247 0L9.375 24.457c-12.5 12.504-12.5 32.77 0 45.25l113.152 113.152L9.398 295.99c-12.503 12.503-12.503 32.769 0 45.25L24.48 356.32c12.5 12.5 32.766 12.5 45.247 0l113.132-113.132L295.99 356.32c12.503 12.5 32.769 12.5 45.25 0l15.081-15.082c12.5-12.504 12.5-32.77 0-45.25z"/>
+                            </svg>
+                            <svg class="sw_checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="10"
+                                 height="10">
+                                <path fill="currentColor"
+                                      d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <span class="switch-label">Rounded Corners</span>
+                </label>
+
+                <!-- Boxed Layout -->
+                {# <label class="sw_switch d-flex align-items-center justify-content-between mb-3 py-2 px-3" for="boxedLayout">
+                    <input type="checkbox" id="boxedLayout">
+                    <div class="sw_slider">
+                        <div class="sw_circle">
+                            <svg class="sw_cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 365.696 365.696" width="6" height="6">
+                                <path fill="currentColor" d="M243.188 182.86 356.32 69.726c12.5-12.5 12.5-32.766 0-45.247L341.238 9.398c-12.504-12.503-32.77-12.503-45.25 0L182.86 122.528 69.727 9.374c-12.5-12.5-32.766-12.5-45.247 0L9.375 24.457c-12.5 12.504-12.5 32.77 0 45.25l113.152 113.152L9.398 295.99c-12.503 12.503-12.503 32.769 0 45.25L24.48 356.32c12.5 12.5 32.766 12.5 45.247 0l113.132-113.132L295.99 356.32c12.503 12.5 32.769 12.5 45.25 0l15.081-15.082c12.5-12.504 12.5-32.77 0-45.25z"/>
+                            </svg>
+                            <svg class="sw_checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="10" height="10">
+                                <path fill="currentColor" d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <span class="switch-label">Boxed Layout</span>
+                </label> #}
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="offcanvas-footer border-top p-3">
+        <button class="btn btn-primary w-100" id="resetCustomizer">Reset to Default</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const logoutLink = document.getElementById('logoutLink');
+        if (!logoutLink) return;
+
+        logoutLink.addEventListener('click', function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Sign out of your account?',
+                text: "You will need to log in again to access your dashboard.",
+                icon: 'warning',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showCancelButton: true,
+                confirmButtonColor: '#209d5e',
+                cancelButtonColor: '#777777',
+                confirmButtonText: 'Yes, Sign out',
+                customClass: {
+                    popup: 'rounded-4 border-0',
+                    confirmButton: 'btn btn-danger px-4 py-2 ',
+                    cancelButton: 'btn btn-outline-secondary px-4 py-2 ms-2'
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = logoutLink.href;
+                }
+                // If cancelled, do nothing
+            });
+        });
+    });
+
+</script>
+

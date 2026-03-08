@@ -1,0 +1,16 @@
+{% for sidesocial in sidesociallink %}
+
+    <ul class="social-list d-flex justify-content-center align-items-center gap-4">
+        <li class="btn btn-sm btn-fb">
+            <a href="{{ sidesocial.facebookurl }}" target="_blank">
+                <i class="fab fa-facebook"></i> Facebook
+            </a>
+        </li>
+        <li class="btn btn-sm btn-insta">
+            <a href="{{ sidesocial.instagramurl }}" target="_blank">
+                <i class="fab fa-instagram-square"></i>
+                instagram
+            </a>
+        </li>
+    </ul>
+{% endfor %}

@@ -1,0 +1,170 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}Banner Slides{% endblock %}
+
+{% block body %}
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-flex align-items-center justify-content-between mb-3">
+                    <h4 class="mb-0">
+                        <i class="bi bi-images me-2"></i>Banner Slides
+                        <span class="badge bg-{{ vsliders|length >= 5 ? 'danger' : 'secondary' }} ms-2">
+                            {{ vsliders|length }} / 5
+                        </span>
+                    </h4>
+                    <div class="d-flex gap-2">
+                        {% if vsliders|length < 5 %}
+                            <a href="{{ path('app_vslider_new') }}" class="btn btn-primary">
+                                <i class="bi bi-plus-circle"></i> Add New Slide
+                            </a>
+                        {% else %}
+                            <button class="btn btn-secondary" disabled title="Maximum limit of 5 slides reached">
+                                <i class="bi bi-exclamation-triangle"></i> Limit Reached (5/5)
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Flash Messages #}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label == 'error' ? 'danger' : label }} alert-dismissible fade show shadow-sm" role="alert">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0 me-3">
+                            {% if label == 'success' %}
+                                <i class="bi bi-check-circle-fill fs-4 text-success"></i>
+                            {% elseif label == 'error' %}
+                                <i class="bi bi-x-circle-fill fs-4 text-danger"></i>
+                            {% elseif label == 'warning' %}
+                                <i class="bi bi-exclamation-triangle-fill fs-4 text-warning"></i>
+                            {% else %}
+                                <i class="bi bi-info-circle-fill fs-4 text-info"></i>
+                            {% endif %}
+                        </div>
+                        <div class="flex-grow-1">
+                            {{ message }}
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        {# Info Alert when at max capacity #}
+        {% if vsliders|length >= 5 %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-info-circle-fill fs-4 me-3"></i>
+                    <div>
+                        <strong>Maximum Capacity Reached!</strong> You have reached the maximum limit of 5 banner slides.
+                        To add a new slide, please delete an existing one first.
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+
+        {# Banner Slides Table #}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle" id="vsliderTable">
+                                <thead class="table-light">
+                                <tr>
+                                    <th width="60">Sl No.</th>
+                                    <th width="120">Preview</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th width="100">Media Type</th>
+                                    <th width="100" class="text-center">Sort Order</th>
+                                    <th width="100" class="text-center">Status</th>
+                                    <th width="150" class="text-center">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for vslider in vsliders %}
+                                    <tr>
+                                        <td>{{ loop.index }}</td>
+                                        <td>
+                                            {% if vslider.mediaType == 'video' %}
+                                                <video style="width: 100px; height: 60px; object-fit: cover; border-radius: 4px;">
+                                                    <source src="{{ asset('uploads/media/' ~ vslider.mediaPath) }}" type="video/mp4">
+                                                </video>
+                                            {% else %}
+                                                <img src="{{ asset('uploads/media/' ~ vslider.mediaPath) }}"
+                                                     alt="{{ vslider.title }}"
+                                                     style="width: 100px; height: 60px; object-fit: cover; border-radius: 4px;">
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <strong>{{ vslider.title }}</strong>
+                                        </td>
+                                        <td>
+                                            {% if vslider.description %}
+                                                {{ vslider.description|slice(0, 50) }}{% if vslider.description|length > 50 %}...{% endif %}
+                                            {% else %}
+                                                <span class="text-muted">No description</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                                <span class="badge bg-{{ vslider.mediaType == 'video' ? 'info' : 'primary' }}">
+                                                    <i class="bi bi-{{ vslider.mediaType == 'video' ? 'film' : 'image' }}"></i>
+                                                    {{ vslider.mediaType|upper }}
+                                                </span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-secondary">{{ vslider.sortOrder }}</span>
+                                        </td>
+                                        <td class="text-center">
+                                            {% if vslider.isActive %}
+                                                <span class="badge bg-success">
+                                                        <i class="bi bi-check-circle"></i> Active
+                                                    </span>
+                                            {% else %}
+                                                <span class="badge bg-danger">
+                                                        <i class="bi bi-x-circle"></i> Inactive
+                                                    </span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="btn-group" role="group">
+                                                <a href="{{ path('app_vslider_show', {'id': vslider.id}) }}"
+                                                   class="btn btn-sm btn-light-info"
+                                                   title="View">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <a href="{{ path('app_vslider_edit', {'id': vslider.id}) }}"
+                                                   class="btn btn-sm btn-light-warning"
+                                                   title="Edit">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="8" class="text-center py-5">
+                                            <i class="bi bi-images fs-1 text-muted d-block mb-3"></i>
+                                            <p class="text-muted mb-3">No banner slides found</p>
+                                            <a href="{{ path('app_vslider_new') }}" class="btn btn-primary">
+                                                <i class="bi bi-plus-circle"></i> Create Your First Slide
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

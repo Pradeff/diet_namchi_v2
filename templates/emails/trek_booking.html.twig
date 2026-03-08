@@ -1,0 +1,145 @@
+{# templates/emails/trek_booking.html.twig #}
+{% extends 'emails/base_email.html.twig' %}
+
+{% block email_title %}New Trek Booking - {{ fullName }}{% endblock %}
+
+{% block header_icon %}🏔️{% endblock %}
+
+{% block header_title %}New Trek Booking Request{% endblock %}
+
+{% block header_subtitle %}You have received a new trek booking request through your website{% endblock %}
+
+{% block email_content %}
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 10px; margin-bottom: 30px; text-align: center;">
+        <h2 style="color: white; margin: 0; font-size: 24px; font-weight: bold;">🔖 Booking Reference</h2>
+        <div style="background: rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 25px; margin: 15px 0; display: inline-block;">
+            <span style="color: white; font-size: 18px; font-weight: bold; letter-spacing: 1px;">{{ bookingReference }}</span>
+        </div>
+        <div style="background: #ff6b6b; color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 14px; display: inline-block;">
+            PENDING CONFIRMATION
+        </div>
+    </div>
+
+    <!-- Customer Information -->
+    <div style="background: #f8f9ff; border-left: 5px solid #667eea; padding: 20px; margin-bottom: 25px; border-radius: 5px;">
+        <h3 style="color: #667eea; margin: 0 0 15px 0; display: flex; align-items: center;">
+            👤 Customer Information
+        </h3>
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; width: 140px; color: #666;">Full Name:</td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333;">{{ fullName }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #666;">Email:</td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                    <a href="mailto:{{ email }}" style="color: #667eea; text-decoration: none;">{{ email }}</a>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #666;">Phone:</td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                    <a href="tel:+91{{ phone }}" style="color: #667eea; text-decoration: none;">+91 {{ phone }}</a>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 8px 0; font-weight: bold; color: #666;">Submitted:</td>
+                <td style="padding: 8px 0; color: #333;">{{ submittedAt.format('d M Y, H:i') }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Trek Details -->
+    <div style="background: #f0f8f0; border-left: 5px solid #28a745; padding: 20px; margin-bottom: 25px; border-radius: 5px;">
+        <h3 style="color: #28a745; margin: 0 0 15px 0; display: flex; align-items: center;">
+            🏔️ Trek Details
+        </h3>
+        <table style="width: 100%; border-collapse: collapse;">
+            {% if trekTitle %}
+            <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; width: 140px; color: #666;">Trek Name:</td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333; font-weight: bold;">{{ trekTitle }}</td>
+            </tr>
+            {% endif %}
+            {% if trekDuration %}
+                <tr>
+                    <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #666;">Duration:</td>
+                    <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333;">{{ trekDuration }} days</td>
+                </tr>
+            {% endif %}
+            {% if trekGrade %}
+                <tr>
+                    <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #666;">Difficulty:</td>
+                    <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333;">
+                <span style="background: #ffc107; color: #333; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold;">
+                    {{ trekGrade|upper }}
+                </span>
+                    </td>
+                </tr>
+            {% endif %}
+            {% if trekAltitude %}
+                <tr>
+                    <td style="padding: 8px 0; font-weight: bold; color: #666;">Altitude:</td>
+                    <td style="padding: 8px 0; color: #333;">{{ trekAltitude }}</td>
+                </tr>
+            {% endif %}
+        </table>
+    </div>
+
+    <!-- Travel Details -->
+    <div style="background: #fff5f5; border-left: 5px solid #dc3545; padding: 20px; margin-bottom: 25px; border-radius: 5px;">
+        <h3 style="color: #dc3545; margin: 0 0 15px 0; display: flex; align-items: center;">
+            🗓️ Travel Details
+        </h3>
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; width: 140px; color: #666;">Arrival Date:</td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333; font-weight: bold;">{{ arrivalDate.format('d M Y') }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #666;">Departure Date:</td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333; font-weight: bold;">{{ departureDate.format('d M Y') }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #666;">Duration:</td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333;">{{ duration }} day{{ duration > 1 ? 's' : '' }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; font-weight: bold; color: #666;">Adults:</td>
+                <td style="padding: 8px 0; border-bottom: 1px solid #eee; color: #333;">{{ adults }}</td>
+            </tr>
+            <tr>
+                <td style="padding: 8px 0; font-weight: bold; color: #666;">Children:</td>
+                <td style="padding: 8px 0; color: #333;">{{ children }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Special Requests -->
+    <div style="background: #fffbf0; border-left: 5px solid #ffc107; padding: 20px; margin-bottom: 25px; border-radius: 5px;">
+        <h3 style="color: #856404; margin: 0 0 15px 0; display: flex; align-items: center;">
+            💬 Special Requests
+        </h3>
+        <div style="background: white; padding: 15px; border-radius: 5px; border: 1px solid #ffeaa7; color: #333; line-height: 1.6;">
+            {{ specialRequests|nl2br }}
+        </div>
+    </div>
+
+    <!-- Action Required -->
+    <div style="background: linear-gradient(135deg, #ff7675 0%, #d63031 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; margin-bottom: 20px;">
+        <h3 style="margin: 0 0 10px 0; font-size: 18px;">⚡ Action Required</h3>
+        <p style="margin: 0; font-size: 14px; opacity: 0.9;">Please review this trek booking request and contact the customer within 24 hours to confirm availability and provide further details.</p>
+    </div>
+
+    <!-- Quick Actions -->
+    <div style="text-align: center; margin: 30px 0;">
+        <a href="mailto:{{ email }}?subject=Trek Booking Confirmation - {{ bookingReference }}&body=Dear {{ fullName }},%0D%0A%0D%0AThank you for your interest in {{ trekTitle }}.%0D%0A%0D%0AWe have received your booking request (Ref: {{ bookingReference }}) and will get back to you shortly with availability and further details.%0D%0A%0D%0ABest regards,%0D%0ALets Go Sikkim Travels Team"
+           style="display: inline-block; background: #28a745; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold; margin: 0 10px;">
+            📧 Reply to Customer
+        </a>
+        <a href="tel:+91{{ phone }}"
+           style="display: inline-block; background: #17a2b8; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold; margin: 0 10px;">
+            📞 Call Customer
+        </a>
+    </div>
+{% endblock %}

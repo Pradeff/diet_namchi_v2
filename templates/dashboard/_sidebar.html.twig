@@ -1,0 +1,164 @@
+<!-- Sidebar -->
+<aside class="side_sidebar" id="sidebar">
+    <div class="side_sidebar-header">
+        <div class="side_logo">
+
+
+            <a href="{{ path('app_dashboard') }}" >
+                {% if global_contact and global_contact.logo2 %}
+                    <img src="{{ asset('images/WebsiteAssets/' ~ global_contact.logo2) }}"
+                          class="side_logo-image" width="" height="40"
+                         alt="{{ global_contact.sitetitle ?? 'Logo' }}">
+                {% else %}
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo" width="40">
+                    D.I.E.T Namchi
+                {% endif %}
+            </a>
+
+            {#<a href="{{ path('app_dashboard') }}">
+                <img src="{{ asset('images/WebsiteAssets/' ~ global_contact.logo1) }}" alt="Logo" class="side_logo-image" width="" height="40">
+            </a>#}
+            {#<span class="side_logo-text">{{ global_contact.sitetitle ?? '' }}</span>#}
+        </div>
+    </div>
+
+    <div class="side_sidebar-content">
+        <div class="side_menu-section">
+            <div class="side_menu-label">MENU</div>
+            <ul class="side_nav-menu">
+                <li class="side_nav-item {% if app.request.attributes.get('_route') in ['app_dashboard'] %}active{% endif %}">
+                    <a href="{{ path('app_dashboard') }}" class="side_nav-link" data-tooltip="Dashboard" title="Dashboard">
+                        <i class="bi bi-speedometer2"></i>
+                        <span> Dashboard </span>
+                    </a>
+                </li>
+
+                <div class="side_menu-section">
+                    <ul class="side_nav-menu">
+                        <li class="side_nav-item {% if app.request.attributes.get('_route') in
+                            ['app_vabout_index','app_vabout_new','app_vabout_edit','app_vabout_show',
+                            'app_vteam_index','app_vteam_new','app_vteam_edit','app_vteam_show','app_vtripcode_index',]
+                        %}active{% endif %}">
+                            <a href="javascript:void(0);" class="side_nav-link" data-bs-toggle="collapse" data-bs-target="#aboutSubmenu">
+                                <i class="bi bi-person-check"></i>
+                                <span>Menu DIET</span>
+                                <i class="bi bi-chevron-right side_dropdown-icon"></i>
+                            </a>
+                            <div class="collapse" id="aboutSubmenu">
+                                <ul class="side_submenu">
+                                    <li class="{% if app.request.attributes.get('_route') in ['app_vabout_index'] %}active{% endif %}">
+                                        <a href="{{ path('app_vabout_index') }}" class="side_submenu-link">
+                                            <i class="bi bi-info-circle"></i> About DIET
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('app_vpeople_index') }}" class="side_submenu-link">
+                                            <i class="bi bi-star"></i> Chief Minister</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('app_vslider_index') }}" class="side_submenu-link">
+                                            <i class="bi bi-medium"></i>
+                                            Home Slider
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <li class="side_nav-item {% if app.request.attributes.get('_route') in ['app_vgallery_index','app_vgallery_new','app_vgallery_edit','app_vgallery_show'] %}active{% endif %}">
+                    <a href="{{ path('app_vgallery_index') }}" class="side_nav-link" data-tooltip="Photo Gallery" title="Photo Gallery">
+                        <i class="bi bi-images"></i>
+                        <span>Photo Gallery</span>
+                    </a>
+                </li>
+
+                <li class="side_nav-item {% if app.request.attributes.get('_route') in ['app_vpages_index','app_vpasge_new','app_vpagse_edit','app_vpagse_show'] %}active{% endif %}">
+                    <a href="{{ path('app_vpages_index') }}" class="side_nav-link"  data-tooltip="Pages" title="Pages">
+                        <i class="bi bi-book"></i>
+                        <span>Pages</span>
+                    </a>
+                </li>
+
+
+
+                <li class="side_nav-item {% if app.request.attributes.get('_route') in ['app_vcontact_index'] %}active{% endif %}">
+                        <a href="{{ path('app_vcontact_index') }}" class="side_nav-link" data-tooltip="Contact" title="Contact">
+                        <i class="bi bi-telephone"></i>
+                        <span>Contact</span>
+                    </a>
+                </li>
+
+
+            </ul>
+        </div>
+
+        <!-- Admin Section - Only for ROLE_ADMIN -->
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="side_menu-section mt-3">
+                <div class="side_menu-label">ADMIN</div>
+                <ul class="side_nav-menu">
+                    <li class="side_nav-item">
+                        <a href="#" class="side_nav-link" data-bs-toggle="collapse" data-bs-target="#authSubmenu">
+                            <i class="bi bi-person-check"></i>
+                            <span>User Management</span>
+                            <i class="bi bi-chevron-right side_dropdown-icon"></i>
+                        </a>
+                        <div class="collapse" id="authSubmenu">
+                            <ul class="side_submenu">
+                                <li class="{% if app.request.attributes.get('_route') in ['app_user_index'] %}active{% endif %}">
+                                    <a href="{{ path('app_user_index') }}" class="side_submenu-link">All Users</a>
+                                </li>
+                                <li class="{% if app.request.attributes.get('_route') in ['app_user_new'] %}active{% endif %}">
+                                    <a href="{{ path('app_user_new') }}" class="side_submenu-link">New User</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        {% endif %}
+
+        <!-- User Info and Logout Section -->
+        {% if app.user %}
+            <div class="side_menu-section mt-4 pt-3 border-top mx-2">
+                <div class="side_user-info">
+                    <div class="d-flex align-items-center">
+                        <div class="side_user-avatar">
+                            <i class="bi bi-person-circle fs-2 text-muted"></i>
+                        </div>
+                        <div class="side_user-details ms-2">
+                            <div class="side_user-name">{{ app.user.name ?? app.user.email }}</div>
+                            <div class="side_user-role small text-muted">
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    Administrator
+                                {% elseif is_granted('ROLE_EDITOR') %}
+                                    Editor
+                                {% elseif is_granted('ROLE_DATA_ENTRY') %}
+                                    Data Entry
+                                {% else %}
+                                    User
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="side_nav-menu mt-2">
+                    <li class="side_nav-item">
+                        <a href="{{ path('app_logout') }}" class="side_nav-link" data-tooltip="Logout" title="Logout">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        {% endif %}
+
+
+    </div>
+</aside>
+

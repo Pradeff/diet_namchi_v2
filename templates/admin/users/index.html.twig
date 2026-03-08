@@ -1,0 +1,221 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}Users Management{% endblock %}
+{% block page_title %}Users Management{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5><i class="bi bi-people"></i> Users ({{ total }} total)</h5>
+            <a href="{{ path('admin_users_new') }}" class="btn btn-primary">
+                <i class="bi bi-plus"></i> Add New User
+            </a>
+        </div>
+
+        <div class="card-body">
+            <!-- Search Form -->
+            <form method="get" class="mb-4">
+                <div class="row">
+                    <div class="col-md-10">
+                        <input type="text" name="search" class="form-control" placeholder="Search by email, name, or phone..." value="{{ search }}">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-outline-secondary w-100">
+                            <i class="bi bi-search"></i> Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Users Table -->
+            {% if users is not empty %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Email</th>
+                            <th>Full Name</th>
+                            <th>Phone</th>
+                            <th>Roles</th>
+                            <th>Status</th>
+                            <th>Last Login</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            <tr id="user-row-{{ user.id }}">
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.fullName ?? '-' }}</td>
+                                <td>{{ user.phone ?? '-' }}</td>
+                                <td>
+                                    {% for role in user.roles %}
+                                        <span class="badge bg-{{ role == 'ROLE_ADMIN' ? 'danger' : 'secondary' }} me-1">
+                                    {{ role|replace({'ROLE_': ''})|title }}
+                                </span>
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-{{ user.isActive ? 'success' : 'danger' }}"
+                                            onclick="toggleStatus({{ user.id }}, {{ user.isActive ? 'false' : 'true' }})">
+                                        <i class="bi bi-{{ user.isActive ? 'check-circle' : 'x-circle' }}"></i>
+                                        <span id="status-text-{{ user.id }}">{{ user.isActive ? 'Active' : 'Inactive' }}</span>
+                                    </button>
+                                </td>
+                                <td>
+                                    {% if user.lastLoginAt %}
+                                        {{ user.lastLoginAt|date('M d, Y H:i') }}
+                                    {% else %}
+                                        <span class="text-muted">Never</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="{{ path('admin_users_show', {'id': user.id}) }}" class="btn btn-sm btn-outline-info" title="View">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="{{ path('admin_users_edit', {'id': user.id}) }}" class="btn btn-sm btn-outline-warning" title="Edit">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        {% if user.id != app.user.id %}
+                                            <button class="btn btn-sm btn-outline-danger" onclick="deleteUser({{ user.id }}, '{{ user.email }}')" title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                {% if totalPages > 1 %}
+                    <nav aria-label="Users pagination">
+                        <ul class="pagination justify-content-center">
+                            {% if currentPage > 1 %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ currentPage - 1 }}{% if search %}&search={{ search }}{% endif %}">Previous</a>
+                                </li>
+                            {% endif %}
+
+                            {% for page in 1..totalPages %}
+                                <li class="page-item {{ page == currentPage ? 'active' : '' }}">
+                                    <a class="page-link" href="?page={{ page }}{% if search %}&search={{ search }}{% endif %}">{{ page }}</a>
+                                </li>
+                            {% endfor %}
+
+                            {% if currentPage < totalPages %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ currentPage + 1 }}{% if search %}&search={{ search }}{% endif %}">Next</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                {% endif %}
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="bi bi-people display-1 text-muted"></i>
+                    <p class="text-muted mt-3">No users found.</p>
+                    <a href="{{ path('admin_users_new') }}" class="btn btn-primary">
+                        <i class="bi bi-plus"></i> Add First User
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function toggleStatus(userId, newStatus) {
+            const csrfToken = '{{ csrf_token('toggle_status_' ~ '') }}' + userId;
+
+            fetch(`/admin/users/${userId}/toggle-status`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({
+                    _token: csrfToken
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const button = document.querySelector(`button[onclick="toggleStatus(${userId}, ${!data.isActive})"]`);
+                        const statusText = document.getElementById(`status-text-${userId}`);
+                        const icon = button.querySelector('i');
+
+                        if (data.isActive) {
+                            button.className = 'btn btn-sm btn-outline-success';
+                            icon.className = 'bi bi-check-circle';
+                            statusText.textContent = 'Active';
+                            button.setAttribute('onclick', `toggleStatus(${userId}, false)`);
+                        } else {
+                            button.className = 'btn btn-sm btn-outline-danger';
+                            icon.className = 'bi bi-x-circle';
+                            statusText.textContent = 'Inactive';
+                            button.setAttribute('onclick', `toggleStatus(${userId}, true)`);
+                        }
+
+                        Swal.fire({
+                            title: 'Success',
+                            text: data.message,
+                            icon: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        Swal.fire('Error', data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    Swal.fire('Error', 'An error occurred while updating user status.', 'error');
+                });
+        }
+
+        function deleteUser(userId, userEmail) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: `Delete user "${userEmail}"? This action cannot be undone.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const csrfToken = '{{ csrf_token('delete_user_' ~ '') }}' + userId;
+
+                    fetch(`/admin/users/${userId}/delete`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: JSON.stringify({
+                            _token: csrfToken
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                document.getElementById(`user-row-${userId}`).remove();
+                                Swal.fire('Deleted!', data.message, 'success');
+                            } else {
+                                Swal.fire('Error', data.message, 'error');
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire('Error', 'An error occurred while deleting the user.', 'error');
+                        });
+                }
+            });
+        }
+    </script>
+{% endblock %}

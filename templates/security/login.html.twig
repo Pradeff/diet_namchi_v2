@@ -1,0 +1,193 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block body %}
+    <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner py-6">
+            <div class="my-5">
+                <form method="post" class="form shadow-sm" id="loginForm">
+                    <div class="flex-column text-center">
+                        <div class="flex-row justify-content-center align-items-center mb-3">
+                            <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo w-25">
+                        </div>
+                        <h5 class="mb-3">Sunrise Tour and Travels</h5>
+
+                        {% for message in app.flashes('success') %}
+                            <div class="alert alert-success">{{ message }}</div>
+                        {% endfor %}
+                        {% for message in app.flashes('error') %}
+                            <div class="alert alert-danger">{{ message }}</div>
+                        {% endfor %}
+
+                        {% if error is defined and error is not null %}
+                            <div class="alert alert-danger mb-4" role="alert">
+                                {{ error.messageKey|trans(error.messageData, 'security') }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="flex-column">
+                        <label for="inputEmail">Email</label>
+                    </div>
+                    <div class="inputForm">
+                        <i class="bi bi-envelope-fill"></i>
+                        <input type="email" id="inputEmail" name="email"
+                               class="input form-control {{ error.messageKey is defined and 'email' in error.messageKey ? 'is-invalid' : '' }}"
+                               placeholder="Enter your Email"
+                               value="{{ last_username|default('') }}" required autofocus>
+                    </div>
+                    {% if error.messageKey is defined and 'email' in error.messageKey %}
+                        <div class="invalid-feedback d-block">Invalid email address.</div>
+                    {% endif %}
+
+
+                    <!-- Password Field -->
+                    <div class="flex-column">
+                        <label for="inputPassword">Password</label>
+                    </div>
+                    <div class="inputForm d-flex align-items-center">
+                        <i class="bi bi-lock-fill"></i>
+                        <input type="password" id="inputPassword" name="password"
+                               class="input form-control {{ error.messageKey is defined and 'password' in error.messageKey ? 'is-invalid' : '' }}"
+                               placeholder="Enter your Password"
+                               required autocomplete="current-password">
+                        <a class="ms-2" id="togglePassword" tabindex="-1" aria-label="Toggle password visibility">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                    </div>
+                    {% if error.messageKey is defined and 'password' in error.messageKey %}
+                        <div class="invalid-feedback d-block">Invalid password.</div>
+                    {% endif %}
+
+
+                    <!-- Captcha -->
+                    <div class="flex-column">
+                        <label for="inputCaptcha">Enter Captcha</label>
+                    </div>
+                    <div class="inputForm d-flex align-items-center justify-content-between">
+                        <i class="bi bi-shield-shaded"></i>
+                        <input type="text" name="captcha" id="inputCaptcha"
+                               class="input w-100 form-control" maxlength="5"
+                               placeholder="Enter Captcha" required>
+                        <div class="d-flex align-items-center ms-2">
+                            <canvas id="captcha" width="120" height="38"></canvas>
+                            <button type="button" class="btn btn-sm ms-2" onclick="refreshCaptcha()" title="Refresh Captcha">
+                                <i class="bi bi-arrow-clockwise"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="invalid-feedback d-none" id="captchaError">Incorrect captcha code.</div>
+
+
+                    {#<div class="flex-row mt-3">
+                        <input type="checkbox" id="remember" name="_remember_me">
+                        <label for="remember" class="ms-1">Remember me</label>
+                        <span class="ms-auto text-primary" style="cursor:pointer;">Forgot password?</span>
+                    </div>#}
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                    <button id="submitBtn" class="button-submit mt-4 d-flex justify-content-center align-items-center" type="submit">
+                        <span class="spinner-border spinner-border-sm me-2 d-none" id="submitSpinner" role="status" aria-hidden="true"></span>
+                        <span id="submitText">Sign In</span>
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let captchaText = '';
+
+        function generateCaptcha() {
+            const characters = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789';
+            captchaText = '';
+            for (let i = 0; i < 5; i++) {
+                captchaText += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+
+            const canvas = document.getElementById('captcha');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.font = 'bold 24px Arial';
+            ctx.fillStyle = '#000';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(captchaText, canvas.width / 2, canvas.height / 2);
+
+            // Optional noise
+            for (let i = 0; i < 20; i++) {
+                ctx.fillStyle = `rgba(0,0,0,${Math.random()})`;
+                ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 1, 1);
+            }
+        }
+
+        function refreshCaptcha() {
+            generateCaptcha();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // Password toggle functionality
+            document.getElementById('togglePassword').addEventListener('click', function () {
+                const passwordInput = document.getElementById('inputPassword');
+                const icon = this.querySelector('i');
+
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('bi-eye');
+                    icon.classList.add('bi-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('bi-eye-slash');
+                    icon.classList.add('bi-eye');
+                }
+            });
+
+
+            generateCaptcha();
+
+            document.getElementById('loginForm').addEventListener('submit', function (e) {
+                const inputCaptcha = document.getElementById('inputCaptcha');
+                const entered = inputCaptcha.value.trim();
+
+                if (entered.toUpperCase() !== captchaText.toUpperCase()) {
+                    e.preventDefault();
+
+                    // Show inline error
+                    inputCaptcha.classList.add('is-invalid');
+                    document.getElementById('captchaError').classList.remove('d-none');
+
+                    // SweetAlert
+                    Swal.fire({
+                        title: 'Invalid Captcha',
+                        text: 'The captcha you entered is incorrect.',
+                        icon: 'error',
+                        confirmButtonText: 'Retry',
+                    });
+
+                    inputCaptcha.value = '';
+                    generateCaptcha();
+                    return false;
+                } else {
+                    // Captcha valid: remove error if previously shown
+                    inputCaptcha.classList.remove('is-invalid');
+                    document.getElementById('captchaError').classList.add('d-none');
+
+                    // ✅ Show spinner
+                    const btn = document.getElementById('submitBtn');
+                    const spinner = document.getElementById('submitSpinner');
+                    const text = document.getElementById('submitText');
+
+                    btn.disabled = true;
+                    spinner.classList.remove('d-none');
+                    text.textContent = 'Processing...';
+                }
+            });
+
+
+        });
+    </script>
+{% endblock %}

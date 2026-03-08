@@ -1,0 +1,88 @@
+{# templates/emails/quick_enquiry.html.twig #}
+{% extends 'emails/base_email.html.twig' %}
+
+{% block email_title %}New Quick Enquiry - {{ name }}{% endblock %}
+
+{% block header_icon %}📧{% endblock %}
+{% block header_title %}New Quick Enquiry{% endblock %}
+{% block header_subtitle %}
+    <p style="color: #ffffff; margin: 0; font-size: 16px; opacity: 0.9;">
+        You have received a new enquiry through your website
+    </p>
+{% endblock %}
+
+{% block email_content %}
+    {# Enquiry Details #}
+    <h2 style="color: #1e3a8a; margin-bottom: 20px; font-size: 22px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;">
+        Enquiry Details
+    </h2>
+
+    <table width="100%" cellpadding="8" cellspacing="0" border="0" style="margin-bottom: 25px;">
+        <tr>
+            <td style="width: 120px; font-weight: bold; color: #4a5568; vertical-align: top; padding: 12px 0;">
+                <span style="color: #1e3a8a;">👤</span> Name:
+            </td>
+            <td style="color: #2d3748; font-size: 16px; padding: 12px 0;">
+                {{ name }}
+            </td>
+        </tr>
+        <tr style="background-color: #f8fafc;">
+            <td style="font-weight: bold; color: #4a5568; vertical-align: top; padding: 12px 0;">
+                <span style="color: #1e3a8a;">📧</span> Email:
+            </td>
+            <td style="color: #2d3748; font-size: 16px; padding: 12px 0;">
+                <a href="mailto:{{ email }}" style="color: #1e3a8a; text-decoration: none;">{{ email }}</a>
+            </td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold; color: #4a5568; vertical-align: top; padding: 12px 0;">
+                <span style="color: #1e3a8a;">📱</span> Phone:
+            </td>
+            <td style="color: #2d3748; font-size: 16px; padding: 12px 0;">
+                <a href="tel:{{ phone }}" style="color: #1e3a8a; text-decoration: none;">{{ phone }}</a>
+            </td>
+        </tr>
+        <tr style="background-color: #f8fafc;">
+            <td style="font-weight: bold; color: #4a5568; vertical-align: top; padding: 12px 0;">
+                <span style="color: #1e3a8a;">🕒</span> Submitted:
+            </td>
+            <td style="color: #2d3748; font-size: 16px; padding: 12px 0;">
+                {{ submittedAt|date('d M Y, h:i A') }}
+            </td>
+        </tr>
+    </table>
+
+    {# Message Section #}
+    <h3 style="color: #1e3a8a; margin-bottom: 15px; font-size: 18px;">
+        <span style="color: #1e3a8a;">💬</span> Customer Message:
+    </h3>
+    <div style="background-color: #f7fafc; border-left: 4px solid #1e3a8a; padding: 20px; margin-bottom: 25px; border-radius: 4px;">
+        <p style="font-size: 15px; color: #2d3748; line-height: 1.6; margin: 0;">
+            {{ message|nl2br }}
+        </p>
+    </div>
+
+    {# Important Notice #}
+    <div style="background-color: #fef3c7; border: 1px solid #f59e0b; border-radius: 6px; padding: 15px; margin-top: 25px;">
+        <p style="color: #92400e; font-size: 14px; margin: 0; font-weight: 500;">
+            <strong>⚡ Action Required:</strong> Please respond to this customer within 24 hours for the best experience.
+        </p>
+    </div>
+{% endblock %}
+
+{% block action_buttons %}
+    <tr>
+        <td align="center" style="padding: 0 40px 30px 40px;">
+            <div style="text-align: center;">
+                <a href="mailto:{{ email }}" class="button" style="display: inline-block; margin: 10px; padding: 12px 24px; background-color: #1e3a8a; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold;">
+                    📧 Reply to Customer
+                </a>
+                <a href="tel:{{ phone }}" class="button" style="display: inline-block; margin: 10px; padding: 12px 24px; background-color: #059669; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold;">
+                    📞 Call Customer
+                </a>
+            </div>
+        </td>
+    </tr>
+{% endblock %}
+
+{% block footer_message %}This enquiry was submitted through the Quick Enquiry form on your website{% endblock %}

@@ -1,0 +1,525 @@
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title mb-0"><i class="bi bi-info-circle me-2"></i>Gallery Information</strong>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="{{ form.title.vars.id }}" class="form-label">{{ form_label(form.title) }}</label>
+                    {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+
+                    {% if form.title.vars.errors|length > 0 %}
+                        <div class="invalid-feedback d-block">
+                            {% set displayed = [] %}
+                            {% for error in form.title.vars.errors %}
+                                {% if error.message|trim|replace({'.':''}) not in displayed %}
+                                    <div>{{ error.message|trim|replace({'.':''}) }}</div>
+                                    {% set displayed = displayed|merge([error.message|trim|replace({'.':''})]) %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title mb-0"><i class="bi bi-gear-wide me-2"></i> Actions</strong>
+            </div>
+            <div class="card-body">
+                <button type="submit" class="btn btn-primary w-100 mb-2" id="saveBtn">
+                    <span class="spinner-border spinner-border-sm d-none me-2" role="status" id="saveSpinner"></span>
+                    <i class="bi bi-save"></i> Save Gallery
+                </button>
+                <a href="{{ path('app_vgallery_index') }}" class="btn btn-light-secondary w-100">
+                    <i class="bi bi-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Only render image upload section if gallery has been saved (i.e., has an ID) #}
+{% if vgallery.id is not null %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <strong class="card-title mb-0"><i class="bi bi-images"></i> Gallery Images</strong>
+                    <small class="text-muted">Max file size: {{ max_file_size }}</small>
+                </div>
+                <div class="card-body">
+                    <!-- Upload Area -->
+                    <div class="upload-area border-dashed border-2 border-secondary rounded p-4 text-center mb-4"
+                         id="uploadArea"
+                         style="min-height: 120px; cursor: pointer; background-color: #f8f9fa; transition: all 0.3s ease;"
+                         ondrop="dropHandler(event)"
+                         ondragover="dragOverHandler(event)"
+                         ondragleave="dragLeaveHandler(event)"
+                         onclick="document.getElementById('fileInput').click()">
+                        <div class="upload-content" id="uploadContent">
+                            <i class="bi bi-cloud-arrow-up display-4 text-muted mb-3"></i>
+                            <p class="mb-1"><strong>Drop images here or click to upload</strong></p>
+                            <small class="text-muted">PNG, JPG, GIF, WEBP up to {{ max_file_size }}</small>
+                        </div>
+                        <div class="upload-loading d-none" id="uploadLoading">
+                            <div class="spinner-border text-primary mb-3" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mb-1"><strong>Uploading images...</strong></p>
+                            <small class="text-muted">Please wait while we process your files</small>
+                        </div>
+                        <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+                    </div>
+
+                    <!-- Images Grid -->
+                    <div id="imagesGrid" class="row">
+                        {% if vgallery.images is not empty %}
+                            {% for image in vgallery.images %}
+                                <div class="col-md-3 mb-3" data-image="{{ image.filename }}">
+                                    <div class="card position-relative">
+                                        {% if vgallery.coverImage == image.filename %}
+                                            <div class="position-absolute top-0 start-0 m-2">
+                                                <span class="badge bg-success">
+                                                    <i class="bi bi-star-fill"></i> Cover
+                                                </span>
+                                            </div>
+                                        {% endif %}
+                                        <img src="/uploads/image/{{ image.filename }}" class="card-img-top" style="height: 150px; object-fit: cover;">
+                                        <div class="card-body p-2">
+                                            <div class="input-group input-group-sm mb-2">
+                                                <input type="text" class="form-control image-title-input"
+                                                       placeholder="Image title..."
+                                                       value="{{ image.title }}"
+                                                       data-image="{{ image.filename }}"
+                                                       data-original-value="{{ image.title }}">
+                                                <button class="btn btn-outline-secondary save-title-btn d-none"
+                                                        type="button"
+                                                        data-image="{{ image.filename }}">
+                                                    <i class="bi bi-check-lg"></i>
+                                                </button>
+                                            </div>
+                                            <div class="btn-group w-100" role="group">
+                                                {% if vgallery.coverImage != image.filename %}
+                                                    <button class="btn btn-sm btn-outline-primary" type="button"
+                                                            onclick="setCoverImage('{{ image.filename }}')"
+                                                            title="Set as Cover">
+                                                        <i class="bi bi-star"></i>
+                                                    </button>
+                                                {% endif %}
+                                                <button class="btn btn-sm btn-outline-danger delete-btn" type="button"
+                                                        onclick="deleteImage('{{ image.filename }}')"
+                                                        title="Delete Image">
+                                                    <span class="delete-icon">
+                                                        <i class="bi bi-trash"></i>
+                                                    </span>
+                                                    <span class="delete-spinner spinner-border spinner-border-sm d-none" role="status"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="col-12" id="noImagesMessage">
+                                <div class="text-center text-muted py-4">
+                                    <i class="bi bi-images display-4 mb-3"></i>
+                                    <p>This gallery doesn't have any images uploaded yet.</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const uploadContent = document.getElementById('uploadContent');
+        const uploadLoading = document.getElementById('uploadLoading');
+        const fileInput = document.getElementById('fileInput');
+        const imagesGrid = document.getElementById('imagesGrid');
+        const saveBtn = document.getElementById('saveBtn');
+        const saveSpinner = document.getElementById('saveSpinner');
+        const form = document.querySelector('form');
+
+        // CSRF Tokens
+        const csrfToken = '{{ csrf_token('upload_images') }}';
+        const setCoverToken = '{{ csrf_token('set_cover') }}';
+        const deleteToken = '{{ csrf_token('delete_image') }}';
+        const updateTitleToken = '{{ csrf_token('update_title') }}';
+
+        // Gallery ID (only available after save)
+        const galleryId = {{ vgallery.id }};
+
+        let isUploading = false;
+        let titleUpdateTimeout = {};
+
+        // Prevent form submission from interfering with buttons
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.delete-btn, .save-title-btn')) {
+                e.stopPropagation();
+                e.preventDefault();
+            }
+        });
+
+        // Form submission handling
+        form.addEventListener('submit', function(e) {
+            if (this.checkValidity()) {
+                saveSpinner.classList.remove('d-none');
+                saveBtn.disabled = true;
+            } else {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            this.classList.add('was-validated');
+        });
+
+        // Image title input handling
+        document.addEventListener('input', function(e) {
+            if (e.target.classList.contains('image-title-input')) {
+                const imageName = e.target.dataset.image;
+                const originalValue = e.target.dataset.originalValue;
+                const currentValue = e.target.value;
+                const saveBtn = e.target.parentElement.querySelector('.save-title-btn');
+
+                if (currentValue !== originalValue) {
+                    saveBtn.classList.remove('d-none');
+                } else {
+                    saveBtn.classList.add('d-none');
+                }
+
+                if (titleUpdateTimeout[imageName]) {
+                    clearTimeout(titleUpdateTimeout[imageName]);
+                }
+
+                titleUpdateTimeout[imageName] = setTimeout(function() {
+                    updateImageTitle(imageName, currentValue, e.target);
+                }, 1500);
+            }
+        });
+
+        // Manual save button click
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.save-title-btn')) {
+                e.preventDefault();
+                e.stopPropagation();
+                const btn = e.target.closest('.save-title-btn');
+                const imageName = btn.dataset.image;
+                const input = btn.parentElement.querySelector('.image-title-input');
+                updateImageTitle(imageName, input.value, input);
+            }
+        });
+
+        function dragOverHandler(ev) {
+            ev.preventDefault();
+            if (!isUploading) {
+                uploadArea.style.borderColor = '#0d6efd';
+                uploadArea.style.backgroundColor = '#e7f1ff';
+            }
+        }
+
+        function dragLeaveHandler(ev) {
+            ev.preventDefault();
+            if (!isUploading) {
+                uploadArea.style.borderColor = '#6c757d';
+                uploadArea.style.backgroundColor = '#f8f9fa';
+            }
+        }
+
+        function dropHandler(ev) {
+            ev.preventDefault();
+            if (isUploading) return;
+
+            uploadArea.style.borderColor = '#6c757d';
+            uploadArea.style.backgroundColor = '#f8f9fa';
+
+            const files = ev.dataTransfer.files;
+            uploadFiles(files);
+        }
+
+        fileInput.addEventListener('change', function(e) {
+            if (isUploading) return;
+            uploadFiles(e.target.files);
+        });
+
+        function showUploadLoading() {
+            isUploading = true;
+            uploadContent.classList.add('d-none');
+            uploadLoading.classList.remove('d-none');
+            uploadArea.style.cursor = 'default';
+            uploadArea.onclick = null;
+        }
+
+        function hideUploadLoading() {
+            isUploading = false;
+            uploadContent.classList.remove('d-none');
+            uploadLoading.classList.add('d-none');
+            uploadArea.style.cursor = 'pointer';
+            uploadArea.onclick = function() { document.getElementById('fileInput').click(); };
+        }
+
+        function uploadFiles(files) {
+            if (files.length === 0) return;
+
+            const maxSize = {{ max_file_size_mb }} * 1024 * 1024;
+            let oversizedFiles = [];
+
+            for (let i = 0; i < files.length; i++) {
+                if (files[i].size > maxSize) {
+                    oversizedFiles.push(files[i].name + ' (' + formatFileSize(files[i].size) + ')');
+                }
+            }
+
+            if (oversizedFiles.length > 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'File Size Error!',
+                    html: '<p>The following files exceed the maximum size of {{ max_file_size }}:</p><ul class="text-start"><li>' +
+                        oversizedFiles.join('</li><li>') + '</li></ul>',
+                    confirmButtonText: 'OK'
+                });
+                fileInput.value = '';
+                return;
+            }
+
+            showUploadLoading();
+
+            const formData = new FormData();
+            for (let i = 0; i < files.length; i++) {
+                formData.append('file[]', files[i]);
+            }
+
+            fetch('{{ path('app_vgallery_upload_images', {'id': vgallery.id}) }}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-Token': csrfToken
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    hideUploadLoading();
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: data.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        let errorMessage = data.error;
+                        if (data.details && Array.isArray(data.details)) {
+                            errorMessage += ':<br><ul class="text-start"><li>' + data.details.join('</li><li>') + '</li></ul>';
+                        }
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Upload Failed!',
+                            html: errorMessage
+                        });
+                    }
+                })
+                .catch(error => {
+                    hideUploadLoading();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Upload Failed!',
+                        text: 'An error occurred during upload'
+                    });
+                });
+
+            fileInput.value = '';
+        }
+
+        function setCoverImage(imageName) {
+            fetch('{{ path('app_vgallery_set_cover', {'id': vgallery.id}) }}', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    'image': imageName
+                }),
+                headers: {
+                    'X-CSRF-Token': setCoverToken,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: data.message,
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: data.error
+                        });
+                    }
+                });
+        }
+
+        function deleteImage(imageName) {
+            event?.preventDefault();
+            event?.stopPropagation();
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This image will be permanently deleted!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: '<i class="bi bi-trash"></i> Yes, delete it!',
+                cancelButtonText: '<i class="bi bi-x-circle"></i> Cancel',
+                allowOutsideClick: false,
+                allowEscapeKey: true,
+                buttonsStyling: true,
+                html: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    performImageDelete(imageName);
+                }
+            });
+        }
+
+        function performImageDelete(imageName) {
+            const deleteBtn = document.querySelector(`[data-image="${imageName}"] .delete-btn`);
+            const deleteIcon = deleteBtn?.querySelector('.delete-icon');
+            const deleteSpinner = deleteBtn?.querySelector('.delete-spinner');
+
+            if (deleteBtn && deleteIcon && deleteSpinner) {
+                deleteIcon.classList.add('d-none');
+                deleteSpinner.classList.remove('d-none');
+                deleteBtn.disabled = true;
+            }
+
+            const deleteUrl = '{{ path('app_vgallery_delete_image', {'id': vgallery.id}) }}';
+
+            fetch(deleteUrl, {
+                method: 'POST',
+                body: new URLSearchParams({
+                    'image': imageName
+                }),
+                headers: {
+                    'X-CSRF-Token': deleteToken,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error('Network error');
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        const imageCard = document.querySelector(`[data-image="${imageName}"]`);
+                        imageCard.style.opacity = '0';
+                        imageCard.style.transform = 'scale(0.8)';
+                        setTimeout(() => imageCard.remove(), 300);
+
+                        const remaining = document.querySelectorAll('#imagesGrid [data-image]');
+                        if (remaining.length === 0) {
+                            document.getElementById('imagesGrid').innerHTML = `
+                                <div class="col-12" id="noImagesMessage">
+                                    <div class="text-center text-muted py-4">
+                                        <i class="bi bi-images display-4 mb-3"></i>
+                                        <p>This gallery doesn't have any images uploaded yet.</p>
+                                    </div>
+                                </div>
+                            `;
+                        }
+
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Image deleted!',
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                    } else {
+                        throw new Error(data.error || 'Delete failed');
+                    }
+                })
+                .catch(error => {
+                    if (deleteBtn && deleteIcon && deleteSpinner) {
+                        deleteIcon.classList.remove('d-none');
+                        deleteSpinner.classList.add('d-none');
+                        deleteBtn.disabled = false;
+                    }
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: error.message
+                    });
+                });
+        }
+
+        function updateImageTitle(imageName, title, inputElement) {
+            fetch('{{ path('app_vgallery_update_image_title', {'id': vgallery.id}) }}', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    'image': imageName,
+                    'title': title
+                }),
+                headers: {
+                    'X-CSRF-Token': updateTitleToken,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        inputElement.dataset.originalValue = title;
+                        const saveBtn = inputElement.parentElement.querySelector('.save-title-btn');
+                        saveBtn.classList.add('d-none');
+                        inputElement.style.borderColor = '#198754';
+                        setTimeout(() => inputElement.style.borderColor = '', 2000);
+                        Swal.mixin({ toast: true, position: 'top-end', timer: 2000 }).fire({ icon: 'success', title: 'Title updated!' });
+                    } else {
+                        Swal.fire({ icon: 'error', title: 'Error!', text: data.error });
+                    }
+                })
+                .catch(() => Swal.fire({ icon: 'error', title: 'Error!', text: 'Failed to update title' }));
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+    </script>
+{% endif %}
+
+{{ form_end(form) }}
+
+<style>
+    .border-dashed { border-style: dashed !important; }
+    .upload-area:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .card:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: all 0.3s ease; }
+    .image-title-input { transition: border-color 0.3s ease; }
+    .image-title-input:focus { border-color: #0d6efd; box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25); }
+    .swal2-toast .swal2-title { font-size: 14px; }
+    [data-image] { transition: opacity 0.3s ease, transform 0.3s ease; }
+</style>

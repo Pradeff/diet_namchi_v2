@@ -1,0 +1,267 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}Hello DashboardController!{% endblock %}
+
+{% block body %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="alert alert-success">
+            <i class="bi bi-stars"></i> Super Admin Dashboard
+        </div>
+    {% elseif is_granted('ROLE_EDITOR') %}
+        <div class="alert alert-info">
+            Welcome !
+            <h5>{{ app.user.name }}</h5>
+            <i class="bi bi-stars"></i> Editor Administrator Dashboard
+        </div>
+    {% elseif app.user %}
+        Normal Admin Panel
+    {% else %}
+        <div class="alert alert-warning">You are not logged in.</div>
+    {% endif %}
+
+
+    <div class="row g-3">
+        <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="stat-info">
+                        <div class="stat-icon bg-teal">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+                        <div class="stat-details">
+                            <div class="stat-label">Total Destination</div>
+                            <div class="stat-value">{{ stats.destinations ?? 0 }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="stat-info">
+                        <div class="stat-icon bg-purple">
+                            <i class="bi bi-airplane-fill"></i>
+                        </div>
+                        <div class="stat-details">
+                            <div class="stat-label">Total Tour Packages</div>
+                            <div class="stat-value">{{ stats.tour_packages ?? 0 }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="stat-info">
+                        <div class="stat-icon bg-orange">
+                            <i class="bi bi-backpack-fill"></i>
+                        </div>
+                        <div class="stat-details">
+                            <div class="stat-label">Total Hiking</div>
+                            <div class="stat-value">{{ stats.hiking ?? 0 }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="stat-info">
+                        <div class="stat-icon bg-green">
+                            <i class="bi bi-tree-fill"></i>
+                        </div>
+                        <div class="stat-details">
+                            <div class="stat-label">Total Trekking Packages</div>
+                            <div class="stat-value">{{ stats.trekking ?? 0 }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3">
+    <div class="col-xl-3 col-lg-4 col-md-6">
+        <div class="card stat-card">
+            <div class="card-body">
+                <div class="stat-info">
+                    <div class="stat-icon bg-indigo">
+                        <i class="bi bi-journal-text"></i>
+                    </div>
+                    <div class="stat-details">
+                        <div class="stat-label">Total Blog Post</div>
+                        <div class="stat-value">{{ stats.blog_posts ?? 0 }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-4 col-md-6">
+        <div class="card stat-card">
+            <div class="card-body">
+                <div class="stat-info">
+                    <div class="stat-icon bg-red">
+                        <i class="bi bi-tags-fill"></i>
+                    </div>
+                    <div class="stat-details">
+                        <div class="stat-label">Tour Type Category</div>
+                        <div class="stat-value">{{ stats.tour_types ?? 0 }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-lg-4 col-md-6">
+        <div class="card stat-card">
+            <div class="card-body">
+                <div class="stat-info">
+                    <div class="stat-icon bg-blue">
+                        <i class="bi bi-calendar2-date-fill"></i>
+                    </div>
+                    <div class="stat-details">
+                        <div class="stat-label">Total Fixed Departure</div>
+                        <div class="stat-value">{{ stats.fixed_departures ?? 0 }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="card stat-card">
+                <div class="card-body">
+                    <div class="stat-info">
+                        <div class="stat-icon bg-yellow">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                        <div class="stat-details">
+                            <div class="stat-label">Total Users</div>
+                            <div class="stat-value">{{ stats.users ?? 0 }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>{% endif %}
+
+    <style>
+        .stat-card {
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .stat-details {
+            flex: 1;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6c757d;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .stat-change {
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .stat-change.positive {
+            color: #28a745;
+        }
+
+        .stat-change.negative {
+            color: #dc3545;
+        }
+
+        .stat-change.neutral {
+            color: #6c757d;
+        }
+
+        .stat-period {
+            color: #6c757d;
+            margin-left: 5px;
+        }
+
+        /* Icon background colors */
+        .bg-teal {
+            background: linear-gradient(135deg, #17a2b8, #20c997);
+        }
+
+        .bg-purple {
+            background: linear-gradient(135deg, #6f42c1, #8b5cf6);
+        }
+
+        .bg-orange {
+            background: linear-gradient(135deg, #fd7e14, #ff9500);
+        }
+
+        .bg-green {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+
+        .bg-blue {
+            background: linear-gradient(135deg, #007bff, #0d6efd);
+        }
+
+        .bg-indigo {
+            background: linear-gradient(135deg, #6610f2, #6f42c1);
+        }
+
+        .bg-red {
+            background: linear-gradient(135deg, #dc3545, #e74c3c);
+        }
+
+        .bg-yellow {
+            background: linear-gradient(135deg, #ffc107, #ffb300);
+        }
+    </style>
+
+
+
+
+{% endblock %}

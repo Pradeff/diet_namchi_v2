@@ -9,7 +9,8 @@
         <div class="row g-0">
 
             <div class="col-lg-9 col-md-8 col-12">
-                <div class="hero-slider">
+                {#Slider Section#}
+                {#<div class="hero-slider">
                     <div class="slide" style="background-image: url('../images/pic1.jpg');">
                         <div class="hero-overlay"></div>
                         <div class="hero-content" data-aos="fade-up">
@@ -34,48 +35,24 @@
 
                         </div>
                     </div>
-                </div>
+                </div>#}
+                {{ render(controller('App\\Controller\\VsliderController::HomeSlider')) }}
+
             </div>
 
             <div class="col-lg-3 col-md-4 col-12">
-
-                <!-- CM Profile Card (inspired by 1st screenshot) -->
-                <div class="cm-card-profile mb-4" data-aos="fade-left">
-                    <div class="cm-cover-wrapper">
-                        <img src="{{ asset('images/cm.jpeg') }}" class="cm-cover-img" alt="Prem Singh Tamang">
-                        <div class="cm-cover-overlay"></div>
-                    </div>
-
-                    <div class="cm-profile-inner">
-                        <div class="cm-avatar-wrapper">
-                            <div class="cm-avatar-ring">
-                                <!-- Use cropped/optimized CM image here -->
-                                <img src="{{ asset('images/cm.jpeg') }}" class="cm-avatar-img" alt="Prem Singh Tamang">
-                            </div>
-                        </div>
-
-                        <button class="cm-chip-role">
-                            <i class="bi bi-star-fill"></i>
-                            Hon'ble Chief Minister
-                        </button>
-
-                        <h3 class="cm-profile-name">Prem Singh Tamang</h3>
-                        <p class="cm-profile-title">Government of Sikkim</p>
-
-                    </div>
-                </div>
+                {{ render(controller('App\\Controller\\VpeopleController::CM')) }}
 
                 <div class="principal-card-profile mb-4" data-aos="fade-left">
                     <div class="principal-cover-wrapper">
-                        <img src="{{ asset('images/cm.jpeg') }}" class="principal-cover-img" alt="Prem Singh Tamang">
+                        <img src="{{ asset('images/principal.jpeg') }}" class="principal-cover-img" alt="Prem Singh Tamang">
                         <div class="principal-cover-overlay"></div>
                     </div>
 
                     <div class="principal-profile-inner">
                         <div class="principal-avatar-wrapper">
                             <div class="principal-avatar-ring">
-                                <!-- Use cropped/optimized image here -->
-                                <img src="{{ asset('images/cm.jpeg') }}" class="principal-avatar-img" alt="Prem Singh Tamang">
+                                <img src="{{ asset('images/principal.jpeg') }}" class="principal-avatar-img" alt="Prem Singh Tamang">
                             </div>
                         </div>
 

@@ -1,0 +1,32 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}About Page Management{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="bi bi-person-lines-fill"></i> About Page Management</h1>
+        </div>
+
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i>
+            <strong>Single About Page:</strong> Your website can only have one about page. This ensures consistency and prevents confusion for your visitors.
+        </div>
+
+        <!-- This template should rarely be seen as the controller redirects to edit if exists or new if doesn't -->
+        <div class="card">
+            <div class="card-body text-center py-5">
+                <i class="bi bi-person-lines-fill display-1 text-muted mb-4"></i>
+                <h3>About Page Management</h3>
+                <p class="text-muted mb-4">
+                    Manage your website's about page content, images, and information.
+                </p>
+                <div class="d-flex gap-2 justify-content-center">
+                    <a href="{{ path('app_vabout_new') }}" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Create About Page
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

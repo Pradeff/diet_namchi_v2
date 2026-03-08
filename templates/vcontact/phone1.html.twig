@@ -1,0 +1,7 @@
+{% for floatingno in phone1 %}
+    {% if(floatingno.phone1) %}
+            <a href="tel:{{ floatingno.phone1 }}">+91 {{ floatingno.phone1}} </a>
+    {% endif %}
+{% endfor %}
+
+

@@ -1,0 +1,60 @@
+<form method="post" action="{{ path('admin_users_delete', {'id': user.id}) }}" onsubmit="return confirm('Are you sure you want to delete this user?')" class="d-inline">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete_user_' ~ user.id) }}">
+    <button type="button" class="btn btn-danger" onclick="confirmDelete()">
+        <i class="bi bi-trash"></i> Delete User
+    </button>
+</form>
+
+<script>
+    function confirmDelete() {
+        Swal.fire({
+            title: 'Are you absolutely sure?',
+            text: `This will permanently delete the user "{{ user.email }}" and all associated data. This action cannot be undone!`,
+            icon: 'error',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, permanently delete!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const form = document.querySelector('form[action="{{ path('admin_users_delete', {'id': user.id}) }}"]');
+
+                // Show loading state
+                Swal.fire({
+                    title: 'Deleting...',
+                    text: 'Please wait while we delete the user.',
+                    icon: 'info',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    willOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                const formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire('Deleted!', data.message, 'success').then(() => {
+                                window.location.href = '{{ path('admin_users') }}';
+                            });
+                        } else {
+                            Swal.fire('Error', data.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire('Error', 'An error occurred while deleting the user.', 'error');
+                    });
+            }
+        });
+    }
+</script>

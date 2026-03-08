@@ -1,0 +1,134 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}Vcontact{% endblock %}
+
+{% block body %}
+    <h1>Vcontact</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ vcontact.id }}</td>
+            </tr>
+            <tr>
+                <th>Phone1</th>
+                <td>{{ vcontact.phone1 }}</td>
+            </tr>
+            <tr>
+                <th>Phone2</th>
+                <td>{{ vcontact.phone2 }}</td>
+            </tr>
+            <tr>
+                <th>Phone3</th>
+                <td>{{ vcontact.phone3 }}</td>
+            </tr>
+            <tr>
+                <th>Phone4</th>
+                <td>{{ vcontact.phone4 }}</td>
+            </tr>
+            <tr>
+                <th>Phone5</th>
+                <td>{{ vcontact.phone5 }}</td>
+            </tr>
+            <tr>
+                <th>Email1</th>
+                <td>{{ vcontact.email1 }}</td>
+            </tr>
+            <tr>
+                <th>Email2</th>
+                <td>{{ vcontact.email2 }}</td>
+            </tr>
+            <tr>
+                <th>Email3</th>
+                <td>{{ vcontact.email3 }}</td>
+            </tr>
+            <tr>
+                <th>Email4</th>
+                <td>{{ vcontact.email4 }}</td>
+            </tr>
+            <tr>
+                <th>Email5</th>
+                <td>{{ vcontact.email5 }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>{{ vcontact.address }}</td>
+            </tr>
+            <tr>
+                <th>Map</th>
+                <td>{{ vcontact.map }}</td>
+            </tr>
+            <tr>
+                <th>Fb</th>
+                <td>{{ vcontact.fb }}</td>
+            </tr>
+            <tr>
+                <th>Insta</th>
+                <td>{{ vcontact.insta }}</td>
+            </tr>
+            <tr>
+                <th>Tripadv</th>
+                <td>{{ vcontact.tripadv }}</td>
+            </tr>
+            <tr>
+                <th>Tw</th>
+                <td>{{ vcontact.tw }}</td>
+            </tr>
+            <tr>
+                <th>Yt</th>
+                <td>{{ vcontact.yt }}</td>
+            </tr>
+            <tr>
+                <th>Linkedin</th>
+                <td>{{ vcontact.linkedin }}</td>
+            </tr>
+            <tr>
+                <th>Telegram</th>
+                <td>{{ vcontact.telegram }}</td>
+            </tr>
+            <tr>
+                <th>Sitetitle</th>
+                <td>{{ vcontact.sitetitle }}</td>
+            </tr>
+            <tr>
+                <th>Sitedescription</th>
+                <td>{{ vcontact.sitedescription }}</td>
+            </tr>
+            <tr>
+                <th>Sitekeyword</th>
+                <td>{{ vcontact.sitekeyword }}</td>
+            </tr>
+            <tr>
+                <th>Favicon</th>
+                <td>{{ vcontact.favicon }}</td>
+            </tr>
+            <tr>
+                <th>Logo1</th>
+                <td>{{ vcontact.logo1 }}</td>
+            </tr>
+            <tr>
+                <th>Logo2</th>
+                <td>{{ vcontact.logo2 }}</td>
+            </tr>
+            <tr>
+                <th>Logo3</th>
+                <td>{{ vcontact.logo3 }}</td>
+            </tr>
+            <tr>
+                <th>Logo4</th>
+                <td>{{ vcontact.logo4 }}</td>
+            </tr>
+            <tr>
+                <th>Sitelink</th>
+                <td>{{ vcontact.sitelink }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_vcontact_index') }}">back to list</a>
+
+    <a href="{{ path('app_vcontact_edit', {'id': vcontact.id}) }}">edit</a>
+
+    {{ include('vcontact/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,34 @@
+{# edit.html.twig #}
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}Edit Slider{% endblock %}
+
+{% block body %}
+    <div class="row mb-4">
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 text_color_default">Edit Tourist Places</h5>
+                <nav class="breadcrumb-nav">
+                    <a href="{{ path('app_dashboard') }}">Home</a>
+                    <i class="bi bi-chevron-right mx-2"></i>
+                    <a href="{{ path('app_vslider_index') }}">Slider</a>
+                    <i class="bi bi-chevron-right mx-2"></i>
+                    <span>Edit Slider</span>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    {{ include('vslider/_form.html.twig', {'button_label': 'Update'}) }}
+
+
+    <div class="container-fluid mt-5 d-flex justify-content-end">
+        {{ include('vslider/_delete_form.html.twig') }}
+    </div>
+
+{% endblock %}
+
+
+
+
+

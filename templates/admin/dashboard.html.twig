@@ -1,0 +1,125 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <h1 class="h3 mb-4 text-gray-800">Dashboard</h1>
+
+        <!-- Stats Cards Row -->
+        <div class="row">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Total Users
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ totalUsers }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="bi bi-people fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Active Users
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ activeUsers }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="bi bi-check-circle fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    Inactive Users
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ totalUsers - activeUsers }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="bi bi-x-circle fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Users Table -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Recent Users</h6>
+                        <a href="{{ path('admin_users') }}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-eye"></i> View All Users
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        {% if recentUsers %}
+                            <div class="table-responsive">
+                                <table class="table table-bordered" width="100%" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Created</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for user in recentUsers %}
+                                        <tr>
+                                            <td>{{ user.fullName ?? 'N/A' }}</td>
+                                            <td>{{ user.email }}</td>
+                                            <td>
+                                                {% if user.isActive %}
+                                                    <span class="badge bg-success">Active</span>
+                                                {% else %}
+                                                    <span class="badge bg-danger">Inactive</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ user.createdAt ? user.createdAt|date('M d, Y') : 'N/A' }}</td>
+                                            <td>
+                                                <a href="{{ path('admin_users_show', {id: user.id}) }}" class="btn btn-info btn-sm">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <a href="{{ path('admin_users_edit', {id: user.id}) }}" class="btn btn-warning btn-sm">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <div class="text-center">
+                                <p class="mb-0">No users found.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,79 @@
+<button type="button" class="btn btn-outline-danger delete-btn"
+        data-id="{{ vpage.id }}"
+        data-title="{{ vpage.title }}"
+        data-url="{{ path('app_vpages_delete', {'id': vpage.id}) }}"
+        data-token="{{ csrf_token('delete' ~ vpage.id) }}">
+    <i class="bi bi-trash"></i>
+</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Delete functionality with SweetAlert
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.dataset.id;
+                const title = this.dataset.title;
+                const url = this.dataset.url;
+                const token = this.dataset.token;
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: `You want to delete "${title}"?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel',
+                    showLoaderOnConfirm: true,
+                    preConfirm: () => {
+                        const formData = new FormData();
+                        formData.append('_token', token);
+
+                        return fetch(url, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                if (!data.success) {
+                                    throw new Error(data.message || 'Something went wrong!');
+                                }
+                                return data;
+                            })
+                            .catch(error => {
+                                Swal.showValidationMessage(`Request failed: ${error.message}`);
+                            });
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Remove the row from table
+                        const row = document.querySelector(`#row-${id}`);
+                        if (row) {
+                            row.remove();
+                        }
+
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: result.value.message,
+                            icon: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    }
+                });
+            });
+        });
+    });
+</script>

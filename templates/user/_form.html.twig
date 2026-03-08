@@ -1,0 +1,236 @@
+{# templates/user/_form.html.twig #}
+{{ form_start(form, {'attr': {'id': 'user-form', 'class': 'needs-validation ajax-form', 'novalidate': 'novalidate'}}) }}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card mb-4">
+                <div class="card-header p-1 px-2">
+                    <label class="form-label card-title mb-0"><i class="bi bi-info-circle"></i> Information</label>
+                </div>
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form_label(form.name, 'Full Name', {'label_attr': {'class': 'form-label required'}}) }}
+                                {{ form_widget(form.name, {'attr': {'class': 'form-control', 'required': 'required'}}) }}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form_label(form.email, 'Email', {'label_attr': {'class': 'form-label required'}}) }}
+                                {{ form_widget(form.email, {'attr': {'class': 'form-control', 'required': 'required'}}) }}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                {{ form_label(form.phone, 'Phone', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                {{ form_label(form.address, 'Address', {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.address, {'attr': {'class': 'form-control', 'rows': '3'}}) }}
+                                <div class="invalid-feedback"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {# Add this section after the existing password section and before the roles section #}
+            {% if form.newPassword is defined %}
+                <div class="card mb-4">
+                    <div class="card-header p-1 px-2">
+                        <label class="form-label card-title mb-0"><i class="bi bi-key"></i> Change Password</label>
+                    </div>
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form_label(form.newPassword.first, 'New Password', {'label_attr': {'class': 'form-label'}}) }}
+                                    <div class="input-group">
+                                        {{ form_widget(form.newPassword.first, {'attr': {'class': 'form-control password-input', 'minlength': '6'}}) }}
+                                        <button class="btn btn-outline-secondary toggle-password" type="button">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </div>
+                                    <div class="invalid-feedback"></div>
+                                    <small class="form-text text-muted">Leave blank to keep current password</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form_label(form.newPassword.second, 'Repeat New Password', {'label_attr': {'class': 'form-label'}}) }}
+                                    <div class="input-group">
+                                        {{ form_widget(form.newPassword.second, {'attr': {'class': 'form-control password-input', 'minlength': '6'}}) }}
+                                        <button class="btn btn-outline-secondary toggle-password" type="button">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </div>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if form.password is defined %}
+                <div class="card mb-4">
+                    <div class="card-header p-1 px-2">
+                        <label class="form-label card-title mb-0"><i class="bi bi-lock"></i>Password</label>
+                    </div>
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form_label(form.password.first, 'Password', {'label_attr': {'class': 'form-label required'}}) }}
+                                    <div class="input-group">
+                                        {{ form_widget(form.password.first, {'attr': {'class': 'form-control password-input', 'required': 'required', 'minlength': '6'}}) }}
+                                        <button class="btn btn-outline-secondary toggle-password" type="button">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </div>
+                                    <div class="invalid-feedback"></div>
+                                    <small class="form-text text-muted">Password must be at least 6 characters
+                                        long</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form_label(form.password.second, 'Repeat Password', {'label_attr': {'class': 'form-label required'}}) }}
+                                    <div class="input-group">
+                                        {{ form_widget(form.password.second, {'attr': {'class': 'form-control password-input', 'required': 'required', 'minlength': '6'}}) }}
+                                        <button class="btn btn-outline-secondary toggle-password" type="button">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                    </div>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="card">
+                <div class="card-header p-1 px-2">
+                    <label class="form-label card-title mb-0"><i class="bi bi-person-rolodex"></i> Roles</label>
+                </div>
+                <div class="card-body p-3">
+                    <div class="row">
+                        {% for role in form.roles %}
+                            <div class="col-md-6 mb-2">
+                                <label
+                                    class="sw_switch d-flex align-items-center justify-content-between mb-0 py-2 px-3">
+                                    {{ form_widget(role, {'attr': {'class': 'd-none'}}) }}
+                                    <div class="sw_slider">
+                                        <div class="sw_circle">
+                                            <svg class="sw_cross" xmlns="http://www.w3.org/2000/svg"
+                                                 viewBox="0 0 365.696 365.696"
+                                                 width="6" height="6">
+                                                <path fill="currentColor"
+                                                      d="M243.188 182.86 356.32 69.726c12.5-12.5 12.5-32.766 0-45.247L341.238 9.398c-12.504-12.503-32.77-12.503-45.25 0L182.86 122.528 69.727 9.374c-12.5-12.5-32.766-12.5-45.247 0L9.375 24.457c-12.5 12.504-12.5 32.77 0 45.25l113.152 113.152L9.398 295.99c-12.503 12.503-12.503 32.769 0 45.25L24.48 356.32c12.5 12.5 32.766 12.5 45.247 0l113.132-113.132L295.99 356.32c12.503 12.5 32.769 12.5 45.25 0l15.081-15.082c12.5-12.504 12.5-32.77 0-45.25z"/>
+                                            </svg>
+                                            <svg class="sw_checkmark" xmlns="http://www.w3.org/2000/svg"
+                                                 viewBox="0 0 24 24" width="10"
+                                                 height="10">
+                                                <path fill="currentColor"
+                                                      d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <span class="switch-label">{{ role.vars.label|replace({'ROLE_': ''})|title }}</span>
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="invalid-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-5">
+            <div class="card mb-4">
+                <div class="card-header p-1 px-2">
+                    <label for="isActive" class="form-label card-title mb-0"><i class="bi bi-check"></i> Status</label>
+                </div>
+
+                <div class="card-body p-2">
+                    <div class="form-check form-switch">
+                        <div class="col-md-6 mb-2">
+                            <label class="sw_switch d-flex align-items-center justify-content-between mb-0 py-2 px-3">
+                                {{ form_widget(form.isActive, {'attr': {'class': 'd-none'}}) }}
+
+                                <div class="sw_slider">
+                                    <div class="sw_circle">
+                                        <!-- Cross icon -->
+                                        <svg class="sw_cross" xmlns="http://www.w3.org/2000/svg"
+                                             viewBox="0 0 365.696 365.696" width="6" height="6">
+                                            <path fill="currentColor"
+                                                  d="M243.188 182.86 356.32 69.726c12.5-12.5 12.5-32.766 0-45.247L341.238 9.398c-12.504-12.503-32.77-12.503-45.25 0L182.86 122.528 69.727 9.374c-12.5-12.5-32.766-12.5-45.247 0L9.375 24.457c-12.5 12.504-12.5 32.77 0 45.25l113.152 113.152L9.398 295.99c-12.503 12.503-12.503 32.769 0 45.25L24.48 356.32c12.5 12.5 32.766 12.5 45.247 0l113.132-113.132L295.99 356.32c12.503 12.5 32.769 12.5 45.25 0l15.081-15.082c12.5-12.504 12.5-32.77 0-45.25z"/>
+                                        </svg>
+
+                                        <!-- Checkmark icon -->
+                                        <svg class="sw_checkmark" xmlns="http://www.w3.org/2000/svg"
+                                             viewBox="0 0 24 24" width="10" height="10">
+                                            <path fill="currentColor"
+                                                  d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <span class="switch-label">Active</span>
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="invalid-feedback"></div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header p-1 px-2">
+                    <label for="profilePhoto" class="form-label card-title mb-0"><i class="bi bi-file-earmark-image"></i> Profile Photo</label>
+                </div>
+                <div class="card-body p-2">
+                    {{ form_widget(form.profilePhoto, {
+                        'attr': {
+                            'class': 'dropify',
+                            'data-height': '200',
+                            'data-default-file': user.profilePhoto ? asset('uploads/image/' ~ user.profilePhoto) : '',
+                            'data-allowed-file-extensions': 'jpg jpeg png gif',
+                            'data-max-file-size': '2M'
+                        }
+                    }) }}
+                    <div class="invalid-feedback"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="card-footer">
+
+    <button type="submit" class="btn btn-sm btn-primary" id="submit-btn">
+        <span class="spinner-border spinner-border-sm d-none" id="submit-spinner" role="status"
+              aria-hidden="true"></span>
+        <span class="btn-text" id="submit-text">
+            {% if form.vars.data.id is defined and form.vars.data.id %}
+                <i class="bi bi-save me-2"></i> Update User
+            {% else %}
+                <i class="bi bi-plus-square me-2"></i> Create New User
+            {% endif %}
+        </span>
+    </button>
+    <a href="{{ path('app_user_index') }}" class="btn btn-light-secondary">Cancel</a>
+</div>
+{{ form_end(form) }}

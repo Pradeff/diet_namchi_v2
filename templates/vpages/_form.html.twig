@@ -1,0 +1,120 @@
+{{ form_start(form, {'attr': {'class': 'ajax-form', 'enctype': 'multipart/form-data'}}) }}
+<div class="row">
+    <div class="col-md-6">
+        <div class="mb-3">
+            {{ form_label(form.title, 'Title', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.title) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.icon, 'Icon (SVG)', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.icon, {'attr': {'class': 'form-control', 'placeholder': 'Paste SVG code here'}}) }}
+            {{ form_errors(form.icon) }}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="mb-3">
+            {{ form_label(form.imageFile, 'Image', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.imageFile, {
+                'attr': {
+                    'class': 'dropify_file_input',
+                    'data-default-file': form.vars.data and form.vars.data.image ? asset('uploads/image/' ~ form.vars.data.image) : '',
+                    'data-height': '200'
+                }
+            }) }}
+            <div class="form-text">Upload page image (JPG, PNG, GIF)</div>
+            {{ form_errors(form.imageFile) }}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="mb-3">
+            {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.description) }}
+        </div>
+    </div>
+</div>
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+    <a href="{{ path('app_vpages_index') }}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Back to List
+    </a>
+    <button type="submit" class="btn btn-primary" id="submit-btn">
+        <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+        <i class="bi bi-save"></i>
+        {% if form.vars.data.id is defined and form.vars.data.id %}
+            Update Page
+        {% else %}
+            Create Page
+        {% endif %}
+    </button>
+</div>
+{{ form_end(form) }}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('.ajax-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const spinner = submitBtn.querySelector('.spinner-border');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Show spinner
+            spinner.classList.remove('d-none');
+            submitBtn.disabled = true;
+
+            // Submit form via AJAX
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.message,
+                            icon: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.href = data.redirect_url;
+                        });
+                    } else {
+                        let errorMsg = data.message;
+                        if (data.errors && data.errors.length > 0) {
+                            errorMsg += '\n\n• ' + data.errors.join('\n• ');
+                        }
+
+                        Swal.fire({
+                            title: 'Error!',
+                            text: errorMsg,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'An error occurred while processing the page.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                })
+                .finally(() => {
+                    spinner.classList.add('d-none');
+                    submitBtn.disabled = false;
+                });
+        });
+    });
+</script>

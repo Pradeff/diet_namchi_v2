@@ -1,0 +1,17 @@
+{% for whatsappno in whatsappno %}
+    {#<a class="" href="https://api.whatsapp.com/send?phone=91{{ whatsappno.phone3 }}&text=&source=&data=&app_absent="
+       target="_blank">#}
+        {#<img src="{{ asset('images/whatsapp-float.svg') }}" width="52" alt=""></a>
+    <a class="wc-list" number="91{{ whatsappno.phone3 }}" message="Hey there 👋">
+        <i class="bx bxl-whatsapp" aria-hidden="true"></i><p>Chat Now</p>
+    </a>#}
+
+    <a href="https://api.whatsapp.com/send?phone=91{{ whatsappno.phone2 }}&text={{ 'Hello! I came across your website and I am interested in your services. Could you please provide more details?'|url_encode }}&app_absent="
+       target="_blank"
+       class="mb-0">
+        +91 {{ whatsappno.phone2 }}
+    </a>
+
+{% endfor %}
+
+

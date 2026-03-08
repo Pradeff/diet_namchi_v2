@@ -1,0 +1,47 @@
+{# templates/vslider/_home_slider.html.twig #}
+{% if slides is not empty %}
+    <div class="hero-slider">
+        {% for slide in slides %}
+            <div class="slide" {% if slide.mediaType != 'video' %}style="background-image: url('{{ asset('uploads/media/' ~ slide.mediaPath) }}'); background-size: cover; background-position: center; background-repeat: no-repeat;"{% endif %}>
+                {% if slide.mediaType == 'video' %}
+                    <video
+                        autoplay
+                        loop
+                        muted
+                        playsinline
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;"
+                        poster="{{ asset('uploads/media/' ~ slide.mediaPath|replace({'.mp4': '-poster.webp', '.webm': '-poster.webp'})) }}">
+                        <source src="{{ asset('uploads/media/' ~ slide.mediaPath) }}" type="video/mp4">
+                    </video>
+                {% endif %}
+
+                <div class="hero-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2;"></div>
+
+                <div class="hero-content" data-aos="fade-up" style="position: relative; z-index: 3; color: white; padding: 20px; max-width: 800px; margin: 0 auto; text-align: center;">
+                <span class="hero-badge" style="display: inline-block; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 25px; margin-bottom: 20px;">
+                    <i class="{{ slide.mediaType == 'video' ? 'bi bi-play-circle' : 'bi bi-stars' }}" style="margin-right: 8px;"></i>
+                    {{ slide.title ?? 'Featured' }}
+                </span>
+                    <h1 style="font-size: 3rem; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">{{ slide.title ?? 'Title' }}</h1>
+                    {% if slide.description %}
+                        <p style="font-size: 1.2rem; line-height: 1.6; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">{{ slide.description }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="hero-slider" style="height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;">
+        <div class="slide" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+            <div class="hero-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 2;"></div>
+            <div class="hero-content" data-aos="fade-up" style="position: relative; z-index: 3; color: white; padding: 20px; text-align: center;">
+            <span class="hero-badge" style="display: inline-block; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 25px; margin-bottom: 20px;">
+                <i class="bi bi-info-circle" style="margin-right: 8px;"></i>
+                No banners available
+            </span>
+                <h1 style="font-size: 3rem; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Welcome to DIET Namchi</h1>
+                <p style="font-size: 1.2rem; line-height: 1.6; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Banner slides will appear here once added from admin panel.</p>
+            </div>
+        </div>
+    </div>
+{% endif %}

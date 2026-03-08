@@ -1,0 +1,215 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}User: {{ user.email }}{% endblock %}
+{% block page_title %}User Details{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5><i class="bi bi-person-circle"></i> User Information</h5>
+                    <div class="btn-group">
+                        <a href="{{ path('admin_users_edit', {'id': user.id}) }}" class="btn btn-sm btn-warning">
+                            <i class="bi bi-pencil"></i> Edit
+                        </a>
+                        {% if user.id != app.user.id %}
+                            <button class="btn btn-sm btn-danger" onclick="deleteUser({{ user.id }}, '{{ user.email }}')">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3"><strong>ID:</strong></div>
+                        <div class="col-sm-9">{{ user.id }}</div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3"><strong>Email:</strong></div>
+                        <div class="col-sm-9">{{ user.email }}</div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3"><strong>Full Name:</strong></div>
+                        <div class="col-sm-9">{{ user.fullName ?? 'Not provided' }}</div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3"><strong>Phone:</strong></div>
+                        <div class="col-sm-9">{{ user.phone ?? 'Not provided' }}</div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3"><strong>Roles:</strong></div>
+                        <div class="col-sm-9">
+                            {% for role in user.roles %}
+                                <span class="badge bg-{{ role == 'ROLE_ADMIN' ? 'danger' : 'secondary' }} me-1">
+                                {{ role|replace({'ROLE_': ''})|title }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3"><strong>Status:</strong></div>
+                        <div class="col-sm-9">
+                            <button class="btn btn-sm btn-outline-{{ user.isActive ? 'success' : 'danger' }}"
+                                    onclick="toggleStatus({{ user.id }}, {{ user.isActive ? 'false' : 'true' }})">
+                                <i class="bi bi-{{ user.isActive ? 'check-circle' : 'x-circle' }}"></i>
+                                <span id="status-text">{{ user.isActive ? 'Active' : 'Inactive' }}</span>
+                            </button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3"><strong>Created At:</strong></div>
+                        <div class="col-sm-9">{{ user.createdAt|date('F d, Y \\a\\t g:i A') }}</div>
+                    </div>
+                    {% if user.updatedAt %}
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3"><strong>Updated At:</strong></div>
+                            <div class="col-sm-9">{{ user.updatedAt|date('F d, Y \\a\\t g:i A') }}</div>
+                        </div>
+                    {% endif %}
+                    {% if user.lastLoginAt %}
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3"><strong>Last Login:</strong></div>
+                            <div class="col-sm-9">
+                                {{ user.lastLoginAt|date('F d, Y \\a\\t g:i A') }}
+                                {% if user.lastLoginIp %}
+                                    <br><small class="text-muted">IP: {{ user.lastLoginIp }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('admin_users') }}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to Users
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h6><i class="bi bi-activity"></i> Quick Actions</h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="{{ path('admin_users_edit', {'id': user.id}) }}" class="btn btn-outline-warning">
+                            <i class="bi bi-pencil"></i> Edit User
+                        </a>
+                        <button class="btn btn-outline-{{ user.isActive ? 'danger' : 'success' }}"
+                                onclick="toggleStatus({{ user.id }}, {{ user.isActive ? 'false' : 'true' }})">
+                            <i class="bi bi-{{ user.isActive ? 'pause' : 'play' }}"></i>
+                            {{ user.isActive ? 'Deactivate' : 'Activate' }} User
+                        </button>
+                        {% if user.id != app.user.id %}
+                            <button class="btn btn-outline-danger" onclick="deleteUser({{ user.id }}, '{{ user.email }}')">
+                                <i class="bi bi-trash"></i> Delete User
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h6><i class="bi bi-info-circle"></i> Account Summary</h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li><strong>Account Age:</strong> {{ date().diff(user.createdAt).days }} days</li>
+                        <li><strong>Profile Completion:</strong>
+                            {% set completion = 0 %}
+                            {% if user.email %}{% set completion = completion + 25 %}{% endif %}
+                            {% if user.fullName %}{% set completion = completion + 25 %}{% endif %}
+                            {% if user.phone %}{% set completion = completion + 25 %}{% endif %}
+                            {% if user.lastLoginAt %}{% set completion = completion + 25 %}{% endif %}
+                            <span class="badge bg-{{ completion >= 75 ? 'success' : (completion >= 50 ? 'warning' : 'danger') }}">
+                            {{ completion }}%
+                        </span>
+                        </li>
+                        <li><strong>Login History:</strong> {{ user.lastLoginAt ? 'Has logged in' : 'Never logged in' }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function toggleStatus(userId, newStatus) {
+            const csrfToken = '{{ csrf_token('toggle_status_' ~ user.id) }}';
+
+            fetch(`/admin/users/${userId}/toggle-status`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({
+                    _token: csrfToken
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload(); // Refresh page to update all status indicators
+                    } else {
+                        Swal.fire('Error', data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    Swal.fire('Error', 'An error occurred while updating user status.', 'error');
+                });
+        }
+
+        function deleteUser(userId, userEmail) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: `Delete user "${userEmail}"? This action cannot be undone.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const csrfToken = '{{ csrf_token('delete_user_' ~ user.id) }}';
+
+                    fetch(`/admin/users/${userId}/delete`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: JSON.stringify({
+                            _token: csrfToken
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire('Deleted!', data.message, 'success').then(() => {
+                                    window.location.href = '{{ path('admin_users') }}';
+                                });
+                            } else {
+                                Swal.fire('Error', data.message, 'error');
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire('Error', 'An error occurred while deleting the user.', 'error');
+                        });
+                }
+            });
+        }
+    </script>
+{% endblock %}

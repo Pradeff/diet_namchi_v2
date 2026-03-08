@@ -1,0 +1,86 @@
+<div class="footerSocials__icons">
+    {% for contact in footersociallink %}
+        {# Facebook #}
+        {% if contact.fb %}
+            <a href="{{ contact.fb }}" target="_blank" class="icon-facebook" title="Facebook">
+            </a>
+        {% endif %}
+
+        {# Instagram #}
+        {% if contact.insta %}
+            <a href="{{ contact.insta }}" target="_blank" class="icon-instagram" title="Instagram">
+
+            </a>
+        {% endif %}
+
+        {# Twitter/X #}
+        {% if contact.tw %}
+            <a href="{{ contact.tw }}" target="_blank" class="icon-twitter" title="Twitter">
+            </a>
+        {% endif %}
+
+        {# YouTube #}
+        {% if contact.yt %}
+            <a href="{{ contact.yt }}" target="_blank" class="icon-youtube" title="YouTube">
+                <i class="bi bi-youtube"></i>
+            </a>
+        {% endif %}
+
+        {# LinkedIn #}
+        {% if contact.linkedin %}
+            <a href="{{ contact.linkedin }}" target="_blank" class="icon-linkedin" title="LinkedIn">
+            </a>
+        {% endif %}
+
+        {# Telegram #}
+        {% if contact.telegram %}
+            <a href="{{ contact.telegram }}" target="_blank" class="icon-telegram" title="Telegram">
+                <i class="bi bi-telegram"></i>
+            </a>
+        {% endif %}
+
+        {# TripAdvisor #}
+        {% if contact.tripadv %}
+            <a href="{{ contact.tripadv }}" target="_blank" class="icon-tripadvisor" title="TripAdvisor">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M12.006 4.295c-2.67 0-5.338.784-7.645 2.353H0l1.963 2.135a5.997 5.997 0 0 0 4.04 10.43a5.98 5.98 0 0 0 4.075-1.6L12 19.705l1.922-2.09a5.97 5.97 0 0 0 4.072 1.598a6 6 0 0 0 6-5.998a5.98 5.98 0 0 0-1.957-4.432L24 6.648h-4.35a13.57 13.57 0 0 0-7.644-2.353M12 6.255c1.531 0 3.063.303 4.504.903C13.943 8.138 12 10.43 12 13.1c0-2.671-1.942-4.962-4.504-5.942A11.7 11.7 0 0 1 12 6.256zM6.002 9.157a4.059 4.059 0 1 1 0 8.118a4.059 4.059 0 0 1 0-8.118m11.992.002a4.057 4.057 0 1 1 .003 8.115a4.057 4.057 0 0 1-.003-8.115m-11.992 1.93a2.128 2.128 0 0 0 0 4.256a2.128 2.128 0 0 0 0-4.256m11.992 0a2.128 2.128 0 0 0 0 4.256a2.128 2.128 0 0 0 0-4.256" />
+                </svg>
+            </a>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<style>
+    .footerSocials__icons {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .footerSocials__icons a {
+        display: inline-flex;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        color: white;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 18px;
+    }
+
+    .footerSocials__icons a:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Social brand colors */
+    .icon-facebook { background-color: #3b5998; }
+    .icon-twitter { background-color: #000000; }
+    .icon-instagram { background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d); }
+    .icon-youtube { background-color: #ff0000; }
+    .icon-linkedin { background-color: #0077b5; }
+    .icon-telegram { background-color: #0088cc; }
+    .icon-tripadvisor { background-color: #00af87; }
+</style>
