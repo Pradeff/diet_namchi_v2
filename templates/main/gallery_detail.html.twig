@@ -1,0 +1,286 @@
+{# main/gallery_detail.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ vgallery.title }} - Gallery - DIET Namchi{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* ── Detail Page Layout ───────────────────────────────────── */
+        .gallery-detail-section {
+            padding: 70px 0 100px;
+            background: #f8f9fc;
+        }
+
+        /* ── Album Header ─────────────────────────────────────────── */
+        .album-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        .album-header-left h2 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin: 0 0 6px;
+        }
+        .album-header-left .album-meta-row {
+            font-size: .85rem;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        .album-meta-row i { color: #94a3b8; }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: 50px;
+            border: 2px solid #e2e8f0;
+            background: #fff;
+            color: #475569;
+            font-size: .875rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all .25s ease;
+        }
+        .btn-back:hover {
+            border-color: var(--primary-color, #0d6efd);
+            color: var(--primary-color, #0d6efd);
+            background: #eff6ff;
+        }
+
+        /* ── Masonry Grid ─────────────────────────────────────────── */
+        .masonry-grid {
+            columns: 4 280px;
+            column-gap: 16px;
+        }
+        @media (max-width: 992px) { .masonry-grid { columns: 3 240px; } }
+        @media (max-width: 680px) { .masonry-grid { columns: 2 160px; } }
+        @media (max-width: 400px) { .masonry-grid { columns: 1; } }
+
+        /* ── Gallery Item ─────────────────────────────────────────── */
+        .gallery-item {
+            position: relative;
+            display: inline-block;      /* required for columns layout */
+            width: 100%;
+            margin-bottom: 16px;
+            border-radius: 12px;
+            overflow: hidden;
+            break-inside: avoid;
+            background: #e2e8f0;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            display: block;
+            width: 100%;
+            height: auto;
+            transition: transform .45s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Overlay */
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15,23,42,.65) 0%, rgba(15,23,42,.1) 60%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity .35s ease;
+            text-decoration: none;
+        }
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        .gallery-overlay .zoom-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.2);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(255,255,255,.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.3rem;
+            transition: transform .3s ease, background .3s ease;
+        }
+        .gallery-overlay:hover .zoom-icon {
+            transform: scale(1.15);
+            background: rgba(255,255,255,.3);
+        }
+        .gallery-overlay .image-title-label {
+            margin-top: 10px;
+            color: #fff;
+            font-size: .78rem;
+            font-weight: 600;
+            letter-spacing: .4px;
+            max-width: 90%;
+            text-align: center;
+            text-shadow: 0 1px 4px rgba(0,0,0,.5);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Cover badge */
+        .cover-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #fff;
+            font-size: .7rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            letter-spacing: .5px;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(245,158,11,.4);
+        }
+
+        /* Empty state */
+        .gallery-empty {
+            text-align: center;
+            padding: 80px 20px;
+            color: #94a3b8;
+        }
+        .gallery-empty i { font-size: 4rem; display: block; margin-bottom: 16px; }
+        .gallery-empty p { font-size: 1.05rem; }
+
+        /* ── Fancybox caption override ────────────────────────────── */
+        .fancybox__caption { font-size: .9rem; letter-spacing: .3px; }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <!-- Compact Hero/Breadcrumb Section -->
+    <section class="compact-hero"
+             style="background-image: url('{{ vgallery.coverImage
+                ? asset('uploads/image/' ~ vgallery.coverImage)
+                : (vgallery.images is not empty
+                    ? asset('uploads/image/' ~ vgallery.images[0].filename)
+                    : asset('images/dummy/2.jpg')) }}');">
+        <div class="compact-hero-overlay"></div>
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="compact-hero-content">
+                        <span class="compact-hero-badge">
+                            <i class="bi bi-images"></i> Gallery
+                        </span>
+                        <h1 class="compact-hero-title">{{ vgallery.title }}</h1>
+                        <nav aria-label="breadcrumb" class="compact-breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="{{ path('app_main') }}" class="text-white">
+                                        <i class="bi bi-house-door"></i> Home
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="{{ path('app_gallery') }}" class="text-white">Gallery</a>
+                                </li>
+                                <li class="breadcrumb-item active text-white-50" aria-current="page">
+                                    {{ vgallery.title }}
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Detail Section -->
+    <section class="gallery-detail-section">
+        <div class="container">
+
+            <!-- Album header -->
+            <div class="album-header" data-aos="fade-up">
+                <div class="album-header-left">
+                    <h2>{{ vgallery.title }}</h2>
+                    <div class="album-meta-row">
+                        <span><i class="bi bi-images"></i> {{ vgallery.images|length }} photo{{ vgallery.images|length != 1 ? 's' : '' }}</span>
+                    </div>
+                </div>
+                <a href="{{ path('app_gallery') }}" class="btn-back">
+                    <i class="bi bi-arrow-left"></i> Back to Albums
+                </a>
+            </div>
+
+            <!-- Masonry image grid -->
+            {% if vgallery.images is not empty %}
+                <div class="masonry-grid" data-aos="fade-up" data-aos-delay="100">
+                    {% for image in vgallery.images %}
+                        <div class="gallery-item">
+
+                            {% if vgallery.coverImage == image.filename %}
+                                <span class="cover-badge"><i class="bi bi-star-fill me-1"></i>Cover</span>
+                            {% endif %}
+
+                            <img src="{{ asset('uploads/image/' ~ image.filename) }}"
+                                 alt="{{ image.title ?: vgallery.title }}"
+                                 loading="lazy">
+
+                            <a href="{{ asset('uploads/image/' ~ image.filename) }}"
+                               data-fancybox="gallery-{{ vgallery.slug }}"
+                               data-caption="{{ image.title ?: vgallery.title }}"
+                               class="gallery-overlay"
+                               aria-label="View {{ image.title ?: 'image' }} in lightbox">
+                                <span class="zoom-icon"><i class="bi bi-zoom-in"></i></span>
+                                {% if image.title %}
+                                    <span class="image-title-label">{{ image.title }}</span>
+                                {% endif %}
+                            </a>
+
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="gallery-empty" data-aos="fade-up">
+                    <i class="bi bi-images"></i>
+                    <p>No images have been added to this album yet.</p>
+                </div>
+            {% endif %}
+
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        Fancybox.bind("[data-fancybox='gallery-{{ vgallery.slug }}']", {
+            animated: true,
+            showClass: "fancybox-zoomInUp",
+            hideClass: "fancybox-zoomOutDown",
+            Toolbar: {
+                display: {
+                    left:  ["infobar"],
+                    middle: [],
+                    right: ["slideshow", "fullscreen", "download", "close"],
+                },
+            },
+            caption: function (fancybox, slide) {
+                return slide.el?.dataset?.caption || "";
+            },
+            Slideshow: { timeout: 3500 },
+            Thumbs: {
+                type: "classic",
+            },
+        });
+    </script>
+{% endblock %}

@@ -9,35 +9,7 @@
         <div class="row g-0">
 
             <div class="col-lg-9 col-md-8 col-12">
-                {#Slider Section#}
-                {#<div class="hero-slider">
-                    <div class="slide" style="background-image: url('../images/pic1.jpg');">
-                        <div class="hero-overlay"></div>
-                        <div class="hero-content" data-aos="fade-up">
-                        <span class="hero-badge">
-                            <i class="bi bi-mortarboard"></i>
-                            Shaping Educators
-                        </span>
-                            <h1>Shaping Future Educators of Tomorrow</h1>
-                            <p>District Institute of Education & Training, Namchi - Empowering teachers with excellence, innovation, and transformative learning experiences since 2010.</p>
-                        </div>
-                    </div>
-
-                    <div class="slide" style="background-image: url('../images/pic2.jpg');">
-                        <div class="hero-overlay"></div>
-                        <div class="hero-content" data-aos="fade-up">
-                        <span class="hero-badge">
-                            <i class="bi bi-stars"></i>
-                            Excellence in Education
-                        </span>
-                            <h1>Excellence in Teacher Education</h1>
-                            <p>We provide world-class teacher training programs with modern infrastructure and experienced faculty dedicated to your growth.</p>
-
-                        </div>
-                    </div>
-                </div>#}
                 {{ render(controller('App\\Controller\\VsliderController::HomeSlider')) }}
-
             </div>
 
             <div class="col-lg-3 col-md-4 col-12">
@@ -397,18 +369,23 @@
     <!-- CTA Section -->
     <section class="cta-section">
         <div class="container">
-            <h2>Ready to Start Your Teaching Journey?</h2>
-            <p>
-                Join DIET Namchi and become part of a legacy of excellence in teacher education. Admissions open for 2026-28.
-            </p>
-            <div class="d-flex justify-content-center gap-3 flex-wrap">
-                <a href="admission.html" class="btn btn-light btn-lg px-4">Apply Online</a>
-                <a href="contact.html" class="btn btn-outline-light btn-lg px-4">Get in Touch</a>
+            <div data-aos="fade-up">
+            <span class="section-subtitle mb-3">
+                <i class="bi bi-hand-thumbs-up"></i> Start Your Journey
+            </span>
+                <h2 class="mb-3">Ready to Join DIET Namchi?</h2>
+                <p class="mx-auto mb-4">Explore our NCTE-recognized programs and become part of Sikkim's educational transformation.</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{{ path('app_main') }}" class="btn-apply">Explore Programs</a>
+                    <a href="tel:03595264521" class="btn btn-outline-primary px-4 py-2 rounded-pill">
+                        <i class="bi bi-telephone me-1"></i> Call Now
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ Section -->
+    {#<!-- FAQ Section -->
     <section class="section-padding" id="faq">
         <div class="container">
             <div class="section-title-block" data-aos="fade-up">
@@ -496,6 +473,8 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>#}
+
+    {{ include('main/_faq_section.html.twig') }}
 
 {% endblock %}

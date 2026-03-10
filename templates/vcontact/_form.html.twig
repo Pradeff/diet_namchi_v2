@@ -380,6 +380,17 @@
                                     </div>
 
                                     <div class="col-12">
+                                        <label class="form-label">Opening Time</label>
+                                        {{ form_widget(form.opentime, {
+                                            'attr': {
+                                                'class': 'form-control',
+                                                'placeholder': 'Mon - Sat: 10:00 AM - 5:00 PM'
+                                            }
+                                        }) }}
+                                        {{ form_errors(form.opentime) }}
+                                    </div>
+
+                                    <div class="col-12">
                                         <label class="form-label">Site Keywords</label>
                                         {{ form_widget(form.sitekeyword, {
                                             'attr': {

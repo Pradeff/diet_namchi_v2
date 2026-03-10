@@ -90,13 +90,25 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6 d-none d-md-block">
-                <a href="tel:+9103595264521">
-                    <i class="bi bi-telephone"></i> 03595-264521
-                </a>
-                <a href="mailto:dietnamchi12@gmail.com">
-                    <i class="bi bi-envelope"></i> dietnamchi12@gmail.com
-                </a>
-                <span><i class="bi bi-clock"></i> Mon - Sat: 10:00 AM - 5:00 PM</span>
+
+                {% if global_contact.phone1 %}
+                    <a href="tel:{{ global_contact.phone1 }}">
+                        <i class="bi bi-telephone"></i> {{ global_contact.phone1 }}
+                    </a>
+                {% endif %}
+
+                {% if global_contact.email1 %}
+                    <a href="mailto:{{ global_contact.email1 }}">
+                        <i class="bi bi-envelope"></i> {{ global_contact.email1 }}
+                    </a>
+                {% endif %}
+
+                {% if global_contact.opentime %}
+                    <span>
+            <i class="bi bi-clock"></i> {{ global_contact.opentime }}
+        </span>
+                {% endif %}
+
             </div>
             <div class="col-12 col-md-6 text-center text-md-end">
                     <span class="badge bg-warning text-dark">
@@ -165,7 +177,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ path('app_gallery') }}"
-                           class="nav-link {% if app.request.attributes.get('_route') == 'app_gallery' %}active{% endif %}">
+                           class="nav-link {% if app.request.attributes.get('_route') in ['app_gallery','app_gallery_detail'] %}active{% endif %}">
                             Gallery
                         </a>
                     </li>
@@ -175,14 +187,14 @@
                             RTI
                         </a>
                     </li>
-                    <li class="nav-item">
+                    {#<li class="nav-item">
                         <a href="{{ path('app_contact') }}"
                            class="nav-link {% if app.request.attributes.get('_route') == 'app_contact' %}active{% endif %}">
                             Contact
                         </a>
-                    </li>
+                    </li>#}
                 </ul>
-                <a href="{{ path('app_admission') }}" class="btn-apply">Apply Now</a>
+                <a href="{{ path('app_contact') }}" class="btn-apply">Contact Now</a>
             </nav>
 
             <!-- Mobile Toggle Button -->
@@ -428,7 +440,7 @@
     <div class="footer-geo"></div>
 
     <!-- ── Newsletter Band ── -->
-    <div class="footer-newsletter">
+    {#<div class="footer-newsletter">
         <div class="container">
             <div class="newsletter-label">
                 <div class="newsletter-icon">
@@ -444,7 +456,7 @@
                 <button type="submit">Subscribe <i class="bi bi-arrow-right-short"></i></button>
             </form>
         </div>
-    </div>
+    </div>#}
 
     <!-- ── Main Body ── -->
     <div class="footer-body">
@@ -472,11 +484,43 @@
                         <span class="badge-chip"><i class="bi bi-mortarboard-fill"></i> SCERT Affiliated</span>
                     </div>
                     <div class="footer-social">
-                        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="#" aria-label="Twitter X"><i class="bi bi-twitter-x"></i></a>
-                        <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+
+                        {% if global_contact.fb %}
+                            <a href="{{ global_contact.fb }}" target="_blank" aria-label="Facebook">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                        {% endif %}
+
+                        {% if global_contact.tw %}
+                            <a href="{{ global_contact.tw }}" target="_blank" aria-label="Twitter X">
+                                <i class="bi bi-twitter-x"></i>
+                            </a>
+                        {% endif %}
+
+                        {% if global_contact.yt %}
+                            <a href="{{ global_contact.yt }}" target="_blank" aria-label="YouTube">
+                                <i class="bi bi-youtube"></i>
+                            </a>
+                        {% endif %}
+
+                        {% if global_contact.insta %}
+                            <a href="{{ global_contact.insta }}" target="_blank" aria-label="Instagram">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+                        {% endif %}
+
+                        {% if global_contact.telegram %}
+                            <a href="{{ global_contact.telegram }}" target="_blank" aria-label="Telegram">
+                                <i class="bi bi-telegram"></i>
+                            </a>
+                        {% endif %}
+
+                        {% if global_contact.linkedin %}
+                            <a href="{{ global_contact.linkedin }}" target="_blank" aria-label="LinkedIn">
+                                <i class="bi bi-linkedin"></i>
+                            </a>
+                        {% endif %}
+
                     </div>
                 </div>
 
@@ -511,34 +555,59 @@
                 <div>
                     <h5 class="footer-col-title">Contact &amp; Location</h5>
                     <ul class="contact-list">
-                        <li class="contact-item">
-                            <div class="contact-icon"><i class="bi bi-geo-alt-fill"></i></div>
-                            <div class="contact-info">
-                                <span class="contact-label">Address</span>
-                                <span>Namchi, South Sikkim – 737126<br>State of Sikkim, India</span>
-                            </div>
-                        </li>
-                        <li class="contact-item">
-                            <div class="contact-icon"><i class="bi bi-telephone-fill"></i></div>
-                            <div class="contact-info">
-                                <span class="contact-label">Phone</span>
-                                <a href="tel:03595264521">03595 – 264521</a>
-                            </div>
-                        </li>
-                        <li class="contact-item">
-                            <div class="contact-icon"><i class="bi bi-envelope-fill"></i></div>
-                            <div class="contact-info">
-                                <span class="contact-label">Email</span>
-                                <a href="mailto:dietnamchi12@gmail.com">dietnamchi12@gmail.com</a>
-                            </div>
-                        </li>
-                        {#<li class="contact-item">
-                            <div class="contact-icon"><i class="bi bi-clock-fill"></i></div>
-                            <div class="contact-info">
-                                <span class="contact-label">Office Hours</span>
-                                <span>Mon – Fri: 9:00 AM – 5:00 PM</span>
-                            </div>
-                        </li>#}
+
+                        {% if global_contact.address %}
+                            <li class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                </div>
+                                <div class="contact-info">
+                                    <span class="contact-label">Address</span>
+                                    <span>{{ global_contact.address|raw }}</span>
+                                </div>
+                            </li>
+                        {% endif %}
+
+                        {% if global_contact.phone1 %}
+                            <li class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="bi bi-telephone-fill"></i>
+                                </div>
+                                <div class="contact-info">
+                                    <span class="contact-label">Phone</span>
+                                    <a href="tel:{{ global_contact.phone1 }}">
+                                        {{ global_contact.phone1 }}
+                                    </a>
+                                </div>
+                            </li>
+                        {% endif %}
+
+                        {% if global_contact.email1 %}
+                            <li class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="bi bi-envelope-fill"></i>
+                                </div>
+                                <div class="contact-info">
+                                    <span class="contact-label">Email</span>
+                                    <a href="mailto:{{ global_contact.email1 }}">
+                                        {{ global_contact.email1 }}
+                                    </a>
+                                </div>
+                            </li>
+                        {% endif %}
+
+                        {#{% if global_contact.opentime %}
+                            <li class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="bi bi-clock-fill"></i>
+                                </div>
+                                <div class="contact-info">
+                                    <span class="contact-label">Office Hours</span>
+                                    <span>{{ global_contact.opentime }}</span>
+                                </div>
+                            </li>
+                        {% endif %}#}
+
                     </ul>
                     {#<div class="map-card">
                         <div class="map-card-inner">
@@ -548,7 +617,7 @@
                     </div>#}
                 </div>
 
-            </div><!-- /footer-grid -->
+            </div>
         </div>
     </div>
 

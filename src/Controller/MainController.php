@@ -1,17 +1,22 @@
 <?php
 namespace App\Controller;
 
+use App\Repository\VgalleryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Entity\Vgallery;
+use App\Repository\VfaqRepository;
 
 final class MainController extends AbstractController
 {
     #[Route('/', name: 'app_main')]
-    public function index(): Response
+    public function index(
+        VfaqRepository $vfaqRepository
+    ): Response
     {
         return $this->render('main/index.html.twig', [
-            'controller_name' => 'MainController',
+            'vfaqs' => $vfaqRepository->findAllOrdered(),
         ]);
     }
 
@@ -31,6 +36,14 @@ final class MainController extends AbstractController
         ]);
     }
 
+ /*   #[Route('/faq', name: 'app_faq')]
+    public function faq(VfaqRepository $vfaqRepository): Response
+    {
+        return $this->render('main/faq.html.twig', [
+            'vfaqs' => $vfaqRepository->findAllOrdered(),
+        ]);
+    }*/
+
     #[Route('/notices', name: 'app_notices')]
     public function PgNotices(): Response
     {
@@ -40,10 +53,23 @@ final class MainController extends AbstractController
     }
 
     #[Route('/gallery', name: 'app_gallery')]
-    public function PgGallery(): Response
+    public function PgGallery(VgalleryRepository $vgalleryRepository): Response
     {
         return $this->render('main/gallery.html.twig', [
-            'controller_name' => 'MainController',
+            'vgalleries' => $vgalleryRepository->findAll(),
+        ]);
+    }
+    #[Route('/gallery/{slug}', name: 'app_gallery_detail')]
+    public function PgGalleryDetail(string $slug, VgalleryRepository $vgalleryRepository): Response
+    {
+        $vgallery = $vgalleryRepository->findOneBy(['slug' => $slug]);
+
+        if (!$vgallery) {
+            throw $this->createNotFoundException('Gallery not found.');
+        }
+
+        return $this->render('main/gallery_detail.html.twig', [
+            'vgallery' => $vgallery,
         ]);
     }
 

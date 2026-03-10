@@ -265,25 +265,47 @@
                                             Site Description
                                         </legend>
                                         <div class="row g-4">
+
                                             <div class="col-12">
-                                                <label class="form-label">Site Title</label>
+                                                <label class="form-label d-flex align-items-center">
+                                                    <i class="bi bi-type-h1 me-2 text-primary"></i>
+                                                    Site Title
+                                                </label>
                                                 {{ vcontact.sitetitle|raw }}
                                             </div>
 
                                             <div class="col-12">
-                                                <label class="form-label">Site Link</label>
+                                                <label class="form-label d-flex align-items-center">
+                                                    <i class="bi bi-link-45deg me-2 text-success"></i>
+                                                    Site Link
+                                                </label>
                                                 {{ vcontact.sitelink|raw }}
                                             </div>
 
                                             <div class="col-12">
-                                                <label class="form-label">Site Keywords</label>
+                                                <label class="form-label d-flex align-items-center">
+                                                    <i class="bi bi-clock me-2 text-warning"></i>
+                                                    Open Time
+                                                </label>
+                                                {{ vcontact.opentime|raw }}
+                                            </div>
+
+                                            <div class="col-12">
+                                                <label class="form-label d-flex align-items-center">
+                                                    <i class="bi bi-tags me-2 text-info"></i>
+                                                    Site Keywords
+                                                </label>
                                                 {{ vcontact.sitekeyword }}
                                             </div>
 
                                             <div class="col-12">
-                                                <label class="form-label">Site Description</label>
+                                                <label class="form-label d-flex align-items-center">
+                                                    <i class="bi bi-card-text me-2 text-danger"></i>
+                                                    Site Description
+                                                </label>
                                                 {{ vcontact.sitedescription|raw }}
                                             </div>
+
                                         </div>
                                     </fieldset>
                                 </div>

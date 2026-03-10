@@ -98,6 +98,9 @@ class Vcontact
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $sitelink = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $opentime = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -437,5 +440,15 @@ class Vcontact
         $this->sitelink = $sitelink;
 
         return $this;
+    }
+
+    public function getOpentime(): ?string
+    {
+        return $this->opentime;
+    }
+
+    public function setOpentime(?string $opentime): void
+    {
+        $this->opentime = $opentime;
     }
 }

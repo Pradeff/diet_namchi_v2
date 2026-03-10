@@ -819,28 +819,36 @@ img {
     background: #b45309;
 }
 
-/* CTA Section - Light Version */
+/*cta-section*/
 .cta-section {
-    background: linear-gradient(135deg, #eff6ff, #dbeafe);
-    color: var(--primary-dark);
-    padding: 80px 0;
+    background-color: #bfdeff;
     text-align: center;
-    border-top: 1px solid var(--border-subtle);
-    border-bottom: 1px solid var(--border-subtle);
+    background-image:
+        linear-gradient(to bottom, rgb(244, 255, 241) 0%, rgba(255, 232, 254, 0.85) 100%),
+
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(0, 0, 0, 0.05) 10px, /* Pattern color and opacity */
+            rgba(0, 0, 0, 0.05) 20px
+        ),
+        repeating-linear-gradient(
+            -45deg,
+            transparent,
+            transparent 10px,
+            rgba(0, 0, 0, 0.05) 10px, /* Pattern color and opacity */
+            rgba(0, 0, 0, 0.05) 20px
+        );
+
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
 }
 
-.cta-section h2 {
-    color: var(--primary-blue);
-    margin-bottom: 16px;
-}
-
-.cta-section p {
-    opacity: 0.9;
-    margin-bottom: 28px;
-    max-width: 620px;
-    margin-left: auto;
-    margin-right: auto;
-    color: var(--text-body);
+.cta-section .container {
+    position: relative;
+    z-index: 2;
 }
 
 /* FAQ */

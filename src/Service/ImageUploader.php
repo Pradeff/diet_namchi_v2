@@ -51,7 +51,8 @@ class ImageUploader
     }
 
     /**
-     * Upload and process a single image
+     * Upload and process a single image.
+     * All images are converted to WebP format regardless of original format.
      */
     public function upload(UploadedFile $file, ?string $prefix = null): string
     {
@@ -59,19 +60,19 @@ class ImageUploader
 
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($originalFilename);
-        $extension = $this->getOptimalExtension($file);
 
-        $fileName = ($prefix ? $prefix . '_' : '') . $safeFilename . '-' . uniqid() . '.' . $extension;
+        // Always use .webp extension — conversion happens below
+        $fileName = ($prefix ? $prefix . '_' : '') . $safeFilename . '-' . uniqid() . '.webp';
 
         try {
             // Create image instance
             $image = $this->imageManager->read($file->getPathname());
 
-            // Apply optimizations
+            // Apply optimizations (resize + auto-orient)
             $this->optimizeImage($image);
 
-            // Save optimized image
-            $image->save($this->uploadDirectory . '/' . $fileName, $this->quality);
+            // Encode to WebP and save
+            $image->toWebp($this->quality)->save($this->uploadDirectory . '/' . $fileName);
 
             return $fileName;
 
@@ -152,7 +153,8 @@ class ImageUploader
     }
 
     /**
-     * Create thumbnail
+     * Create thumbnail.
+     * Thumbnail is also saved as WebP for consistency.
      */
     public function createThumbnail(string $filename, int $width = 300, int $height = 200): ?string
     {
@@ -162,14 +164,17 @@ class ImageUploader
             return null;
         }
 
-        $pathInfo = pathinfo($filename);
-        $thumbnailName = $pathInfo['filename'] . '_thumb.' . $pathInfo['extension'];
+        // Strip whatever extension the stored file has and force .webp
+        $baseName = pathinfo($filename, PATHINFO_FILENAME);
+        $thumbnailName = $baseName . '_thumb.webp';
         $thumbnailPath = $this->uploadDirectory . '/' . $thumbnailName;
 
         try {
             $image = $this->imageManager->read($filePath);
             $image->cover($width, $height);
-            $image->save($thumbnailPath, $this->quality);
+
+            // Encode thumbnail to WebP and save
+            $image->toWebp($this->quality)->save($thumbnailPath);
 
             return $thumbnailName;
         } catch (\Exception $e) {
@@ -207,7 +212,7 @@ class ImageUploader
     }
 
     /**
-     * Optimize image (resize, compress)
+     * Optimize image (resize if too large, auto-orient via EXIF)
      */
     private function optimizeImage($image): void
     {
@@ -221,19 +226,14 @@ class ImageUploader
     }
 
     /**
-     * Get optimal file extension based on image type
+     * Get optimal file extension based on image type.
+     *
+     * @deprecated All uploads are now stored as WebP. This method is kept for
+     *             backwards compatibility but always returns 'webp'.
      */
     private function getOptimalExtension(UploadedFile $file): string
     {
-        $mimeType = $file->getMimeType();
-
-        return match($mimeType) {
-            'image/jpeg' => 'jpg',
-            'image/png' => 'png',
-            'image/gif' => 'gif',
-            'image/webp' => 'webp',
-            default => $file->guessExtension() ?? 'jpg'
-        };
+        return 'webp';
     }
 
     /**

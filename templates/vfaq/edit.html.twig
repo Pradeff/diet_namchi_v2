@@ -1,0 +1,26 @@
+{# templates/vfaq/edit.html.twig #}
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}Edit FAQ{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h4 class="mb-1 fw-bold"><i class="bi bi-pencil-square me-2 text-primary"></i>Edit FAQ</h4>
+            <p class="text-muted mb-0 small">Update the question or answer.</p>
+        </div>
+    </div>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-2"></i>{{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    {% endfor %}
+
+    {{ include('vfaq/_form.html.twig') }}
+
+</div>
+{% endblock %}

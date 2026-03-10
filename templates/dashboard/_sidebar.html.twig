@@ -76,6 +76,20 @@
                     </a>
                 </li>
 
+                <li class="side_nav-item {% if app.request.attributes.get('_route') in ['app_vfaq_index','app_vfaq_new','app_vfaq_edit','app_vfaq_show'] %}active{% endif %}">
+                    <a href="{{ path('app_vfaq_index') }}" class="side_nav-link" data-tooltip="FAQ's" title="FAQ's">
+                        <i class="bi bi-images"></i>
+                        <span>FAQ's</span>
+                    </a>
+                </li>
+
+                <li class="side_nav-item {% if app.request.attributes.get('_route') in ['app_vteam_index','app_vteam_new','app_vteam_edit','app_vteam_show'] %}active{% endif %}">
+                    <a href="{{ path('app_vteam_index') }}" class="side_nav-link"  data-tooltip="Staff" title="Staff">
+                        <i class="bi bi-users"></i>
+                        <span>Staff</span>
+                    </a>
+                </li>
+
                 <li class="side_nav-item {% if app.request.attributes.get('_route') in ['app_vpages_index','app_vpasge_new','app_vpagse_edit','app_vpagse_show'] %}active{% endif %}">
                     <a href="{{ path('app_vpages_index') }}" class="side_nav-link"  data-tooltip="Pages" title="Pages">
                         <i class="bi bi-book"></i>

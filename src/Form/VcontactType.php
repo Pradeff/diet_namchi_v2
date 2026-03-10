@@ -262,6 +262,7 @@ class VcontactType extends AbstractType
                 ],
             ])
 
+
             // File Uploads - All Optional
             ->add('favicon', FileType::class, [
                 'label' => 'Favicon',
@@ -362,6 +363,13 @@ class VcontactType extends AbstractType
                         'mimeTypesMessage' => 'Please upload a valid image file',
                         'maxSizeMessage' => 'The file is too large. Maximum allowed size is 1MB',
                     ]),
+                ],
+            ])
+            ->add('opentime', TextType::class, [
+                'label' => 'Open Time',
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Mon - Sat: 10:00 AM - 5:00 PM',
                 ],
             ]);
     }

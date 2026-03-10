@@ -136,6 +136,7 @@ class VgalleryController extends AbstractController
         }
 
         try {
+            // uploadMultiple now converts all images to .webp internally
             $uploadedFiles = $this->imageUploader->uploadMultiple($files, 'gallery');
 
             foreach ($uploadedFiles as $fileName) {
