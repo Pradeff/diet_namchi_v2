@@ -1,0 +1,87 @@
+<section class="hs-section">
+    <div class="container">
+
+        <div class="hs-header" data-aos="fade-up">
+            <div class="hs-label">
+                <i class="bi bi-people-fill"></i> Our People
+            </div>
+            <h2 class="hs-heading">
+                Meet Our <span>Faculty &amp; Staff</span>
+            </h2>
+            <p class="hs-sub">
+                Dedicated educators and professionals shaping the future of
+                education in Sikkim.
+            </p>
+        </div>
+
+        {% if vteams is defined and vteams|length > 0 %}
+
+            <div class="hs-slider" data-aos="fade-up" data-aos-delay="100">
+                {% for member in vteams %}
+                    <div class="hs-slide">
+                        <div class="hs-card">
+
+                            {# photo #}
+                            <div class="hs-photo">
+                                {% if member.image %}
+                                    <img src="{{ asset('uploads/image/' ~ member.image) }}"
+                                         alt="{{ member.title }}"
+                                         loading="lazy">
+                                {% else %}
+                                    <div class="hs-photo-placeholder">
+                                        <i class="bi bi-person-fill"></i>
+                                    </div>
+                                {% endif %}
+                                {% if member.position == 1 %}
+                                    <span class="hs-badge">
+                                    <i class="bi bi-award-fill"></i> Principal
+                                </span>
+                                {% endif %}
+                                <div class="hs-photo-overlay"></div>
+                            </div>
+
+                            {# info #}
+                            <div class="hs-info">
+                                <div class="hs-name">{{ member.title|default('N/A') }}</div>
+
+                                <div class="hs-role">
+                                    {{ member.designation|default('N/A') }}
+                                </div>
+
+                                <a href="mailto:{{ member.email|default('#') }}" class="hs-email">
+                                    <i class="bi bi-envelope-fill"></i>
+                                    <span>{{ member.email|default('N/A') }}</span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="hs-footer" data-aos="fade-up">
+                <a href="{{ path('app_team') }}" class="hs-btn-all">
+                    View All Members <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+
+        {% else %}
+
+            <div class="hs-empty" data-aos="fade-up" data-aos-delay="100">
+                <div class="hs-empty-icon">
+                    <i class="bi bi-people"></i>
+                </div>
+                <h3 class="hs-empty-title">Team profiles coming soon</h3>
+                <p class="hs-empty-msg">
+                    We're putting together our faculty &amp; staff directory.
+                    Check back shortly to meet the dedicated team behind DIET Namchi.
+                </p>
+                <a href="{{ path('app_team') }}" class="hs-btn-all mt-2">
+                    Visit Team Page <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+
+        {% endif %}
+
+    </div>
+</section>

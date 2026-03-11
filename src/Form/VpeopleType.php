@@ -30,7 +30,8 @@ class VpeopleType extends AbstractType
                             'image/jpeg',
                             'image/png',
                             'image/jpg',
-                            'image/gif'
+                            'image/gif',
+                            'image/webp',
                         ],
                         'mimeTypesMessage' => "This file isn't valid. Upload only image file.",
                         'maxSizeMessage' => "Upload below 1MB file.",

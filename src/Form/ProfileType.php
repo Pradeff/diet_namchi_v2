@@ -40,7 +40,9 @@ class ProfileType extends AbstractType
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/png',
+                            'image/jpg',
                             'image/gif',
+                            'image/webp',
                         ],
                         'mimeTypesMessage' => 'Please upload a valid image file (JPEG, PNG, GIF)',
                     ])

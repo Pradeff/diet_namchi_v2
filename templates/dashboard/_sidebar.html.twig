@@ -40,7 +40,7 @@
                             'app_vteam_index','app_vteam_new','app_vteam_edit','app_vteam_show','app_vtripcode_index',]
                         %}active{% endif %}">
                             <a href="javascript:void(0);" class="side_nav-link" data-bs-toggle="collapse" data-bs-target="#aboutSubmenu">
-                                <i class="bi bi-person-check"></i>
+                                <i class="bi bi-menu-down"></i>
                                 <span>Menu DIET</span>
                                 <i class="bi bi-chevron-right side_dropdown-icon"></i>
                             </a>
@@ -78,14 +78,14 @@
 
                 <li class="side_nav-item {% if app.request.attributes.get('_route') in ['app_vfaq_index','app_vfaq_new','app_vfaq_edit','app_vfaq_show'] %}active{% endif %}">
                     <a href="{{ path('app_vfaq_index') }}" class="side_nav-link" data-tooltip="FAQ's" title="FAQ's">
-                        <i class="bi bi-images"></i>
+                        <i class="bi bi-patch-question"></i>
                         <span>FAQ's</span>
                     </a>
                 </li>
 
                 <li class="side_nav-item {% if app.request.attributes.get('_route') in ['app_vteam_index','app_vteam_new','app_vteam_edit','app_vteam_show'] %}active{% endif %}">
                     <a href="{{ path('app_vteam_index') }}" class="side_nav-link"  data-tooltip="Staff" title="Staff">
-                        <i class="bi bi-users"></i>
+                        <i class="bi bi-people"></i>
                         <span>Staff</span>
                     </a>
                 </li>

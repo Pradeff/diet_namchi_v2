@@ -64,8 +64,9 @@ class VsliderType extends AbstractType
                         'maxSize' => '20M',
                         'mimeTypes' => [
                             'image/jpeg',
-                            'image/jpg',
                             'image/png',
+                            'image/jpg',
+                            'image/gif',
                             'image/webp',
                             'video/mp4',
                             'video/webm',

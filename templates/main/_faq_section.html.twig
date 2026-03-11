@@ -1,11 +1,3 @@
-{#
-templates/main/_faq_section.html.twig
-Include this in any public page with:
-    {{ include('main/_faq_section.html.twig') }}
-Make sure $vfaqs is passed from the controller.
-#}
-
-<!-- FAQ Section -->
 <section class="section-padding" id="faq">
     <div class="container">
         <div class="section-title-block" data-aos="fade-up">
@@ -52,5 +44,12 @@ Make sure $vfaqs is passed from the controller.
             </div>
         {% endif %}
 
+
     </div>
+    <div class="container mx-auto text-center mt-5" data-aos="fade-up" data-aos-delay="200">
+        <a href="{{ path('app_pg_faq') }}" class="btn-apply">
+            <i class="bi bi-arrow-right"></i>
+            View all FAQ's </a>
+    </div>
+
 </section>

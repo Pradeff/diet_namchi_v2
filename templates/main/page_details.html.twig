@@ -1,0 +1,144 @@
+{# templates/main/page_details.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ page.title }} - DIET Namchi{% endblock %}
+
+{% block body %}
+    <!-- Compact Hero/Breadcrumb Section -->
+    <section class="compact-hero" style="background-image: url('{{ page.image ? asset('uploads/image/' ~ page.image) : asset('images/dummy/2.jpg') }}');">
+        <div class="compact-hero-overlay"></div>
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12" data-aos="fade-up">
+                    <div class="compact-hero-content">
+                        <span class="compact-hero-badge">
+                            <i class="bi {{ page.icon ?: 'bi-file-text' }}"></i> {{ page.title }}
+                        </span>
+                        <h1 class="compact-hero-title">{{ page.title }}</h1>
+                        <nav aria-label="breadcrumb" class="compact-breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="{{ path('app_main') }}" class="text-white">
+                                        <i class="bi bi-house-door"></i> Home
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active text-white-50" aria-current="page">{{ page.title }}</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page Content -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="section-header" data-aos="fade-up">
+                        <span class="section-subtitle">
+                            <i class="bi {{ page.icon ?: 'bi-info-circle' }}"></i>
+                            {% if page.updatedAt %}
+                                Last Updated: {{ page.updatedAt|date('F Y') }}
+                            {% else %}
+                                Published: {{ page.createdAt|date('F Y') }}
+                            {% endif %}
+                        </span>
+                        <h2 class="section-title">{{ page.title }}</h2>
+                        {% if page.shortDescription|default('') %}
+                            <p>{{ page.shortDescription }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="feature-card" data-aos="fade-up">
+                        {% if page.description %}
+                            <div class="page-content" style="text-align: justify;">
+                                {{ page.description|raw }}
+                            </div>
+                        {% endif %}
+
+                        {# Optional second content section #}
+                        {% if page.description2|default('') %}
+                            <hr class="my-4">
+                            <div class="page-content" style="text-align: justify;">
+                                {{ page.description2|raw }}
+                            </div>
+                        {% endif %}
+
+                        <!-- Meta Info + Contact -->
+                        <div class="mt-5 pt-3 border-top d-flex flex-column flex-sm-row
+                                justify-content-between align-items-sm-center gap-3">
+                            <div class="text-muted small">
+                                <i class="bi bi-calendar3 me-1"></i>
+                                {% if page.updatedAt %}
+                                    Last updated: {{ page.updatedAt|date('F j, Y') }}
+                                {% else %}
+                                    Published: {{ page.createdAt|date('F j, Y') }}
+                                {% endif %}
+                            </div>
+                            <div class="text-end">
+                                {% if global_contact.phone1 %}
+                                    <small class="me-3">
+                                        <i class="bi bi-telephone me-1"></i>{{ global_contact.phone1 }}
+                                    </small>
+                                {% endif %}
+                                <a href="{{ path('app_main') }}" class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-arrow-left me-2"></i>Back to Menu
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div data-aos="fade-up">
+                <h2 class="mb-3">Have Questions?</h2>
+                <p class="mx-auto mb-4">Our team is available to address your inquiries about {{ page.title|lower }}.</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{{ path('app_contact') }}" class="btn-apply">Contact Us</a>
+                    <a href="{{ path('app_main') }}" class="btn btn-outline-primary px-4 py-2 rounded-pill">
+                        <i class="bi bi-grid me-2"></i>Explore More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Pages Links (styled to match privacy page) -->
+    {% if footerPages|length > 0 %}
+        <section class="py-5 bg-light">
+            <div class="container">
+                <div class="section-header text-center" data-aos="fade-up">
+                    <span class="section-subtitle"><i class="bi bi-link-45deg"></i> Quick Links</span>
+                    <h2 class="section-title">Explore Other Pages</h2>
+                </div>
+                <div class="row g-4">
+                    {% for footerPage in footerPages|slice(0, 4) %}
+                        {% if footerPage.slug != page.slug %}
+                            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
+                                <a href="{{ path('page_detail', {'slug': footerPage.slug}) }}"
+                                   class="text-decoration-none">
+                                    <div class="feature-card h-100 text-center">
+                                        {% if footerPage.icon %}
+                                            <i class="bi {{ footerPage.icon }} display-5 text-primary mb-3 d-block"></i>
+                                        {% endif %}
+                                        <h5 class="fw-semibold mb-2">{{ footerPage.title }}</h5>
+                                        <small class="text-muted">Learn more <i class="bi bi-arrow-right-short"></i></small>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}
+
+

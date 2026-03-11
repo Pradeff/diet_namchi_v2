@@ -228,68 +228,9 @@
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section id="faq" class="section-padding bg-light-section">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <span class="section-subtitle">
-                    <i class="bi bi-question-circle"></i> FAQs
-                </span>
-                <h2 class="section-title">Common Questions</h2>
-            </div>
-
-            <div class="accordion" id="contactFaq" data-aos="fade-up">
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                            What documents do I need for admission inquiry?
-                        </button>
-                    </h2>
-                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#contactFaq">
-                        <div class="accordion-body">
-                            For admission inquiries, please have your educational certificates, ID proof, and passport-size photographs ready. Our team will guide you through the exact requirements based on your chosen program.
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                            How long does it take to get a response?
-                        </button>
-                    </h2>
-                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#contactFaq">
-                        <div class="accordion-body">
-                            We aim to respond to all inquiries within 24 working hours. For urgent matters, please call our office directly during working hours.
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                            Can I visit the campus without an appointment?
-                        </button>
-                    </h2>
-                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#contactFaq">
-                        <div class="accordion-body">
-                            Yes, campus visits are welcome during office hours. However, for personalized guidance, we recommend scheduling an appointment in advance by calling or emailing us.
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
-                            Do you offer virtual counseling sessions?
-                        </button>
-                    </h2>
-                    <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#contactFaq">
-                        <div class="accordion-body">
-                            Yes! We offer virtual counseling via video call for prospective students outside Sikkim. Request this option when you call or email us.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    {{ render(controller('App\\Controller\\MainController::SecFaq')) }}
+    <a href="{{ path('app_pg_faq') }}" class="d-block text-center mt-4" data-aos="fade-up">
+        <i class="bi bi-arrow-right"></i> View All FAQs
 
     <!-- CTA Section -->
     <section class="cta-section">

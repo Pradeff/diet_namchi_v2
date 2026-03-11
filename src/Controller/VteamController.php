@@ -6,6 +6,8 @@ use App\Entity\Vteam;
 use App\Form\VteamType;
 use App\Repository\VteamRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,13 +36,12 @@ class VteamController extends AbstractController
             $croppedData = $request->request->get('croppedImageData');
 
             if ($croppedData) {
-                $fileName = $this->saveCroppedImage($croppedData);
+                $fileName = $this->saveCroppedImageAsWebp($croppedData);
                 $vteam->setImage($fileName);
             } else {
                 $file = $form->get('image')->getData();
                 if ($file) {
-                    $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
-                    $file->move($this->getParameter('image_directory'), $fileName);
+                    $fileName = $this->convertAndSaveAsWebp($file->getPathname());
                     $vteam->setImage($fileName);
                 }
             }
@@ -83,26 +84,15 @@ class VteamController extends AbstractController
             $croppedData = $request->request->get('croppedImageData');
 
             if ($croppedData) {
-                if ($filename) {
-                    $filepath = $this->getParameter('image_directory') . '/' . $filename;
-                    if (file_exists($filepath)) {
-                        unlink($filepath);
-                    }
-                }
-                $fileName = $this->saveCroppedImage($croppedData);
+                $this->deleteExistingImage($filename);
+                $fileName = $this->saveCroppedImageAsWebp($croppedData);
                 $vteam->setImage($fileName);
             } else {
                 $file = $form->get('image')->getData();
                 if ($file) {
-                    if ($filename) {
-                        $filepath = $this->getParameter('image_directory') . '/' . $filename;
-                        if (file_exists($filepath)) {
-                            unlink($filepath);
-                        }
-                    }
-                    $fileName1 = $this->generateUniqueFileName() . '.' . $file->guessExtension();
-                    $file->move($this->getParameter('image_directory'), $fileName1);
-                    $vteam->setImage($fileName1);
+                    $this->deleteExistingImage($filename);
+                    $fileName = $this->convertAndSaveAsWebp($file->getPathname());
+                    $vteam->setImage($fileName);
                 } else {
                     $vteam->setImage($filename);
                 }
@@ -126,14 +116,8 @@ class VteamController extends AbstractController
     public function delete(Request $request, Vteam $vteam,
                            VteamRepository $vteamRepository, EntityManagerInterface $entityManager): Response
     {
-        $image = $vteam->getImage();
         if ($this->isCsrfTokenValid('delete'.$vteam->getId(), $request->request->get('_token'))) {
-            if ($image) {
-                $filepath = $this->getParameter('image_directory') . '/' . $image;
-                if (file_exists($filepath)) {
-                    unlink($filepath);
-                }
-            }
+            $this->deleteExistingImage($vteam->getImage());
             $entityManager->remove($vteam);
             $entityManager->flush();
             $vteamRepository->reorderPositions();
@@ -159,19 +143,58 @@ class VteamController extends AbstractController
         return new JsonResponse(['success' => true]);
     }
 
+    // ── Private helpers ──────────────────────────────────────────────────────
+
     private function generateUniqueFileName(): string
     {
         return md5(uniqid());
     }
 
-    private function saveCroppedImage(string $croppedData): string
+    /**
+     * Convert any uploaded file to WebP and save it.
+     * Returns the new filename (*.webp).
+     */
+    private function convertAndSaveAsWebp(string $sourcePath): string
     {
-        $data = explode(',', $croppedData);
-        $decoded = base64_decode($data[1]);
-        $fileName = $this->generateUniqueFileName() . '.png';
-        $path = $this->getParameter('image_directory') . '/' . $fileName;
-        file_put_contents($path, $decoded);
+        $manager  = new ImageManager(new Driver());
+        $image    = $manager->read($sourcePath);
+        $fileName = $this->generateUniqueFileName() . '.webp';
+        $destPath = $this->getParameter('image_directory') . '/' . $fileName;
+        $image->toWebp(85)->save($destPath);
 
         return $fileName;
+    }
+
+    /**
+     * Decode a base64 cropped-image data-URI, convert to WebP and save.
+     * Returns the new filename (*.webp).
+     */
+    private function saveCroppedImageAsWebp(string $croppedData): string
+    {
+        $data    = explode(',', $croppedData);
+        $decoded = base64_decode($data[1]);
+
+        // Write raw bytes to a temp file so Intervention can read them
+        $tmp = tempnam(sys_get_temp_dir(), 'crop_') . '.png';
+        file_put_contents($tmp, $decoded);
+
+        $fileName = $this->convertAndSaveAsWebp($tmp);
+
+        @unlink($tmp);
+
+        return $fileName;
+    }
+
+    /**
+     * Delete an existing image file from the uploads directory if it exists.
+     */
+    private function deleteExistingImage(?string $filename): void
+    {
+        if ($filename) {
+            $filepath = $this->getParameter('image_directory') . '/' . $filename;
+            if (file_exists($filepath)) {
+                unlink($filepath);
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-{#template/base.html.twig#}
+{# template/base.html.twig #}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,7 +48,8 @@
         {
             "@context": "https://schema.org",
             "@type": "EducationInstitution",
-            "name": "{% if global_contact and global_contact.sitetitle %}{{ global_contact.sitetitle|e('js') }}{% else %}Lets Go Sikkim{% endif %}",
+            "name": "{% if global_contact and global_contact.sitetitle %}{{ global_contact.sitetitle|e('js') }}{% else %}Lets Go Sikkim{% endif %}
+        ",
         {% if global_contact and global_contact.sitedescription %}"description": "{{ global_contact.sitedescription|e('js') }}",{% endif %}
         {% if global_contact and global_contact.sitelink %}"url": "{{ global_contact.sitelink|e('js') }}",{% endif %}
         {% if global_contact and global_contact.phone1 %}"telephone": "+91{{ global_contact.phone1|e('js') }}",{% endif %}
@@ -182,17 +183,17 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ path('app_rti') }}"
-                           class="nav-link {% if app.request.attributes.get('_route') == 'app_rti' %}active{% endif %}">
-                            RTI
+                        <a href="{{ path('app_pg_faq') }}"
+                           class="nav-link {% if app.request.attributes.get('_route') == 'app_pg_faq' %}active{% endif %}">
+                            FAQ's
                         </a>
                     </li>
-                    {#<li class="nav-item">
+                    {# <li class="nav-item">
                         <a href="{{ path('app_contact') }}"
                            class="nav-link {% if app.request.attributes.get('_route') == 'app_contact' %}active{% endif %}">
                             Contact
                         </a>
-                    </li>#}
+                    </li> #}
                 </ul>
                 <a href="{{ path('app_contact') }}" class="btn-apply">Contact Now</a>
             </nav>
@@ -255,192 +256,14 @@
 </div>
 {% block body %}{% endblock %}
 
-
-{#<footer class="main-footer">
-
-
-
-    <!-- Main Footer Content -->
-    <div class="footer-content">
-        <div class="container">
-            <div class="row g-4">
-
-                <!-- Brand Column -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="footer-brand">
-                        <div class="footer-brand-logo">
-                            <img src="{{ asset('images/logo.png') }}" alt="DIET Namchi">
-                            <div>
-                                <h3>D.I.E.T Namchi</h3>
-                                <span>Est. 2010</span>
-                            </div>
-                        </div>
-                        <p>District Institute of Education & Training, committed to excellence in teacher
-                            education and professional development.</p>
-                        <div class="footer-social">
-                            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                            <a href="#" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
-                            <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div class="col-6 col-lg-2 col-md-3">
-                    <div class="footer-column">
-                        <h5 class="footer-column-title">Quick Links</h5>
-                        <ul class="footer-column-links">
-                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>About Us</a></li>
-                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>Admission</a></li>
-                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>Training</a></li>
-                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>Notices</a></li>
-                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Programs -->
-                <div class="col-6 col-lg-2 col-md-3">
-                    <div class="footer-column">
-                        <h5 class="footer-column-title">Programs</h5>
-                        <ul class="footer-column-links">
-                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>D.El.Ed</a></li>
-                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>B.Ed</a></li>
-                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>In-Service Training</a></li>
-                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>Downloads</a></li>
-                            <li><a href="{{ path('app_main') }}"><i class="bi bi-chevron-right"></i>Gallery</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Contact Info -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="footer-column">
-                        <h5 class="footer-column-title">Contact Info</h5>
-                        <ul class="footer-contact-list">
-                            <li class="footer-contact-item">
-                                <i class="bi bi-geo-alt-fill"></i>
-                                <span>Namchi, South Sikkim - 737126</span>
-                            </li>
-                            <li class="footer-contact-item">
-                                <i class="bi bi-telephone"></i>
-                                <a href="tel:03595264521">03595-264521</a>
-                            </li>
-                            <li class="footer-contact-item">
-                                <i class="bi bi-envelope"></i>
-                                <a href="mailto:dietnamchi12@gmail.com">dietnamchi12@gmail.com</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer Bottom -->
-    <div class="footer-bottom">
-        <div class="container">
-            <div class="footer-bottom-content">
-                <p>&copy; 2026 DIET Namchi. All Rights Reserved.</p>
-                <div class="footer-bottom-links">
-                    <a href="{{ path('app_main') }}">Privacy Policy</a>
-                    <a href="{{ path('app_main') }}">Terms of Use</a>
-                    <a href="{{ path('app_main') }}">Sitemap</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</footer>#}
-{#<footer class="main-footer pt-5 pb-0">
-    <div class="container mb-5">
-        <div class="row g-4">
-            <div class="col-lg-4">
-                <div class="footer-brand">
-                    <div class="footer-brand-logo mb-3">
-                        <img src="{{ asset('images/logo.png') }}" alt="DIET Namchi">
-                        <div>
-                            <h3 class="mb-0">D.I.E.T Namchi</h3>
-                            <span class="text-uppercase fw-bold text-primary">Est. 2010</span>
-                        </div>
-                    </div>
-                    <p class="mb-4">District Institute of Education & Training, Namchi. Dedicated to fostering pedagogical innovation and teacher excellence across Sikkim.</p>
-                    <div class="footer-social">
-                        <a href="#"><i class="bi bi-facebook"></i></a>
-                        <a href="#"><i class="bi bi-twitter"></i></a>
-                        <a href="#"><i class="bi bi-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="row">
-                    <div class="col-6">
-                        <h5 class="footer-column-title mb-4">Platform</h5>
-                        <ul class="footer-column-links">
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Admission</a></li>
-                            <li><a href="#">Programs</a></li>
-                            <li><a href="#">Gallery</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-6">
-                        <h5 class="footer-column-title mb-4">Support</h5>
-                        <ul class="footer-column-links">
-                            <li><a href="#">Notices</a></li>
-                            <li><a href="#">Downloads</a></li>
-                            <li><a href="#">Privacy</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="card border-0 bg-light p-4 rounded-4 shadow-sm">
-                    <h5 class="footer-column-title mb-3">Get in Touch</h5>
-                    <ul class="footer-contact-list m-0">
-                        <li class="d-flex gap-3 mb-3">
-                            <i class="bi bi-geo-alt-fill text-primary mt-1"></i>
-                            <span class="text-secondary small">Namchi, South Sikkim<br>Pin: 737126</span>
-                        </li>
-                        <li class="d-flex gap-3 mb-3">
-                            <i class="bi bi-telephone text-primary"></i>
-                            <a href="tel:03595264521" class="text-dark fw-bold">03595-264521</a>
-                        </li>
-                        <li class="d-flex gap-3">
-                            <i class="bi bi-envelope text-primary"></i>
-                            <a href="mailto:dietnamchi12@gmail.com" class="text-dark fw-bold">dietnamchi12@gmail.com</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer-bottom py-4 bg-white border-top">
-        <div class="container text-center text-md-start d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
-            <p class="small text-muted mb-0">&copy; 2026 DIET Namchi. All Rights Reserved.</p>
-            <div class="d-flex gap-4">
-                <a href="#" class="small text-muted">Privacy Policy</a>
-                <a href="#" class="small text-muted">Terms of Service</a>
-            </div>
-        </div>
-    </div>
-</footer>#}
-
 <footer class="main-footer">
 
-    <!-- Animated accent bar -->
     <div class="footer-accent-bar"></div>
 
-    <!-- Background circle geometry -->
     <div class="footer-geo"></div>
 
     <!-- ── Newsletter Band ── -->
-    {#<div class="footer-newsletter">
+    {# <div class="footer-newsletter">
         <div class="container">
             <div class="newsletter-label">
                 <div class="newsletter-icon">
@@ -456,7 +279,7 @@
                 <button type="submit">Subscribe <i class="bi bi-arrow-right-short"></i></button>
             </form>
         </div>
-    </div>#}
+    </div> #}
 
     <!-- ── Main Body ── -->
     <div class="footer-body">
@@ -526,32 +349,43 @@
 
                 <!-- Quick Links -->
                 <div>
-                    <h5 class="footer-col-title">Quick Links</h5>
+                    <h5 class="footer-col-title">Important Links</h5>
                     <ul class="footer-links">
-                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>About Us</a></li>
-                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>Admission</a></li>
-                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>Training Programs</a></li>
-                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>Notices &amp; Circulars</a></li>
-                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>Downloads</a></li>
-                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>Photo Gallery</a></li>
-                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>Contact Us</a></li>
+                        <li><a href="https://sikkim.gov.in/" target="_blank" rel="noopener"><span
+                                    class="link-dot"></span>Government of Sikkim</a></li>
+                        <li><a href="https://education.sikkim.gov.in/" target="_blank" rel="noopener"><span
+                                    class="link-dot"></span>Education Department Sikkim</a></li>
+                        <li><a href="https://www.scertsikkim.ac.in/" target="_blank" rel="noopener"><span
+                                    class="link-dot"></span>SCERT Sikkim</a></li>
+                        <li><a href="https://www.samagrashikshasikkim.org/" target="_blank" rel="noopener"><span
+                                    class="link-dot"></span>Samagra Shiksha Sikkim</a></li>
+                        <li><a href="https://diksha.gov.in/" target="_blank" rel="noopener"><span
+                                    class="link-dot"></span>DIKSHA Portal</a></li>
+                        <li><a href="https://sikkim.nic.in/" target="_blank" rel="noopener"><span
+                                    class="link-dot"></span>NIC Sikkim</a></li>
+
                     </ul>
                 </div>
 
-                <!-- Programs -->
-                <div>
-                    <h5 class="footer-col-title">Programs</h5>
-                    <ul class="footer-links">
-                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>D.El.Ed</a></li>
-                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>B.Ed</a></li>
-                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>In-Service Training</a></li>
-                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>Bridge Course</a></li>
-                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>Orientation Program</a></li>
-                        <li><a href="{{ path('app_main') }}"><span class="link-dot"></span>Research &amp; Dev.</a></li>
-                    </ul>
-                </div>
+                <!-- site menu -->
+                {% if quick_link_pages is defined and quick_link_pages is not empty %}
 
-                <!-- Contact Column -->
+                    <div>
+                        <h5 class="footer-col-title">Menu</h5>
+                        <ul class="footer-links">
+                            {% for page in quick_link_pages %}
+                                <li>
+                                    <a href="{{ path('page_detail', {'slug': page.slug}) }}">
+                                        <span class="link-dot"></span>{{ page.title }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% else %}
+
+                {% endif %}
+
                 <div>
                     <h5 class="footer-col-title">Contact &amp; Location</h5>
                     <ul class="contact-list">
@@ -596,7 +430,7 @@
                             </li>
                         {% endif %}
 
-                        {#{% if global_contact.opentime %}
+                        {# {% if global_contact.opentime %}
                             <li class="contact-item">
                                 <div class="contact-icon">
                                     <i class="bi bi-clock-fill"></i>
@@ -606,15 +440,15 @@
                                     <span>{{ global_contact.opentime }}</span>
                                 </div>
                             </li>
-                        {% endif %}#}
+                        {% endif %} #}
 
                     </ul>
-                    {#<div class="map-card">
+                    {# <div class="map-card">
                         <div class="map-card-inner">
                             <i class="bi bi-geo-alt-fill"></i>
                             Namchi, South Sikkim, India
                         </div>
-                    </div>#}
+                    </div> #}
                 </div>
 
             </div>
@@ -632,15 +466,15 @@
             <div class="footer-bottom-inner">
                 <div class="footer-bottom-left">
                     <p class="footer-copyright">
-                        &copy; 2026 <strong>DIET Namchi</strong>. All Rights Reserved.
+                        <strong>&copy; {{ "now"|date("Y") }} DIET Namchi. All Rights Reserved.</strong>
                     </p>
-                    {#<div class="footer-bottom-sep"></div>
+                    {# <div class="footer-bottom-sep"></div>
                     <nav class="footer-bottom-nav">
                         <a href="{{ path('app_main') }}">Privacy Policy</a>
                         <a href="{{ path('app_main') }}">Terms of Use</a>
                         <a href="{{ path('app_main') }}">Sitemap</a>
                         <a href="{{ path('app_main') }}">RTI</a>
-                    </nav>#}
+                    </nav> #}
                 </div>
                 <div class="footer-bottom-right">
           <span class="govt-badge">
@@ -662,6 +496,8 @@
 </div>
 
 {% block javascripts %}
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/slick.min.js') }}" type="text/javascript"></script>

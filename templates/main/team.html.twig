@@ -1,4 +1,4 @@
-{# main/team.html.twig — Redesigned #}
+{# main/team.html.twig — Bound to Vteam data #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Our Team — DIET Namchi{% endblock %}
@@ -53,7 +53,7 @@
             border: 1px solid rgba(255,255,255,.18);
             background: rgba(255,255,255,.08);
             backdrop-filter: blur(6px);
-            font-family: var(--sans);
+
             font-size: 12px;
             font-weight: 600;
             letter-spacing: .8px;
@@ -63,7 +63,6 @@
         }
         .hero-eyebrow i { color: var(--gold); }
         .team-hero h1 {
-            font-family: var(--serif);
             font-size: clamp(2rem, 5vw, 3.2rem);
             font-weight: 700;
             color: #fff;
@@ -77,7 +76,7 @@
             gap: 8px;
             font-size: 13px;
             color: rgba(255,255,255,.55);
-            font-family: var(--sans);
+
         }
         .team-breadcrumb a { color: rgba(255,255,255,.75); text-decoration: none; transition: color .2s; }
         .team-breadcrumb a:hover { color: #fff; }
@@ -96,7 +95,7 @@
             display: inline-flex;
             align-items: center;
             gap: 7px;
-            font-family: var(--sans);
+
             font-size: 11.5px;
             font-weight: 700;
             letter-spacing: 1.2px;
@@ -111,7 +110,6 @@
             background: var(--rose);
         }
         .team-heading {
-            font-family: var(--serif);
             font-size: clamp(1.8rem, 3.5vw, 2.5rem);
             font-weight: 700;
             color: var(--navy);
@@ -121,7 +119,6 @@
         .team-sub {
             font-size: 15px;
             color: var(--slate);
-            max-width: 480px;
             line-height: 1.7;
         }
 
@@ -158,10 +155,11 @@
             border-radius: 8px;
             background: rgba(15,23,42,.75);
             backdrop-filter: blur(8px);
-            font-family: var(--sans);
+
             font-size: 12px;
             font-weight: 600;
             color: #fff;
+            z-index: 1;
         }
         .principal-role-tag i { color: var(--gold); }
         .principal-info {
@@ -175,7 +173,6 @@
             content: '"';
             position: absolute;
             top: 20px; right: 36px;
-            font-family: var(--serif);
             font-size: 120px;
             line-height: 1;
             color: rgba(153,64,106,.06);
@@ -190,7 +187,6 @@
             margin-bottom: 12px;
         }
         .principal-info h2 {
-            font-family: var(--serif);
             font-size: 2rem;
             font-weight: 700;
             color: var(--navy);
@@ -200,7 +196,6 @@
         .principal-info h2 span { color: var(--blue); }
         .principal-degree { font-size: 13px; color: var(--muted); margin-bottom: 18px; }
         .principal-quote {
-            font-family: var(--serif);
             font-size: 16px;
             font-style: italic;
             color: var(--slate);
@@ -227,61 +222,8 @@
         .contact-pill:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
         .contact-pill:hover i { color: #fff; }
 
-        /* ══ ADMIN GRID ══ */
-        .admin-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-top: 32px;
-        }
-        .admin-card {
-            background: #fff;
-            border-radius: var(--r);
-            border: 1px solid var(--border);
-            overflow: hidden;
-            transition: all .3s var(--ease);
-        }
-        .admin-card:hover { box-shadow: 0 20px 50px rgba(15,23,42,.10); transform: translateY(-4px); border-color: transparent; }
-        .admin-card-top { height: 6px; background: linear-gradient(90deg, var(--blue), var(--rose)); }
-        .admin-card-body { padding: 28px 24px 24px; display: flex; align-items: flex-start; gap: 18px; }
-        .admin-avatar {
-            width: 72px; height: 72px;
-            border-radius: 14px;
-            overflow: hidden;
-            flex-shrink: 0;
-            border: 2px solid var(--bg-off);
-            box-shadow: 0 6px 18px rgba(15,23,42,.10);
-        }
-        .admin-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .admin-role { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--rose); margin-bottom: 4px; }
-        .admin-name { font-family: var(--serif); font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
-        .admin-qual { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
-        .admin-ext { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--blue); font-weight: 500; }
-
-        /* ══ STAT RIBBON ══ */
-        .stat-ribbon {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            background: var(--navy);
-            border-radius: 18px;
-            overflow: hidden;
-            margin: 52px 0 0;
-            position: relative;
-        }
-        .stat-ribbon::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse 70% 80% at 80% 20%, rgba(153,64,106,.22) 0%, transparent 60%);
-            pointer-events: none;
-        }
-        .stat-item { padding: 32px 28px; text-align: center; border-right: 1px solid rgba(255,255,255,.08); position: relative; }
-        .stat-item:last-child { border-right: none; }
-        .stat-num { font-family: var(--serif); font-size: 2.8rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 6px; }
-        .stat-desc { font-size: 12.5px; color: rgba(255,255,255,.5); font-weight: 500; text-transform: uppercase; letter-spacing: .8px; }
-
         /* ══ FACULTY GRID ══ */
-        .faculty-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        .faculty-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 32px; }
         .faculty-card {
             background: #fff;
             border-radius: var(--r);
@@ -315,7 +257,7 @@
         }
         .faculty-card:hover .faculty-photo { border-color: var(--rose-lt); }
         .faculty-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .faculty-name { font-family: var(--serif); font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 4px; line-height: 1.3; }
+        .faculty-name { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 4px; line-height: 1.3; }
         .faculty-role { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--rose); margin-bottom: 6px; }
         .faculty-subject {
             display: inline-flex;
@@ -326,7 +268,8 @@
             background: var(--bg-off);
             font-size: 11.5px;
             color: var(--slate);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
+            word-break: break-all;
         }
         .faculty-subject i { color: var(--blue); font-size: 11px; }
         .faculty-ext { font-size: 12px; color: var(--muted); display: flex; align-items: center; justify-content: center; gap: 5px; }
@@ -347,7 +290,7 @@
         .support-card:hover { box-shadow: 0 16px 44px rgba(15,23,42,.09); transform: translateY(-3px); border-color: transparent; }
         .support-icon-wrap { width: 58px; height: 58px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #fff; flex-shrink: 0; }
         .support-text { flex: 1; }
-        .support-text h5 { font-family: var(--serif); font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+        .support-text h5 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
         .support-count { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
         .support-bar { height: 4px; border-radius: 2px; background: var(--border); overflow: hidden; width: 100%; }
         .support-bar-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--blue), var(--rose-lt)); }
@@ -387,7 +330,7 @@
             color: var(--gold);
             margin-bottom: 20px;
         }
-        .team-cta h2 { font-family: var(--serif); font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; color: #fff; margin-bottom: 14px; }
+        .team-cta h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; color: #fff; margin-bottom: 14px; }
         .team-cta p { font-size: 15px; color: rgba(255,255,255,.6); max-width: 440px; margin: 0 auto 32px; line-height: 1.7; }
         .btn-cta-primary {
             display: inline-flex; align-items: center; gap: 8px;
@@ -407,17 +350,23 @@
         }
         .btn-cta-outline:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.4); color: #fff; }
 
+        /* ══ NO-IMAGE PLACEHOLDER ══ */
+        .photo-placeholder {
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, var(--bg-off), var(--border));
+            color: var(--muted);
+            font-size: 2rem;
+        }
+
         /* ══ RESPONSIVE ══ */
         @media (max-width: 1024px) {
             .faculty-grid { grid-template-columns: repeat(2, 1fr); }
-            .stat-ribbon  { grid-template-columns: repeat(2, 1fr); }
-            .stat-item:nth-child(2) { border-right: none; }
-            .stat-item:nth-child(1), .stat-item:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,.08); }
+            .support-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 768px) {
             .principal-card  { grid-template-columns: 1fr; }
             .principal-photo { height: 260px; }
-            .admin-grid      { grid-template-columns: 1fr; }
             .support-grid    { grid-template-columns: 1fr; }
             .team-cta        { padding: 48px 28px; }
         }
@@ -449,8 +398,19 @@
         </svg>
     </section>
 
+    {# ── Separate principal (position=1) and the rest ── #}
+    {% set principal = null %}
+    {% set faculty   = [] %}
+    {% for member in vteams %}
+        {% if member.position == 1 %}
+            {% set principal = member %}
+        {% else %}
+            {% set faculty = faculty|merge([member]) %}
+        {% endif %}
+    {% endfor %}
 
-    {# ── LEADERSHIP ── #}
+
+    {# ── LEADERSHIP / PRINCIPAL ── #}
     <section class="team-section alt">
         <div class="container">
 
@@ -460,210 +420,100 @@
                 <p class="team-sub">Our dedicated leadership ensures academic excellence and institutional growth across every programme.</p>
             </div>
 
-            {# Principal #}
-            <div class="principal-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="principal-photo">
-                    <img src="{{ asset('images/dummy/2.jpg') }}" alt="Principal">
-                    <div class="principal-role-tag"><i class="bi bi-award-fill"></i> Principal</div>
-                </div>
-                <div class="principal-info">
-                    <div class="principal-eyebrow">Leading With Vision</div>
-                    <h2>Dr. <span>[Principal Name]</span></h2>
-                    <p class="principal-degree">Ph.D. in Education &nbsp;&middot;&nbsp; M.Ed. &nbsp;&middot;&nbsp; 20+ Years Experience</p>
-                    <p class="principal-quote">
-                        "Our mission is to nurture reflective, compassionate educators who will transform classrooms and inspire the next generation."
-                    </p>
-                    <div class="principal-contacts">
-                        <a href="mailto:principal@dietnamchi.org" class="contact-pill">
-                            <i class="bi bi-envelope-fill"></i> principal@dietnamchi.org
-                        </a>
-                        <span class="contact-pill"><i class="bi bi-telephone-fill"></i> Ext. 101</span>
-                        <span class="contact-pill"><i class="bi bi-calendar3"></i> Appointment available</span>
+            {% if principal %}
+                <div class="principal-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="principal-photo">
+                        {% if principal.image %}
+                            <img src="{{ asset('uploads/image/' ~ principal.image) }}" alt="{{ principal.title }}">
+                        {% else %}
+                            <div class="photo-placeholder"><i class="bi bi-person-fill"></i></div>
+                        {% endif %}
+                        <div class="principal-role-tag">
+                            <i class="bi bi-award-fill"></i>
+                            {{ principal.designation ?? 'Principal' }}
+                        </div>
                     </div>
-                </div>
-            </div>
+                    <div class="principal-info">
+                        <div class="principal-eyebrow">Leading With Vision</div>
+                        <h2><span>{{ principal.title }}</span></h2>
+                        {% if principal.designation %}
+                            <p class="principal-degree">{{ principal.designation }}</p>
+                        {% endif %}
+                        {% if principal.description %}
+                            <p class="principal-quote">{{ principal.description|raw }} sdfgsdfg</p>
+                        {% endif %}
 
-            {# Admin cards #}
-            <div class="admin-grid">
-                <div class="admin-card" data-aos="fade-up" data-aos-delay="150">
-                    <div class="admin-card-top"></div>
-                    <div class="admin-card-body">
-                        <div class="admin-avatar"><img src="{{ asset('images/dummy/2.jpg') }}" alt="Vice Principal"></div>
-                        <div>
-                            <div class="admin-role">Vice Principal</div>
-                            <div class="admin-name">Dr. [VP Name]</div>
-                            <div class="admin-qual">M.Ed., Ph.D. in Education</div>
-                            <span class="admin-ext"><i class="bi bi-telephone"></i> Ext. 102</span>
+                        <div class="principal-contacts">
+                            {% if principal.email %}
+                                <a href="mailto:{{ principal.email }}" class="contact-pill">
+                                    <i class="bi bi-envelope-fill"></i> {{ principal.email }}
+                                </a>
+                            {% endif %}
+                            {% if principal.phone %}
+                                <span class="contact-pill">
+                                <i class="bi bi-telephone-fill"></i> {{ principal.phone }}
+                            </span>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-                <div class="admin-card" data-aos="fade-up" data-aos-delay="220">
-                    <div class="admin-card-top"></div>
-                    <div class="admin-card-body">
-                        <div class="admin-avatar"><img src="{{ asset('images/dummy/2.jpg') }}" alt="Admin Officer"></div>
-                        <div>
-                            <div class="admin-role">Administrative Officer</div>
-                            <div class="admin-name">Mr./Ms. [AO Name]</div>
-                            <div class="admin-qual">MBA, M.Com</div>
-                            <span class="admin-ext"><i class="bi bi-telephone"></i> Ext. 103</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="admin-card" data-aos="fade-up" data-aos-delay="290">
-                    <div class="admin-card-top"></div>
-                    <div class="admin-card-body">
-                        <div class="admin-avatar"><img src="{{ asset('images/dummy/2.jpg') }}" alt="Training Coordinator"></div>
-                        <div>
-                            <div class="admin-role">Training Coordinator</div>
-                            <div class="admin-name">Dr. [TC Name]</div>
-                            <div class="admin-qual">M.Ed., NET Qualified</div>
-                            <span class="admin-ext"><i class="bi bi-telephone"></i> Ext. 104</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {# Stats #}
-            <div class="stat-ribbon" data-aos="fade-up">
-                <div class="stat-item"><div class="stat-num">16+</div><div class="stat-desc">Faculty Members</div></div>
-                <div class="stat-item"><div class="stat-num">25+</div><div class="stat-desc">Years of Excellence</div></div>
-                <div class="stat-item"><div class="stat-num">98%</div><div class="stat-desc">PG / PhD Qualified</div></div>
-                <div class="stat-item"><div class="stat-num">500+</div><div class="stat-desc">Educators Trained</div></div>
-            </div>
+            {% endif %}
 
         </div>
     </section>
 
 
     {# ── FACULTY ── #}
-    <section class="team-section">
-        <div class="container">
+    {% if faculty|length > 0 %}
+        <section class="team-section">
+            <div class="container">
 
-            <div data-aos="fade-up" style="margin-bottom:40px;">
-                <div class="team-label"><i class="bi bi-mortarboard-fill"></i> Academic Faculty</div>
-                <h2 class="team-heading">Our Expert Faculty</h2>
-                <p class="team-sub">Learn from experienced educators dedicated to your professional growth and development.</p>
-            </div>
-
-            <div class="faculty-grid">
-
-                <div class="faculty-card" data-aos="fade-up" data-aos-delay="80">
-                    <div class="faculty-photo"><img src="{{ asset('images/dummy/2.jpg') }}" alt="Faculty"></div>
-                    <div class="faculty-name">Dr. [Faculty Name]</div>
-                    <div class="faculty-role">Associate Professor</div>
-                    <div class="faculty-subject"><i class="bi bi-brain"></i> Educational Psychology</div>
-                    <div class="faculty-ext"><i class="bi bi-telephone"></i> Ext. 105</div>
+                <div data-aos="fade-up" style="margin-bottom: 8px;">
+                    <div class="team-label"><i class="bi bi-mortarboard-fill"></i> Academic Faculty</div>
+                    <h2 class="team-heading">Our Expert Faculty</h2>
+                    <p class="team-sub">Learn from experienced educators dedicated to your professional growth and development.</p>
                 </div>
 
-                <div class="faculty-card" data-aos="fade-up" data-aos-delay="140">
-                    <div class="faculty-photo"><img src="{{ asset('images/dummy/2.jpg') }}" alt="Faculty"></div>
-                    <div class="faculty-name">Mr./Ms. [Faculty Name]</div>
-                    <div class="faculty-role">Assistant Professor</div>
-                    <div class="faculty-subject"><i class="bi bi-journal-richtext"></i> Curriculum Dev.</div>
-                    <div class="faculty-ext"><i class="bi bi-telephone"></i> Ext. 106</div>
-                </div>
-
-                <div class="faculty-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="faculty-photo"><img src="{{ asset('images/dummy/2.jpg') }}" alt="Faculty"></div>
-                    <div class="faculty-name">Mr./Ms. [Faculty Name]</div>
-                    <div class="faculty-role">Assistant Professor</div>
-                    <div class="faculty-subject"><i class="bi bi-laptop"></i> ICT in Education</div>
-                    <div class="faculty-ext"><i class="bi bi-telephone"></i> Ext. 107</div>
-                </div>
-
-                <div class="faculty-card" data-aos="fade-up" data-aos-delay="260">
-                    <div class="faculty-photo"><img src="{{ asset('images/dummy/2.jpg') }}" alt="Faculty"></div>
-                    <div class="faculty-name">Mr./Ms. [Faculty Name]</div>
-                    <div class="faculty-role">Assistant Professor</div>
-                    <div class="faculty-subject"><i class="bi bi-heart-pulse"></i> Inclusive Education</div>
-                    <div class="faculty-ext"><i class="bi bi-telephone"></i> Ext. 108</div>
-                </div>
-
-                <div class="faculty-card" data-aos="fade-up" data-aos-delay="320">
-                    <div class="faculty-photo"><img src="{{ asset('images/dummy/2.jpg') }}" alt="Faculty"></div>
-                    <div class="faculty-name">Dr. [Faculty Name]</div>
-                    <div class="faculty-role">Associate Professor</div>
-                    <div class="faculty-subject"><i class="bi bi-translate"></i> Language Teaching</div>
-                    <div class="faculty-ext"><i class="bi bi-telephone"></i> Ext. 109</div>
-                </div>
-
-                <div class="faculty-card" data-aos="fade-up" data-aos-delay="380">
-                    <div class="faculty-photo"><img src="{{ asset('images/dummy/2.jpg') }}" alt="Faculty"></div>
-                    <div class="faculty-name">Mr./Ms. [Faculty Name]</div>
-                    <div class="faculty-role">Assistant Professor</div>
-                    <div class="faculty-subject"><i class="bi bi-calculator"></i> Mathematics Education</div>
-                    <div class="faculty-ext"><i class="bi bi-telephone"></i> Ext. 110</div>
-                </div>
-
-                <div class="faculty-card" data-aos="fade-up" data-aos-delay="440">
-                    <div class="faculty-photo"><img src="{{ asset('images/dummy/2.jpg') }}" alt="Faculty"></div>
-                    <div class="faculty-name">Dr. [Faculty Name]</div>
-                    <div class="faculty-role">Associate Professor</div>
-                    <div class="faculty-subject"><i class="bi bi-activity"></i> Science Education</div>
-                    <div class="faculty-ext"><i class="bi bi-telephone"></i> Ext. 111</div>
-                </div>
-
-                <div class="faculty-card" data-aos="fade-up" data-aos-delay="500">
-                    <div class="faculty-photo"><img src="{{ asset('images/dummy/2.jpg') }}" alt="Faculty"></div>
-                    <div class="faculty-name">Mr./Ms. [Faculty Name]</div>
-                    <div class="faculty-role">Assistant Professor</div>
-                    <div class="faculty-subject"><i class="bi bi-globe-americas"></i> Social Studies</div>
-                    <div class="faculty-ext"><i class="bi bi-telephone"></i> Ext. 112</div>
+                <div class="faculty-grid">
+                    {% for member in faculty %}
+                        <div class="faculty-card" data-aos="fade-up" data-aos-delay="{{ loop.index * 60 }}">
+                            <div class="faculty-photo">
+                                {% if member.image %}
+                                    <img src="{{ asset('uploads/image/' ~ member.image) }}" alt="{{ member.title }}">
+                                {% else %}
+                                    <div class="photo-placeholder" style="font-size:1.6rem;">
+                                        <i class="bi bi-person-fill"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="faculty-name">{{ member.title }}</div>
+                            {% if member.designation %}
+                                <div class="faculty-role">{{ member.designation }}</div>
+                            {% endif %}
+                            {% if member.email %}
+                                <div class="faculty-subject">
+                                    <i class="bi bi-envelope-fill"></i>
+                                    {{ member.email }}
+                                </div>
+                            {% endif %}
+                            {% if member.phone %}
+                                <div class="faculty-ext">
+                                    <i class="bi bi-telephone"></i> {{ member.phone }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
                 </div>
 
             </div>
-        </div>
-    </section>
+        </section>
+    {% endif %}
 
 
-    {# ── SUPPORT STAFF ── #}
-    <section class="team-section alt">
-        <div class="container">
-
-            <div data-aos="fade-up" style="margin-bottom:40px;">
-                <div class="team-label"><i class="bi bi-people-fill"></i> Support Staff</div>
-                <h2 class="team-heading">Administrative &amp; Support Team</h2>
-                <p class="team-sub">The backbone of DIET Namchi — keeping every operation smooth and every student supported.</p>
-            </div>
-
-            <div class="support-grid">
-                <div class="support-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="support-icon-wrap" style="background:linear-gradient(135deg,#0ea5e9,#22c55e);">
-                        <i class="bi bi-file-earmark-text"></i>
-                    </div>
-                    <div class="support-text">
-                        <h5>Office Staff</h5>
-                        <p class="support-count">5 dedicated members</p>
-                        <div class="support-bar"><div class="support-bar-fill" style="width:50%;"></div></div>
-                    </div>
-                </div>
-                <div class="support-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="support-icon-wrap" style="background:linear-gradient(135deg,#f59e0b,#ef4444);">
-                        <i class="bi bi-tools"></i>
-                    </div>
-                    <div class="support-text">
-                        <h5>Technical Staff</h5>
-                        <p class="support-count">3 dedicated members</p>
-                        <div class="support-bar"><div class="support-bar-fill" style="width:30%;"></div></div>
-                    </div>
-                </div>
-                <div class="support-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="support-icon-wrap" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);">
-                        <i class="bi bi-broom"></i>
-                    </div>
-                    <div class="support-text">
-                        <h5>Support Staff</h5>
-                        <p class="support-count">8 dedicated members</p>
-                        <div class="support-bar"><div class="support-bar-fill" style="width:80%;"></div></div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
 
 
     {# ── CTA ── #}
+<section class="team-section alt">
     <div class="container">
         <div class="team-cta" data-aos="fade-up">
             <div class="team-cta-inner">
@@ -671,15 +521,13 @@
                 <h2>Interested in Working With Us?</h2>
                 <p>Check our current openings and become part of the DIET Namchi family, shaping the future of education in Sikkim.</p>
                 <div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;">
-                    <a href="{{ path('app_notices') }}" class="btn-cta-primary">
-                        <i class="bi bi-briefcase"></i> View Openings
-                    </a>
-                    <a href="{{ path('app_contact') }}" class="btn-cta-outline">
-                        <i class="bi bi-envelope"></i> Contact HR
+                    <a href="{{ path('app_contact') }}" class="btn-cta-primary">
+                        <i class="bi bi-briefcase"></i> Contact us
                     </a>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
 {% endblock %}

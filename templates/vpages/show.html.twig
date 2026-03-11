@@ -71,7 +71,7 @@
                                 <h5>Description</h5>
                                 <div class="border rounded p-3 bg-light">
                                     {% if vpage.description %}
-                                        {{ vpage.description|nl2br }}
+                                        {{ vpage.description|raw }}
                                     {% else %}
                                         <em class="text-muted">No description provided</em>
                                     {% endif %}

@@ -1,0 +1,55 @@
+{# main/rti.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}RTI - Right to Information - DIET Namchi{% endblock %}
+
+{% block body %}
+    <section class="section-padding">
+        <div class="container">
+            <div class="section-title-block" data-aos="fade-up">
+            <span class="section-subtitle">
+                <i class="bi bi-patch-question"></i> Got Questions?
+            </span>
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p>Common questions about admissions and programs.</p>
+            </div>
+
+            {% if vfaqs is not empty %}
+                <div class="accordion" id="faqAccordion" data-aos="fade-up" data-aos-delay="100">
+                    {% for vfaq in vfaqs %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faqHeading{{ vfaq.id }}">
+                                <button
+                                    class="accordion-button {{ loop.first ? '' : 'collapsed' }}"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#faqCollapse{{ vfaq.id }}"
+                                    aria-expanded="{{ loop.first ? 'true' : 'false' }}"
+                                    aria-controls="faqCollapse{{ vfaq.id }}"
+                                >
+                                    {{ vfaq.question }}
+                                </button>
+                            </h2>
+                            <div
+                                id="faqCollapse{{ vfaq.id }}"
+                                class="accordion-collapse collapse {{ loop.first ? 'show' : '' }}"
+                                aria-labelledby="faqHeading{{ vfaq.id }}"
+                                data-bs-parent="#faqAccordion"
+                            >
+                                <div class="accordion-body">
+                                    {{ vfaq.answer }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center text-muted py-5" data-aos="fade-up">
+                    <i class="bi bi-patch-question display-4 d-block mb-3"></i>
+                    <p>No FAQs have been added yet.</p>
+                </div>
+            {% endif %}
+
+        </div>
+    </section>
+{% endblock %}

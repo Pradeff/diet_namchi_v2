@@ -28,4 +28,13 @@ class VfaqRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findFirstThreeOrdered(): array
+    {
+        return $this->createQueryBuilder('f')
+            ->orderBy('f.createdAt', 'ASC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult();
+    }
 }
