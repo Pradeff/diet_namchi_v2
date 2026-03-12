@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Repository\VaboutRepository;
 use App\Repository\VcontactRepository;
 use App\Repository\VgalleryRepository;
 use App\Repository\VpagesRepository;
@@ -17,22 +18,25 @@ final class MainController extends AbstractController
     public function index(
         VfaqRepository $vfaqRepository,
         VteamRepository $vteamRepository
-    ): Response
-    {
+    ): Response {
         return $this->render('main/index.html.twig', [
             'vfaqs' => $vfaqRepository->findFirstThreeOrdered(),
             'vteams' => $vteamRepository->findTopN(5),
-
+            'principal' => $vteamRepository->findOneBy(['position' => 0]) ?? null,  // First/lowest position
         ]);
     }
+
 
     #[Route('/about', name: 'app_about')]
-    public function PgAbout(): Response
+    public function PgAbout(VaboutRepository $vaboutRepository): Response
     {
+        $vabout = $vaboutRepository->findFirst();
+
         return $this->render('main/about.html.twig', [
-            'controller_name' => 'MainController',
+            'vabout' => $vabout,
         ]);
     }
+
 
     #[Route('/contact', name: 'app_contact')]
     public function PgContact(): Response
@@ -149,10 +153,13 @@ final class MainController extends AbstractController
     }
 
     #[Route('/vision-mission', name: 'app_vision_mission')]
-    public function PgVisionMission(): Response
+    public function PgVisionMission(VaboutRepository $vaboutRepository): Response
     {
+        // Adjust the slug/id to match however you store this record
+        $vabout = $vaboutRepository->findOneBy(['slug' => 'vision-mission']) ?? $vaboutRepository->find(1);
+
         return $this->render('main/vision-mission.html.twig', [
-            'controller_name' => 'MainController',
+            'vabout' => $vabout,
         ]);
     }
 

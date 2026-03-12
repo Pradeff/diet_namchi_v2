@@ -15,16 +15,16 @@
                     </video>
                 {% endif %}
 
-                <div class="hero-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2;"></div>
+                <div class="hero-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2;"></div>
 
-                <div class="hero-content" data-aos="fade-up" style="position: relative; z-index: 3; color: white; padding: 20px; max-width: 800px; margin: 0 auto; text-align: center;">
-                <span class="hero-badge" style="display: inline-block; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 25px; margin-bottom: 20px;">
+                <div class="hero-content" data-aos="fade-up">
+                <span class="hero-badge" >
                     <i class="{{ slide.mediaType == 'video' ? 'bi bi-play-circle' : 'bi bi-stars' }}" style="margin-right: 8px;"></i>
                     {{ slide.title ?? 'Featured' }}
                 </span>
                     {#<h1 style="font-size: 3rem; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">{{ slide.title ?? 'Title' }}</h1>#}
                     {% if slide.description %}
-                        <p style="font-size: 1.2rem; line-height: 1.6; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">{{ slide.description }}</p>
+                        <p>{{ slide.description }}</p>
                     {% endif %}
                 </div>
             </div>

@@ -61,6 +61,16 @@ class VteamRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findPrincipal(): ?Vteam
+    {
+        return $this->createQueryBuilder('v')
+            ->orderBy('v.position', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+
 
 //    /**
 //     * @return Vteam[] Returns an array of Vteam objects

@@ -5,7 +5,7 @@
 
 {% block body %}
     <!-- Compact Hero/Breadcrumb Section -->
-    <section class="compact-hero" style="background-image: url('{{ asset('images/dummy/2.jpg') }}');">
+    <section class="compact-hero" style="background-image: url('{{ vabout and vabout.coverImage ? asset('uploads/image/' ~ vabout.coverImage) : asset('images/dummy/2.jpg') }}');">
         <div class="compact-hero-overlay"></div>
         <div class="container h-100">
             <div class="row h-100 align-items-center">
@@ -14,7 +14,9 @@
                         <span class="compact-hero-badge">
                             <i class="bi bi-building"></i> About Us
                         </span>
-                        <h1 class="compact-hero-title">Empowering Educators Since 2010</h1>
+                        <h1 class="compact-hero-title">
+                            {{ vabout and vabout.subtitle ? vabout.subtitle : 'Empowering Educators Since 2010' }}
+                        </h1>
                         <nav aria-label="breadcrumb" class="compact-breadcrumb">
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
@@ -38,64 +40,32 @@
             <div class="row g-5 align-items-center">
                 <div class="col-lg-6" data-aos="fade-right">
                     <span class="section-subtitle">
-                        <i class="bi bi-book-half"></i> Our Legacy
+                        <i class="bi bi-book-half"></i>
+                        {{ vabout and vabout.title ? vabout.title : 'Our Legacy' }}
                     </span>
-                    <h2 class="section-title">Empowering Educators Since 2010</h2>
-                    <p class="mb-4">District Institute of Education & Training (DIET) Namchi is committed to excellence in teacher education and professional development. Located in Namchi, South Sikkim, we nurture future educators through NCTE-recognized programs aligned with NEP 2020.</p>
+                    <h2 class="section-title">
+                        {{ vabout and vabout.subtitle ? vabout.subtitle : 'Empowering Educators Since 2010' }}
+                    </h2>
 
-                    <div class="row g-3">
-                        <div class="col-sm-6">
-                            <div class="d-flex align-items-start">
-                                <div class="feature-icon me-3">
-                                    <i class="bi bi-award"></i>
-                                </div>
-                                <div>
-                                    <strong class="d-block">NCTE Approved</strong>
-                                    <small class="text-muted">Recognized Institution</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="d-flex align-items-start">
-                                <div class="feature-icon me-3">
-                                    <i class="bi bi-people"></i>
-                                </div>
-                                <div>
-                                    <strong class="d-block">Expert Faculty</strong>
-                                    <small class="text-muted">Experienced Trainers</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="d-flex align-items-start">
-                                <div class="feature-icon me-3">
-                                    <i class="bi bi-mortarboard"></i>
-                                </div>
-                                <div>
-                                    <strong class="d-block">NEP 2020 Aligned</strong>
-                                    <small class="text-muted">Modern Curriculum</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="d-flex align-items-start">
-                                <div class="feature-icon me-3">
-                                    <i class="bi bi-globe-asia-australia"></i>
-                                </div>
-                                <div>
-                                    <strong class="d-block">Community Focus</strong>
-                                    <small class="text-muted">Local Impact</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% if vabout and vabout.description1 %}
+                        <div class="mb-4">{{ vabout.description1|raw }}</div>
+                    {% endif %}
+
                 </div>
+
                 <div class="col-lg-6" data-aos="fade-left">
                     <div class="position-relative">
-                        <img src="{{ asset('images/pic1.jpg') }}"
-                             alt="DIET Namchi Campus"
-                             class="img-fluid rounded-4 shadow-lg w-100"
-                             style="object-fit: cover; height: 320px;">
+                        {% if vabout and vabout.coverImage %}
+                            <img src="{{ asset('uploads/image/' ~ vabout.coverImage) }}"
+                                 alt="{{ vabout.title }}"
+                                 class="img-fluid rounded-4 shadow-lg w-100"
+                                 style="object-fit: cover; height: 320px;">
+                        {% else %}
+                            <img src="{{ asset('images/pic1.jpg') }}"
+                                 alt="DIET Namchi Campus"
+                                 class="img-fluid rounded-4 shadow-lg w-100"
+                                 style="object-fit: cover; height: 320px;">
+                        {% endif %}
                         <div class="position-absolute bottom-0 end-0 bg-white p-3 rounded-4 shadow-soft m-3"
                              style="max-width: 180px;">
                             <div class="d-flex align-items-center gap-2">
@@ -129,7 +99,9 @@
                             <i class="bi bi-bullseye"></i>
                         </div>
                         <h4 class="feature-title">Our Mission</h4>
-                        <p>To prepare competent, compassionate educators equipped with innovative teaching skills and modern pedagogical practices for Sikkim's schools.</p>
+                        {% if vabout and vabout.description2 %}
+                            <div>{{ vabout.description2|raw }}</div>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
@@ -138,7 +110,9 @@
                             <i class="bi bi-eye"></i>
                         </div>
                         <h4 class="feature-title">Our Vision</h4>
-                        <p>To be the premier teacher training institute in South Sikkim, fostering inclusive, quality education for a progressive tomorrow.</p>
+                        {% if vabout and vabout.description3 %}
+                            <div>{{ vabout.description3|raw }}</div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -210,5 +184,3 @@
         </div>
     </section>
 {% endblock %}
-
-

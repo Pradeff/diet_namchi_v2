@@ -23,10 +23,10 @@
         /* ══ HERO ══ */
         .team-hero {
             position: relative;
-            height: 340px;
+            height: 240px;
             display: flex;
             align-items: flex-end;
-            background: url('{{ asset('images/dummy/2.jpg') }}') center/cover no-repeat;
+            background: url('{{ asset('images/breadcrumb.webp') }}') center/cover no-repeat;
             overflow: hidden;
         }
         .team-hero::after {
@@ -53,7 +53,6 @@
             border: 1px solid rgba(255,255,255,.18);
             background: rgba(255,255,255,.08);
             backdrop-filter: blur(6px);
-
             font-size: 12px;
             font-weight: 600;
             letter-spacing: .8px;
@@ -76,7 +75,6 @@
             gap: 8px;
             font-size: 13px;
             color: rgba(255,255,255,.55);
-
         }
         .team-breadcrumb a { color: rgba(255,255,255,.75); text-decoration: none; transition: color .2s; }
         .team-breadcrumb a:hover { color: #fff; }
@@ -95,7 +93,6 @@
             display: inline-flex;
             align-items: center;
             gap: 7px;
-
             font-size: 11.5px;
             font-weight: 700;
             letter-spacing: 1.2px;
@@ -155,7 +152,6 @@
             border-radius: 8px;
             background: rgba(15,23,42,.75);
             backdrop-filter: blur(8px);
-
             font-size: 12px;
             font-weight: 600;
             color: #fff;
@@ -202,7 +198,7 @@
             line-height: 1.7;
             border-left: 3px solid var(--rose);
             padding-left: 16px;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
         }
         .principal-contacts { display: flex; flex-wrap: wrap; gap: 10px; }
         .contact-pill {
@@ -221,6 +217,32 @@
         .contact-pill i { color: var(--blue); font-size: 13px; }
         .contact-pill:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
         .contact-pill:hover i { color: #fff; }
+
+        /* ══ READ MORE BUTTON ══ */
+        .btn-read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 20px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--rose), var(--rose-lt));
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all .25s var(--ease);
+            box-shadow: 0 4px 14px rgba(153,64,106,.25);
+            letter-spacing: .3px;
+        }
+        .btn-read-more:hover {
+            opacity: .9;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 22px rgba(153,64,106,.38);
+            color: #fff;
+        }
+        .btn-read-more i { font-size: 14px; }
 
         /* ══ FACULTY GRID ══ */
         .faculty-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 32px; }
@@ -366,12 +388,152 @@
         }
         @media (max-width: 768px) {
             .principal-card  { grid-template-columns: 1fr; }
-            .principal-photo { height: 260px; }
+            .principal-photo { height: 360px; }
             .support-grid    { grid-template-columns: 1fr; }
             .team-cta        { padding: 48px 28px; }
+            .principal-info{ padding: 15px }
+            .team-hero{ height: 220px; }
+            .team-section{ padding: 10px 0;}
         }
         @media (max-width: 480px) {
             .faculty-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ══ PRINCIPAL BIO MODAL ══ */
+        .bio-modal .modal-dialog {
+            max-width: 680px;
+            margin: 1.75rem auto;
+        }
+        .bio-modal .modal-content {
+            border: none;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 40px 100px rgba(15,23,42,.22);
+        }
+        .bio-modal-header {
+            position: relative;
+            background: linear-gradient(135deg, var(--navy) 0%, #1e2d5a 60%, #3d1a2e 100%);
+            padding: 36px 40px 28px;
+            border-bottom: none;
+        }
+        .bio-modal-header::before {
+            content: '"';
+            position: absolute;
+            top: -10px; right: 32px;
+            font-size: 140px;
+            line-height: 1;
+            color: rgba(255,255,255,.04);
+            pointer-events: none;
+            font-family: Georgia, serif;
+        }
+        .bio-modal-avatar {
+            width: 72px; height: 72px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid rgba(255,255,255,.2);
+            box-shadow: 0 8px 24px rgba(0,0,0,.3);
+            flex-shrink: 0;
+        }
+        .bio-modal-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .bio-modal-avatar-placeholder {
+            width: 72px; height: 72px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.1);
+            border: 3px solid rgba(255,255,255,.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; color: rgba(255,255,255,.5);
+            flex-shrink: 0;
+        }
+        .bio-modal-title-group { flex: 1; min-width: 0; }
+        .bio-modal-eyebrow {
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 5px;
+            opacity: .85;
+        }
+        .bio-modal-name {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 4px;
+        }
+        .bio-modal-role {
+            font-size: 12px;
+            color: rgba(255,255,255,.5);
+            font-weight: 500;
+        }
+        .bio-modal-close {
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.12);
+            color: rgba(255,255,255,.6);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: all .2s;
+            flex-shrink: 0;
+            font-size: 16px;
+            padding: 0;
+        }
+        .bio-modal-close:hover {
+            background: rgba(255,255,255,.16);
+            color: #fff;
+            border-color: rgba(255,255,255,.25);
+        }
+        .bio-modal-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.12) 30%, rgba(255,255,255,.12) 70%, transparent);
+            margin: 0 40px;
+        }
+        .bio-modal-body {
+            padding: 32px 20px 36px;
+            background: #fff;
+        }
+        .bio-modal-body-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: var(--rose);
+            margin-bottom: 14px;
+        }
+        .bio-modal-body-label::before {
+            content: '';
+            width: 20px; height: 2px;
+            background: var(--rose);
+            border-radius: 2px;
+        }
+        .bio-modal-text {
+            font-size: 15px;
+            font-style: italic;
+            color: var(--slate);
+            line-height: 1.78;
+            border-left: 3px solid var(--rose);
+            padding-left: 18px;
+            margin: 0;
+        }
+        .bio-modal-contacts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 28px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 600px) {
+            .bio-modal .modal-dialog { margin: 0; max-width: 100%; }
+            .bio-modal .modal-content { border-radius: 20px 20px 0 0; }
+            .bio-modal-header { padding: 28px 24px 22px; }
+            .bio-modal-body  { padding: 24px 24px 28px; }
+            .bio-modal-divider { margin: 0 24px; }
         }
     </style>
 {% endblock %}
@@ -398,7 +560,6 @@
         </svg>
     </section>
 
-    {# ── Separate principal (position=1) and the rest ── #}
     {% set principal = null %}
     {% set faculty   = [] %}
     {% for member in vteams %}
@@ -421,6 +582,20 @@
             </div>
 
             {% if principal %}
+
+                {% set raw_desc     = principal.description|striptags %}
+                {% set words        = raw_desc|split(' ') %}
+                {% set word_count   = words|length %}
+                {% set is_long      = word_count > 100 %}
+
+                {% if is_long %}
+                    {% set preview_words = [] %}
+                    {% for i in 0..55 %}
+                        {% set preview_words = preview_words|merge([words[i]]) %}
+                    {% endfor %}
+                    {% set preview_text = preview_words|join(' ') ~ '…' %}
+                {% endif %}
+
                 <div class="principal-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="principal-photo">
                         {% if principal.image %}
@@ -439,8 +614,27 @@
                         {% if principal.designation %}
                             <p class="principal-degree">{{ principal.designation }}</p>
                         {% endif %}
+
                         {% if principal.description %}
-                            <p class="principal-quote">{{ principal.description|raw }} sdfgsdfg</p>
+                            {% if is_long %}
+                                {# Show truncated plain-text preview #}
+                                <p class="principal-quote">{{ preview_text }}
+                                    {# "Read full message" button triggers modal #}
+                                    <a class=""
+                                       type="button"
+                                       data-bs-toggle="modal"
+                                       data-bs-target="#principalBioModal">
+                                        <i class="bi bi-book-open"></i> Read Full Message
+                                    </a>
+                                </p>
+
+
+                            {% else %}
+                                <p class="principal-quote">{{ principal.description|raw }}
+
+
+                                </p>
+                            {% endif %}
                         {% endif %}
 
                         <div class="principal-contacts">
@@ -451,12 +645,85 @@
                             {% endif %}
                             {% if principal.phone %}
                                 <span class="contact-pill">
-                                <i class="bi bi-telephone-fill"></i> {{ principal.phone }}
-                            </span>
+                                    <i class="bi bi-telephone-fill"></i> {{ principal.phone }}
+                                </span>
                             {% endif %}
                         </div>
                     </div>
                 </div>
+
+                {# ── MODERN BIO MODAL ── #}
+                {% if is_long %}
+                    <div class="modal fade bio-modal" id="principalBioModal" tabindex="-1"
+                         aria-labelledby="principalBioModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+
+                    {# — Modal Header — #}
+                    <div class="bio-modal-header d-flex align-items-start gap-3">
+                        <div class="bio-modal-avatar">
+                            {% if principal.image %}
+                                <img src="{{ asset('uploads/image/' ~ principal.image) }}"
+                                     alt="{{ principal.title }}">
+                            {% else %}
+                                <div class="bio-modal-avatar-placeholder">
+                                    <i class="bi bi-person-fill"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="bio-modal-title-group">
+                            <div class="bio-modal-eyebrow">Principal's Message</div>
+                            <div class="bio-modal-name" id="principalBioModalLabel">
+                                {{ principal.title }}
+                            </div>
+                            {% if principal.designation %}
+                                <div class="bio-modal-role">{{ principal.designation }}</div>
+                            {% endif %}
+                        </div>
+
+                        <button type="button"
+                                class="bio-modal-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+
+                    <div class="bio-modal-divider"></div>
+
+                    {# — Modal Body — #}
+                    <div class="modal-body p-0">
+                        <div class="bio-modal-body">
+                            <div class="bio-modal-body-label">
+                                <i class="bi bi-quote"></i> Full Message
+                            </div>
+                            <div class="bio-modal-text">
+                                {{ principal.description|raw }}
+                            </div>
+
+                            {% if principal.email or principal.phone %}
+                                <div class="bio-modal-contacts">
+                                    {% if principal.email %}
+                                        <a href="mailto:{{ principal.email }}" class="contact-pill">
+                                            <i class="bi bi-envelope-fill"></i> {{ principal.email }}
+                                        </a>
+                                    {% endif %}
+                                    {% if principal.phone %}
+                                        <span class="contact-pill">
+                                                    <i class="bi bi-telephone-fill"></i> {{ principal.phone }}
+                                                </span>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    </div>{# /.modal-content #}
+                    </div>{# /.modal-dialog #}
+                    </div>{# /.modal #}
+                {% endif %}
+
             {% endif %}
 
         </div>
@@ -510,24 +777,21 @@
     {% endif %}
 
 
-
-
     {# ── CTA ── #}
-<section class="team-section alt">
-    <div class="container">
-        <div class="team-cta" data-aos="fade-up">
-            <div class="team-cta-inner">
-                <div class="team-cta-eyebrow"><i class="bi bi-briefcase-fill"></i> Join Our Team</div>
-                <h2>Interested in Working With Us?</h2>
-                <p>Check our current openings and become part of the DIET Namchi family, shaping the future of education in Sikkim.</p>
-                <div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;">
-                    <a href="{{ path('app_contact') }}" class="btn-cta-primary">
-                        <i class="bi bi-briefcase"></i> Contact us
-                    </a>
+    <section class="team-section alt">
+        <div class="container">
+            <div class="team-cta" data-aos="fade-up">
+                <div class="team-cta-inner">
+                    <div class="team-cta-eyebrow"><i class="bi bi-briefcase-fill"></i> Join Our Team</div>
+                    <h2>Interested in Working With Us?</h2>
+                    <p>Check our current openings and become part of the DIET Namchi family, shaping the future of education in Sikkim.</p>
+                    <div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;">
+                        <a href="{{ path('app_contact') }}" class="btn-cta-primary">
+                            <i class="bi bi-briefcase"></i> Contact us
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
+    </section>
 {% endblock %}

@@ -145,12 +145,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="#" class="nav-link {% if app.request.attributes.get('_route') in ['app_about','app_vision_mission','app_team'] %}active{% endif %}">
                             About <i class="bi bi-chevron-down dropdown-indicator"></i>
                         </a>
                         <div class="dropdown-menu-custom">
                             <a href="{{ path('app_about') }}"
-                               class="nav-link {% if app.request.attributes.get('_route') == 'app_about' %}active{% endif %}">
+                               class="nav-link">
                                 About DIET
                             </a>
                             <a href="{{ path('app_vision_mission') }}">Vision & Mission</a>
@@ -245,12 +245,9 @@
             <li>
                 <a href="{{ path('app_rti') }}">RTI</a>
             </li>
-            <li>
-                <a href="{{ path('app_contact') }}">Contact</a>
-            </li>
         </ul>
         <div class="mobile-apply-btn">
-            <a href="{{ path('app_admission') }}" class="btn-apply">Apply Now</a>
+            <a href="{{ path('app_contact') }}" class="btn-apply">Contact us</a>
         </div>
     </div>
 </div>

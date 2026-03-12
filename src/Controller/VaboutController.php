@@ -22,6 +22,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class VaboutController extends AbstractController
 {
     private ImageManager $imageManager;
+
     public function __construct(
         private EntityManagerInterface $entityManager,
         private SluggerInterface $slugger,
@@ -46,7 +47,7 @@ class VaboutController extends AbstractController
     #[Route('/new', name: 'app_vabout_new', methods: ['GET', 'POST'])]
     public function new(Request $request, VaboutRepository $vaboutRepository): Response
     {
-        // Check if Vabout already exists (singleton pattern)
+        // Singleton pattern — only one Vabout record allowed
         $existingVabout = $vaboutRepository->findFirst();
         if ($existingVabout) {
             $this->addFlash('warning', 'About page already exists. You can only edit the existing one.');
@@ -61,6 +62,13 @@ class VaboutController extends AbstractController
             $slug = $this->slugger->slug($vabout->getTitle())->lower();
             $vabout->setSlug($slug);
 
+            // Handle cover image upload on create
+            $file = $form->get('cover_image')->getData();
+            if ($file) {
+                $fileName = $this->saveCoverImageAsWebp($file);
+                $vabout->setCoverImage($fileName);
+            }
+
             $vabout->setCreatedAt(new \DateTimeImmutable());
             $vabout->setUpdatedAt(new \DateTimeImmutable());
 
@@ -72,9 +80,9 @@ class VaboutController extends AbstractController
         }
 
         return $this->render('vabout/new.html.twig', [
-            'vabout' => $vabout,
-            'form' => $form,
-            'max_file_size' => $this->imageUploader->getMaxFileSizeFormatted(),
+            'vabout'          => $vabout,
+            'form'            => $form,
+            'max_file_size'    => $this->imageUploader->getMaxFileSizeFormatted(),
             'max_file_size_mb' => $this->imageUploader->getMaxFileSize() / 1024 / 1024,
         ]);
     }
@@ -88,10 +96,10 @@ class VaboutController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_vabout_edit', methods: ['GET', 'POST'])]
-    public function edit($id, Request $request, Vabout $vabout, EntityManagerInterface $entityManager): Response
+    public function edit(int $id, Request $request, Vabout $vabout, EntityManagerInterface $entityManager): Response
     {
-        $entity = $entityManager->getRepository(Vabout::class)->find($id);
-        $filename = $vabout->getCoverImage();
+        $existingFilename = $vabout->getCoverImage();
+
         $form = $this->createForm(VaboutFormType::class, $vabout);
         $form->handleRequest($request);
 
@@ -101,29 +109,20 @@ class VaboutController extends AbstractController
 
             $file = $form->get('cover_image')->getData();
             if ($file) {
-                if ($filename) {
-                    $filepath = $this->getParameter('image_directory') . '/' . $filename;
-                    if ($this->filesystem->exists($filepath)) {
-                        $this->filesystem->remove($filepath);
+                // Delete old cover image file if it exists
+                if ($existingFilename) {
+                    $oldPath = $this->getParameter('image_directory') . '/' . $existingFilename;
+                    if ($this->filesystem->exists($oldPath)) {
+                        $this->filesystem->remove($oldPath);
                     }
                 }
-                $fileName1 = $this->generateUniqueFileName() . '.jpg';
-                $directory = $this->getParameter('image_directory');
-                $filePath = $directory . '/' . $fileName1;
 
-                // Ensure the directory exists
-                if (!$this->filesystem->exists($directory)) {
-                    $this->filesystem->mkdir($directory);
-                }
-
-                // Compress and save the image
-                $image = $this->imageManager->read($file->getPathname());
-                //$image->cover(800, 600);
-                $image->toWebp(80)->save($filePath);
-
-                $vabout->setCoverImage($fileName1);
+                // Save new cover image as .webp
+                $newFileName = $this->saveCoverImageAsWebp($file);
+                $vabout->setCoverImage($newFileName);
             } else {
-                $vabout->setCoverImage($filename);
+                // Keep the existing filename unchanged
+                $vabout->setCoverImage($existingFilename);
             }
 
             $this->entityManager->flush();
@@ -131,20 +130,46 @@ class VaboutController extends AbstractController
             $this->addFlash('success', 'About page updated successfully!');
             return $this->redirectToRoute('app_vabout_show', ['id' => $vabout->getId()]);
         }
-        $imageUrl = $entity->getCoverImage();
+
         return $this->render('vabout/edit.html.twig', [
-            'vabout' => $vabout,
-            'form' => $form,
-            'max_file_size' => $this->imageUploader->getMaxFileSizeFormatted(),
+            'vabout'          => $vabout,
+            'form'            => $form,
+            'max_file_size'    => $this->imageUploader->getMaxFileSizeFormatted(),
             'max_file_size_mb' => $this->imageUploader->getMaxFileSize() / 1024 / 1024,
-            'image_url' => $imageUrl,
+            'image_url'        => $existingFilename,
         ]);
+    }
+
+    // ── Private helpers ──────────────────────────────────────────────────────
+
+    /**
+     * Compress and save an uploaded file as WebP.
+     * Returns the generated filename (with .webp extension).
+     */
+    private function saveCoverImageAsWebp(\Symfony\Component\HttpFoundation\File\UploadedFile $file): string
+    {
+        $directory = $this->getParameter('image_directory');
+
+        if (!$this->filesystem->exists($directory)) {
+            $this->filesystem->mkdir($directory, 0755);
+        }
+
+        // Always .webp extension — matches ImageUploader convention
+        $fileName = $this->generateUniqueFileName() . '.webp';
+        $filePath = $directory . '/' . $fileName;
+
+        $image = $this->imageManager->read($file->getPathname());
+        $image->toWebp(80)->save($filePath);
+
+        return $fileName;
     }
 
     private function generateUniqueFileName(): string
     {
         return md5(uniqid());
     }
+
+    // ── Gallery / image endpoints ─────────────────────────────────────────────
 
     #[Route('/{id}/upload-images', name: 'app_vabout_upload_images', methods: ['POST'])]
     public function uploadImages(Request $request, Vabout $vabout): JsonResponse
@@ -163,19 +188,18 @@ class VaboutController extends AbstractController
         }
 
         $maxSize = $this->imageUploader->getMaxFileSize();
-        $errors = [];
+        $errors  = [];
 
         foreach ($files as $file) {
             if ($file->getSize() > $maxSize) {
-                $errors[] = $file->getClientOriginalName() . ' (' . $this->formatFileSize($file->getSize()) . ') exceeds maximum size of ' . $this->imageUploader->getMaxFileSizeFormatted();
+                $errors[] = $file->getClientOriginalName()
+                    . ' (' . $this->formatFileSize($file->getSize()) . ')'
+                    . ' exceeds maximum size of ' . $this->imageUploader->getMaxFileSizeFormatted();
             }
         }
 
         if (!empty($errors)) {
-            return new JsonResponse([
-                'error' => 'File size error',
-                'details' => $errors
-            ], 400);
+            return new JsonResponse(['error' => 'File size error', 'details' => $errors], 400);
         }
 
         try {
@@ -187,44 +211,21 @@ class VaboutController extends AbstractController
 
             $this->entityManager->flush();
 
-            $responseFiles = array_map(function($fileName) {
-                return [
-                    'name' => $fileName,
-                    'url' => $this->imageUploader->getWebPath($fileName)
-                ];
-            }, $uploadedFiles);
+            $responseFiles = array_map(fn($f) => [
+                'name' => $f,
+                'url'  => $this->imageUploader->getWebPath($f),
+            ], $uploadedFiles);
 
             return new JsonResponse([
                 'success' => true,
-                'files' => $responseFiles,
-                'message' => count($uploadedFiles) . ' file(s) uploaded successfully'
+                'files'   => $responseFiles,
+                'message' => count($uploadedFiles) . ' file(s) uploaded successfully',
             ]);
 
         } catch (FileException $e) {
             return new JsonResponse(['error' => 'Upload failed: ' . $e->getMessage()], 500);
         }
     }
-
-    /*#[Route('/{id}/set-cover-image', name: 'app_vabout_set_cover', methods: ['POST'])]
-    public function setCoverImage(Request $request, Vabout $vabout): JsonResponse
-    {
-        if (!$this->isCsrfTokenValid('set_cover', $request->headers->get('X-CSRF-Token'))) {
-            return new JsonResponse(['error' => 'Invalid CSRF token'], 403);
-        }
-
-        $imageName = $request->request->get('image');
-        if (!$vabout->hasImage($imageName)) {
-            return new JsonResponse(['error' => 'Image not found'], 404);
-        }
-
-        $vabout->setCoverImage($imageName);
-        $this->entityManager->flush();
-
-        return new JsonResponse([
-            'success' => true,
-            'message' => 'Cover image set successfully'
-        ]);
-    }*/
 
     #[Route('/{id}/delete-image', name: 'app_vabout_delete_image', methods: ['POST'])]
     public function deleteImage(Request $request, Vabout $vabout): JsonResponse
@@ -247,10 +248,7 @@ class VaboutController extends AbstractController
         $this->imageUploader->delete($imageName);
         $this->entityManager->flush();
 
-        return new JsonResponse([
-            'success' => true,
-            'message' => 'Image deleted successfully'
-        ]);
+        return new JsonResponse(['success' => true, 'message' => 'Image deleted successfully']);
     }
 
     #[Route('/{id}/update-image-title', name: 'app_vabout_update_image_title', methods: ['POST'])]
@@ -261,7 +259,7 @@ class VaboutController extends AbstractController
         }
 
         $imageName = $request->request->get('image');
-        $title = $request->request->get('title', '');
+        $title     = $request->request->get('title', '');
 
         if (!$vabout->hasImage($imageName)) {
             return new JsonResponse(['error' => 'Image not found'], 404);
@@ -270,18 +268,17 @@ class VaboutController extends AbstractController
         $vabout->updateImageTitle($imageName, $title);
         $this->entityManager->flush();
 
-        return new JsonResponse([
-            'success' => true,
-            'message' => 'Image title updated successfully'
-        ]);
+        return new JsonResponse(['success' => true, 'message' => 'Image title updated successfully']);
     }
+
+    // ── Utility ───────────────────────────────────────────────────────────────
 
     private function formatFileSize(int $bytes): string
     {
         $units = ['B', 'KB', 'MB', 'GB'];
         $bytes = max($bytes, 0);
-        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
-        $pow = min($pow, count($units) - 1);
+        $pow   = floor(($bytes ? log($bytes) : 0) / log(1024));
+        $pow   = min($pow, count($units) - 1);
         return round($bytes / (1024 ** $pow), 2) . ' ' . $units[$pow];
     }
 }

@@ -5,7 +5,7 @@
 
 {% block body %}
     <!-- Compact Hero/Breadcrumb Section -->
-    <section class="compact-hero" style="background-image: url('{{ asset('images/dummy/1.webp') }}');">
+    <section class="compact-hero" style="background-image: url('{{ asset('images/breadcrumb.webp') }}');">
         <div class="compact-hero-overlay"></div>
         <div class="container h-100">
             <div class="row h-100 align-items-center">
@@ -50,10 +50,21 @@
                             <i class="bi bi-geo-alt-fill"></i>
                         </div>
                         <h4 class="feature-title">Visit Us</h4>
-                        <p class="mb-0">Namchi, South Sikkim<br>737126, India</p>
-                        <a href="https://maps.google.com/?q=DIET+Namchi" target="_blank" class="program-link mt-2">
-                            View on Map <i class="bi bi-arrow-right"></i>
-                        </a>
+                        <p class="mb-0">
+                            {% if global_contact and global_contact.address %}
+                                {{ global_contact.address|nl2br }}
+                            {% else %}
+
+                            {% endif %}
+                        </p>
+                        {% if global_contact and global_contact.map %}
+                            {# Extract src URL from the stored <iframe> string #}
+                            {% set map_src = global_contact.map|replace({'<iframe': '', '</iframe>': ''})|trim %}
+                            {% set map_src = map_src|split('src="')[1]|split('"')[0] %}
+
+                        {% else %}
+
+                        {% endif %}
                     </div>
                 </div>
 
@@ -65,12 +76,26 @@
                         </div>
                         <h4 class="feature-title">Call Us</h4>
                         <p class="mb-0">
-                            <a href="tel:03595264521" class="text-decoration-none text-body">03595-264521</a><br>
-                            <small class="text-muted">Mon-Sat: 10AM-5PM</small>
+                            {% if global_contact and global_contact.phone1 %}
+                                <a href="tel:{{ global_contact.phone1 }}" class="text-decoration-none text-body">{{ global_contact.phone1 }}</a>
+                            {% endif %}
+                            {% if global_contact and global_contact.phone2 %}
+                                <br><a href="tel:{{ global_contact.phone2 }}" class="text-decoration-none text-body">{{ global_contact.phone2 }}</a>
+                            {% endif %}
+                            {% if global_contact and global_contact.phone3 %}
+                                <br><a href="tel:{{ global_contact.phone3 }}" class="text-decoration-none text-body">{{ global_contact.phone3 }}</a>
+                            {% endif %}
+                            {% if global_contact and global_contact.opentime %}
+                                <br><small class="text-muted">{{ global_contact.opentime }}</small>
+                            {% else %}
+                                <br><small class="text-muted"></small>
+                            {% endif %}
                         </p>
-                        <a href="tel:03595264521" class="program-link mt-2">
-                            Call Now <i class="bi bi-arrow-right"></i>
-                        </a>
+                        {% if global_contact and global_contact.phone1 %}
+                            <a href="tel:{{ global_contact.phone1 }}" class="program-link mt-2">
+                                Call Now <i class="bi bi-arrow-right"></i>
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -82,12 +107,19 @@
                         </div>
                         <h4 class="feature-title">Email Us</h4>
                         <p class="mb-0">
-                            <a href="mailto:dietnamchi12@gmail.com" class="text-decoration-none text-body">dietnamchi12@gmail.com</a><br>
-                            <small class="text-muted">Response within 24h</small>
+                            {% if global_contact and global_contact.email1 %}
+                                <a href="mailto:{{ global_contact.email1 }}" class="text-decoration-none text-body">{{ global_contact.email1 }}</a>
+                            {% endif %}
+                            {% if global_contact and global_contact.email2 %}
+                                <br><a href="mailto:{{ global_contact.email2 }}" class="text-decoration-none text-body">{{ global_contact.email2 }}</a>
+                            {% endif %}
+                            <br><small class="text-muted">Response within 24h</small>
                         </p>
-                        <a href="mailto:dietnamchi12@gmail.com" class="program-link mt-2">
-                            Send Email <i class="bi bi-arrow-right"></i>
-                        </a>
+                        {% if global_contact and global_contact.email1 %}
+                            <a href="mailto:{{ global_contact.email1 }}" class="program-link mt-2">
+                                Send Email <i class="bi bi-arrow-right"></i>
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -99,9 +131,11 @@
                         </div>
                         <h4 class="feature-title">Office Hours</h4>
                         <p class="mb-0">
-                            Monday - Friday: 10AM-5PM<br>
-                            Saturday: 10AM-1PM<br>
-                            <small class="text-muted">Sunday: Closed</small>
+                            {% if global_contact and global_contact.opentime %}
+                                {{ global_contact.opentime|nl2br }}
+                            {% else %}
+
+                            {% endif %}
                         </p>
                     </div>
                 </div>
@@ -116,15 +150,22 @@
                 <!-- Map -->
                 <div class="col-lg-7" data-aos="fade-right">
                     <div class="rounded-4 overflow-hidden shadow-soft" style="height: 380px; background: var(--bg-soft);">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3555.123456789!2d88.364!3d27.166!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjfCsDA5JzU3LjYiTiA4OMKwMjEnNTAuNCJF!5e0!3m2!1sen!2sin!4v1234567890"
-                            width="100%"
-                            height="100%"
-                            style="border:0;"
-                            allowfullscreen=""
-                            loading="lazy"
-                            title="DIET Namchi Location">
-                        </iframe>
+                        {% if global_contact and global_contact.map %}
+                            {# Extract src from stored <iframe> HTML string #}
+                            {% set map_src = global_contact.map|split('src="')[1]|split('"')[0] %}
+                            <iframe
+                                src="{{ map_src }}"
+                                width="100%"
+                                height="100%"
+                                style="border:0;"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"
+                                title="DIET Namchi Location">
+                            </iframe>
+                        {% else %}
+
+                        {% endif %}
                     </div>
                 </div>
 
@@ -155,7 +196,7 @@
                             </div>
                             <div>
                                 <strong class="d-block">By Air</strong>
-                                <small class="text-muted">Pakyong Airport - 65km<br>Bagdogra Airport - 150km</small>
+                                <small class="text-muted">Pakyong Airport - 65km<br>Bagdogra Airport - 103km</small>
                             </div>
                         </div>
                     </div>
@@ -188,33 +229,43 @@
             </div>
 
             <div class="row g-4 justify-content-center">
-                <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="100">
-                    <a href="tel:03595264521" class="feature-card text-center text-decoration-none h-100">
-                        <div class="feature-icon mx-auto" style="background: linear-gradient(135deg, #10b981, #059669);">
-                            <i class="bi bi-telephone"></i>
-                        </div>
-                        <h4 class="feature-title">Phone Call</h4>
-                        <p class="mb-0">Speak directly with our team</p>
-                    </a>
-                </div>
-                <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="200">
-                    <a href="mailto:dietnamchi12@gmail.com" class="feature-card text-center text-decoration-none h-100">
-                        <div class="feature-icon mx-auto" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">
-                            <i class="bi bi-envelope"></i>
-                        </div>
-                        <h4 class="feature-title">Email</h4>
-                        <p class="mb-0">Send detailed inquiries</p>
-                    </a>
-                </div>
-                <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="300">
-                    <a href="https://wa.me/919876543210" target="_blank" class="feature-card text-center text-decoration-none h-100">
-                        <div class="feature-icon mx-auto" style="background: linear-gradient(135deg, #25d366, #128c7e);">
-                            <i class="bi bi-whatsapp"></i>
-                        </div>
-                        <h4 class="feature-title">WhatsApp</h4>
-                        <p class="mb-0">Quick chat support</p>
-                    </a>
-                </div>
+                {% if global_contact and global_contact.phone1 %}
+                    <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="100">
+                        <a href="tel:{{ global_contact.phone1 }}" class="feature-card text-center text-decoration-none h-100">
+                            <div class="feature-icon mx-auto" style="background: linear-gradient(135deg, #10b981, #059669);">
+                                <i class="bi bi-telephone"></i>
+                            </div>
+                            <h4 class="feature-title">Phone Call</h4>
+                            <p class="mb-0">Speak directly with our team</p>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if global_contact and global_contact.email1 %}
+                    <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="200">
+                        <a href="mailto:{{ global_contact.email1 }}" class="feature-card text-center text-decoration-none h-100">
+                            <div class="feature-icon mx-auto" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                            <h4 class="feature-title">Email</h4>
+                            <p class="mb-0">Send detailed inquiries</p>
+                        </a>
+                    </div>
+                {% endif %}
+
+                {% if global_contact and global_contact.phone1 %}
+                    <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="300">
+                        <a href="https://wa.me/{{ global_contact.phone2|replace({'+': '', ' ': '', '-': ''}) }}"
+                           target="_blank" class="feature-card text-center text-decoration-none h-100">
+                            <div class="feature-icon mx-auto" style="background: linear-gradient(135deg, #25d366, #128c7e);">
+                                <i class="bi bi-whatsapp"></i>
+                            </div>
+                            <h4 class="feature-title">WhatsApp</h4>
+                            <p class="mb-0">Quick chat support</p>
+                        </a>
+                    </div>
+                {% endif %}
+
                 <div class="col-6 col-md-3" data-aos="zoom-in" data-aos-delay="400">
                     <a href="#faq" class="feature-card text-center text-decoration-none h-100">
                         <div class="feature-icon mx-auto" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
@@ -225,29 +276,58 @@
                     </a>
                 </div>
             </div>
+
+            {# Social links — only rendered if at least one is set #}
+            {% if global_contact and (global_contact.fb or global_contact.insta or global_contact.yt or global_contact.tw or global_contact.linkedin or global_contact.telegram) %}
+                <div class="row g-3 justify-content-center mt-2">
+                    {% if global_contact.fb %}
+                        <div class="col-auto" data-aos="zoom-in" data-aos-delay="100">
+                            <a href="{{ global_contact.fb }}" target="_blank" class="feature-card text-center text-decoration-none px-4 py-3 d-flex align-items-center gap-2">
+                                <i class="bi bi-facebook"></i> Facebook
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% if global_contact.insta %}
+                        <div class="col-auto" data-aos="zoom-in" data-aos-delay="150">
+                            <a href="{{ global_contact.insta }}" target="_blank" class="feature-card text-center text-decoration-none px-4 py-3 d-flex align-items-center gap-2">
+                                <i class="bi bi-instagram"></i> Instagram
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% if global_contact.yt %}
+                        <div class="col-auto" data-aos="zoom-in" data-aos-delay="200">
+                            <a href="{{ global_contact.yt }}" target="_blank" class="feature-card text-center text-decoration-none px-4 py-3 d-flex align-items-center gap-2">
+                                <i class="bi bi-youtube"></i> YouTube
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% if global_contact.tw %}
+                        <div class="col-auto" data-aos="zoom-in" data-aos-delay="250">
+                            <a href="{{ global_contact.tw }}" target="_blank" class="feature-card text-center text-decoration-none px-4 py-3 d-flex align-items-center gap-2">
+                                <i class="bi bi-twitter-x"></i> Twitter/X
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% if global_contact.linkedin %}
+                        <div class="col-auto" data-aos="zoom-in" data-aos-delay="300">
+                            <a href="{{ global_contact.linkedin }}" target="_blank" class="feature-card text-center text-decoration-none px-4 py-3 d-flex align-items-center gap-2">
+                                <i class="bi bi-linkedin"></i> LinkedIn
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% if global_contact.telegram %}
+                        <div class="col-auto" data-aos="zoom-in" data-aos-delay="350">
+                            <a href="{{ global_contact.telegram }}" target="_blank" class="feature-card text-center text-decoration-none px-4 py-3 d-flex align-items-center gap-2">
+                                <i class="bi bi-telegram"></i> Telegram
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+
         </div>
     </section>
 
     {{ render(controller('App\\Controller\\MainController::SecFaq')) }}
-    <a href="{{ path('app_pg_faq') }}" class="d-block text-center mt-4" data-aos="fade-up">
-        <i class="bi bi-arrow-right"></i> View All FAQs
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div data-aos="fade-up">
-                <span class="section-subtitle mb-3">
-                    <i class="bi bi-hand-thumbs-up"></i> Start Your Journey
-                </span>
-                <h2 class="mb-3">Ready to Join DIET Namchi?</h2>
-                <p class="mx-auto mb-4">Explore our NCTE-recognized programs and become part of Sikkim's educational transformation.</p>
-                <div class="d-flex justify-content-center gap-3 flex-wrap">
-                    <a href="{{ path('app_main') }}" class="btn-apply">Explore Programs</a>
-                    <a href="tel:03595264521" class="btn btn-outline-primary px-4 py-2 rounded-pill">
-                        <i class="bi bi-telephone me-1"></i> Call Now
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
 {% endblock %}

@@ -4,55 +4,63 @@
 
 {% block body %}
 
-    <!-- Hero Section with CM & Principal Cards -->
-    <div class="container-fluid px-0">
-        <div class="row g-0">
+<!-- Hero Section with CM & Principal Cards -->
+<div class="container-fluid px-0">
+    <div class="row g-0">
 
-            <div class="col-lg-9 col-md-8 col-12">
-                {{ render(controller('App\\Controller\\VsliderController::HomeSlider')) }}
-            </div>
+        <div class="col-lg-9 col-md-8 col-12">
+            {{ render(controller('App\\Controller\\VsliderController::HomeSlider')) }}
+        </div>
 
-            <div class="col-lg-3 col-md-4 col-12">
-                {{ render(controller('App\\Controller\\VpeopleController::CM')) }}
+        <div class="col-lg-3 col-md-4 col-12">
+            {{ render(controller('App\\Controller\\VpeopleController::CM')) }}
 
-                <div class="principal-card-profile mb-4" data-aos="fade-left">
-                    <div class="principal-cover-wrapper">
-                        <img src="{{ asset('images/principal.jpeg') }}" class="principal-cover-img" alt="Prem Singh Tamang">
-                        <div class="principal-cover-overlay"></div>
-                    </div>
+            {% set default_principal = {
+                title: 'Mrs. Bandana Rai',
+                designation: 'Principal, DIET Namchi',
+                image: asset('images/principal.jpeg'),
+                description: 'Welcome to DIET Namchi. We are committed to nurturing future educators with quality training...'
+            } %}
 
-                    <div class="principal-profile-inner">
-                        <div class="principal-avatar-wrapper">
-                            <div class="principal-avatar-ring">
-                                <img src="{{ asset('images/principal.jpeg') }}" class="principal-avatar-img" alt="Prem Singh Tamang">
-                            </div>
-                        </div>
+            {% set principal = vteams[0] ?? app.request.attributes.get('principal') ?? default_principal %}
 
-                        <button class="principal-chip-role">
-                            <i class="bi bi-mortarboard"></i>
-                            Principal, DIET Namch
-                        </button>
-
-                        <h3 class="principal-profile-name">Mrs. Bandana Rai,</h3>
-                        <p class="principal-sub-text">
-                            "Welcome to DIET Namchi. We are committed to nurturing future educators with quality training..."
-                            "Welcome to DIET Namchi. We are committed to nurturing future educators with quality training..."
-                            "Welcome to DIET Namchi. We are committed to nurturing future educators with quality training..."
-                        </p>
-                        <a href="##" class="principal-cta">
-                            Read Full Message
-                            <i class="bi bi-arrow-right-short"></i>
-                        </a>
-                    </div>
+            <div class="principal-card-profile mb-4" data-aos="fade-left">
+                <div class="principal-cover-wrapper">
+                    <img src="{{ asset('uploads/image/' ~ principal.image) }}" alt="{{ principal.title }}">
+                    <div class="principal-cover-overlay"></div>
                 </div>
 
-            </div>
-        </div>
-    </div>
+                <div class="principal-profile-inner">
+                    <div class="principal-avatar-wrapper">
+                        <div class="principal-avatar-ring">
+                            <img src="{{ asset('uploads/image/' ~ principal.image) }}" alt="{{ principal.title }}">
+                        </div>
+                    </div>
+
+                    <button class="principal-chip-role">
+                        <i class="bi bi-mortarboard"></i>
+                        {{ principal.designation|default(default_principal.designation) }}
+                    </button>
+
+                    <h3 class="principal-profile-name">{{ principal.title|default(default_principal.title) }}</h3>
+                    <p class="principal-sub-text">
+                        {{ principal.description|default(default_principal.description)|slice(0, 200)|raw ~ '...'}}
+                        </p>
+                        <a href="{{ path('app_team') }}" class="principal-cta">
+                        Read Full Message
+                        <i class="bi bi-arrow-right-short"></i>
+                        </a>
+                        </div>
+                        </div>
 
 
-    <!-- Stats Section -->
-    {#<div class="container stats-wrapper">
+                        </div>
+                        </div>
+                        </div>
+
+
+                        <!-- Stats Section -->
+                        {#<div class="container stats-wrapper">
         <div class="stats-section" data-aos="fade-up">
             <div class="row g-3">
                 <div class="col-6 col-md-3">
@@ -84,309 +92,247 @@
     </div>#}
 
     <!-- Why Choose Us -->
-    <section class="section-padding why-choose-section">
+    <section class="why-choose-section">
         <div class="container">
+
             <div class="section-header" data-aos="fade-up">
                 <span class="section-subtitle">Why Choose Us</span>
                 <h2 class="section-title">Excellence in Teacher Education</h2>
                 <p>
-                    We provide world-class teacher training programs with modern infrastructure and experienced faculty dedicated
-                    to your growth.
+                    We provide world-class teacher training programs with modern infrastructure and
+                    experienced faculty dedicated to your growth.
                 </p>
             </div>
 
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="bi bi-award"></i>
-                        </div>
-                        <h3 class="feature-title">Quality Programs</h3>
-                        <p>
-                            NCTE recognized D.El.Ed and B.Ed programs designed to meet modern educational standards and NEP 2020
-                            guidelines.
-                        </p>
+            <!-- Grid Container -->
+            <div class="features-grid">
+
+                <!-- Item 1 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="feature-icon-wrapper">
+                        <i class="bi bi-award"></i>
                     </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="bi bi-people"></i>
-                        </div>
-                        <h3 class="feature-title">Expert Faculty</h3>
-                        <p>
-                            Learn from experienced educators and subject matter experts dedicated to your professional growth.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="bi bi-building"></i>
-                        </div>
-                        <h3 class="feature-title">Modern Infrastructure</h3>
-                        <p>
-                            State-of-the-art classrooms, ICT labs, library, and digital resources for enhanced learning.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="bi bi-patch-check"></i>
-                        </div>
-                        <h3 class="feature-title">Recognized</h3>
-                        <p>
-                            Fully recognized by NCTE and affiliated with SCERT, ensuring valid and valuable certifications.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Programs Section -->
-    <section class="section-padding">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <span class="section-subtitle">Academic Offerings</span>
-                <h2 class="section-title">Our Programs</h2>
-                <p>Comprehensive teacher education programs for aspiring and in-service educators.</p>
-            </div>
-
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
-                    <div class="program-card">
-                        <div class="program-img-wrapper">
-                            <img
-                                src="{{ asset('images/dummy/2.jpg') }}"
-                                alt="D.El.Ed"
-                            />
-                        </div>
-                        <div class="program-content">
-                            <div class="program-meta">
-                                <span><i class="bi bi-clock"></i> 2 Years</span>
-                                <span><i class="bi bi-layers"></i> 4 Semesters</span>
-                                <span><i class="bi bi-people"></i> 100 Seats</span>
-                            </div>
-                            <h3 class="program-title">D.El.Ed</h3>
-                            <p>
-                                Diploma in Elementary Education for teaching Classes I-VIII. Comprehensive training in child
-                                development and pedagogy.
-                            </p>
-                            <a href="admission.html" class="program-link">
-                                Apply Now
-                                <i class="bi bi-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                    <div class="program-card">
-                        <div class="program-img-wrapper">
-                            <img
-                                src="{{ asset('images/dummy/4.jpg') }}"
-                                alt="B.Ed"
-                            />
-                        </div>
-                        <div class="program-content">
-                            <div class="program-meta">
-                                <span><i class="bi bi-clock"></i> 2 Years</span>
-                                <span><i class="bi bi-layers"></i> 4 Semesters</span>
-                                <span><i class="bi bi-people"></i> 100 Seats</span>
-                            </div>
-                            <h3 class="program-title">B.Ed</h3>
-                            <p>
-                                Bachelor of Education for secondary and higher secondary teaching. Advanced pedagogical training
-                                and subject specialization.
-                            </p>
-                            <a href="admission.html" class="program-link">
-                                Apply Now
-                                <i class="bi bi-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="program-card">
-                        <div class="program-img-wrapper">
-                            <img
-                                src="{{ asset('images/dummy/6.jpg') }}"
-                                alt="Training"
-                            />
-                        </div>
-                        <div class="program-content">
-                            <div class="program-meta">
-                                <span><i class="bi bi-calendar-event"></i> Continuous</span>
-                                <span><i class="bi bi-patch-check"></i> Certificate</span>
-                            </div>
-                            <h3 class="program-title">In-Service Training</h3>
-                            <p>
-                                Professional development programs for serving teachers. ICT integration, inclusive education, and
-                                innovative teaching methods.
-                            </p>
-                            <a href="##" class="program-link">
-                                View Schedule
-                                <i class="bi bi-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Masonry Gallery -->
-    <section class="section-padding gallery-section" id="gallery">
-        <div class="container">
-            <div class="section-title-block" data-aos="fade-up">
-            <span class="section-subtitle">
-                <i class="bi bi-images"></i> Our Gallery
-            </span>
-                <h2 class="section-title">Campus Gallery</h2>
-                <p>A glimpse into our learning environment and activities.</p>
-            </div>
-
-            <div class="masonry-grid" data-aos="fade-up" data-aos-delay="200">
-                <!-- Gallery Item 1 -->
-                <div class="gallery-item">
-                    <img src="{{ asset('images/dummy/2.jpg') }}" alt="Campus Life" />
-                    <a href="{{ asset('images/dummy/2.jpg') }}" data-fancybox="gallery" class="gallery-overlay">
-                        <i class="bi bi-zoom-in"></i>
-                    </a>
-                </div>
-
-                <!-- Gallery Item 2 -->
-                <div class="gallery-item">
-                    <img src="{{ asset('images/dummy/1.webp') }}" alt="Classroom" />
-                    <a href="{{ asset('images/dummy/1.webp') }}" data-fancybox="gallery" class="gallery-overlay">
-                        <i class="bi bi-zoom-in"></i>
-                    </a>
-                </div>
-
-                <!-- Gallery Item 3 -->
-                <div class="gallery-item">
-                    <img src="{{ asset('images/dummy/3.jpg') }}" alt="Workshop" />
-                    <a href="{{ asset('images/dummy/3.jpg') }}" data-fancybox="gallery" class="gallery-overlay">
-                        <i class="bi bi-zoom-in"></i>
-                    </a>
-                </div>
-
-                <!-- Gallery Item 4 -->
-                <div class="gallery-item">
-                    <img src="{{ asset('images/dummy/4.jpg') }}" alt="Library" />
-                    <a href="{{ asset('images/dummy/4.jpg') }}" data-fancybox="gallery" class="gallery-overlay">
-                        <i class="bi bi-zoom-in"></i>
-                    </a>
-                </div>
-
-                <!-- Gallery Item 5 -->
-                <div class="gallery-item">
-                    <img src="{{ asset('images/dummy/5.jpg') }}" alt="Students" />
-                    <a href="{{ asset('images/dummy/5.jpg') }}" data-fancybox="gallery" class="gallery-overlay">
-                        <i class="bi bi-zoom-in"></i>
-                    </a>
-                </div>
-
-                <!-- Gallery Item 6 -->
-                <div class="gallery-item">
-                    <img src="{{ asset('images/dummy/6.jpg') }}" alt="Graduation" />
-                    <a href="{{ asset('images/dummy/6.jpg') }}" data-fancybox="gallery" class="gallery-overlay">
-                        <i class="bi bi-zoom-in"></i>
-                    </a>
-                </div>
-
-            </div>
-
-            <div class="text-center mt-4" data-aos="fade-up" data-aos-delay="300">
-                <a href="##" class="btn btn-outline-primary px-5 rounded-pill">
-                    <i class="bi bi-images me-2"></i>View All Photos
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Notices Section -->
-    <section class="section-padding notices-section">
-        <div class="container">
-            <div class="row align-items-start">
-                <div class="col-lg-5 mb-5 mb-lg-0" data-aos="fade-right">
-                    <span class="section-subtitle">Stay Updated</span>
-                    <h2 class="section-title">Latest News &amp; Announcements</h2>
-                    <p class="mb-4">
-                        Get the latest updates about admissions, examinations, workshops, and important notices.
+                    <h3 class="feature-title">Quality Programs</h3>
+                    <p>
+                        NCTE recognized D.El.Ed and B.Ed programs designed to meet modern educational standards and NEP 2020 guidelines.
                     </p>
-                    <a href="notices.html" class="btn-hero-primary">View All Notices</a>
                 </div>
-                <div class="col-lg-7" data-aos="fade-left">
-                    <div class="notice-item">
-                        <div class="notice-date-box">
-                            <span class="notice-day">01</span>
-                            <span class="notice-month">Mar</span>
-                        </div>
-                        <div class="notice-content">
-                            <h5>Admission Open for D.El.Ed 2026-28</h5>
-                            <p>
-                                Applications are now invited for Diploma in Elementary Education program. Last date: March 31,
-                                2026.
-                            </p>
-                        </div>
-                    </div>
 
-                    <div class="notice-item">
-                        <div class="notice-date-box">
-                            <span class="notice-day">25</span>
-                            <span class="notice-month">Feb</span>
-                        </div>
-                        <div class="notice-content">
-                            <h5>In-Service Training Workshop</h5>
-                            <p>
-                                5-day workshop on ICT Integration in Teaching from March 10-15, 2026. Registration open.
-                            </p>
-                        </div>
+                <!-- Item 2 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon-wrapper">
+                        <i class="bi bi-people"></i>
                     </div>
-
-                    <div class="notice-item">
-                        <div class="notice-date-box">
-                            <span class="notice-day">20</span>
-                            <span class="notice-month">Feb</span>
-                        </div>
-                        <div class="notice-content">
-                            <h5>Result Declared - B.Ed Semester II</h5>
-                            <p>Results for B.Ed Semester II examination now available on student portal.</p>
-                        </div>
-                    </div>
+                    <h3 class="feature-title">Expert Faculty</h3>
+                    <p>
+                        Learn from experienced educators and subject matter experts dedicated to your professional growth.
+                    </p>
                 </div>
+
+                <!-- Item 3 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon-wrapper">
+                        <i class="bi bi-building"></i>
+                    </div>
+                    <h3 class="feature-title">Modern Infrastructure</h3>
+                    <p>
+                        State-of-the-art classrooms, ICT labs, library, and digital resources for enhanced learning.
+                    </p>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon-wrapper">
+                        <i class="bi bi-patch-check"></i>
+                    </div>
+                    <h3 class="feature-title">Recognized</h3>
+                    <p>
+                        Fully recognized by NCTE and affiliated with SCERT, ensuring valid and valuable certifications.
+                    </p>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div data-aos="fade-up">
+                    <!-- Programs Section -->
+                    <section class="section-padding">
+                        <div class="container">
+                            <div class="section-header" data-aos="fade-up">
+                                <span class="section-subtitle">Academic Offerings</span>
+                                <h2 class="section-title">Our Programs</h2>
+                                <p>Comprehensive teacher education programs for aspiring and in-service educators.</p>
+                            </div>
+
+                            <div class="row g-4">
+                                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
+                                    <div class="program-card">
+                                        <div class="program-img-wrapper">
+                                            <img
+                                                src="{{ asset('images/default.webp') }}"
+                                                alt="D.El.Ed"
+                                            />
+                                        </div>
+                                        <div class="program-content">
+                                            <div class="program-meta">
+                                                <span><i class="bi bi-clock"></i> 2 Years</span>
+                                                <span><i class="bi bi-layers"></i> 4 Semesters</span>
+                                                <span><i class="bi bi-people"></i> 100 Seats</span>
+                                            </div>
+                                            <h3 class="program-title">D.El.Ed</h3>
+                                            <p>
+                                                Diploma in Elementary Education for teaching Classes I-VIII.
+                                                Comprehensive training in child
+                                                development and pedagogy.
+                                            </p>
+                                            <a href="javascript:void(0);" class="program-link">
+                                                Apply Now
+                                                <i class="bi bi-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="program-card">
+                                        <div class="program-img-wrapper">
+                                            <img
+                                                src="{{ asset('images/default.webp') }}"
+                                                alt="B.Ed"
+                                            />
+                                        </div>
+                                        <div class="program-content">
+                                            <div class="program-meta">
+                                                <span><i class="bi bi-clock"></i> 2 Years</span>
+                                                <span><i class="bi bi-layers"></i> 4 Semesters</span>
+                                                <span><i class="bi bi-people"></i> 100 Seats</span>
+                                            </div>
+                                            <h3 class="program-title">B.Ed</h3>
+                                            <p>
+                                                Bachelor of Education for secondary and higher secondary teaching.
+                                                Advanced pedagogical training
+                                                and subject specialization.
+                                            </p>
+                                            <a href="admission.html" class="program-link">
+                                                Apply Now
+                                                <i class="bi bi-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                                    <div class="program-card">
+                                        <div class="program-img-wrapper">
+                                            <img
+                                                src="{{ asset('images/default.webp') }}"
+                                                alt="Training"
+                                            />
+                                        </div>
+                                        <div class="program-content">
+                                            <div class="program-meta">
+                                                <span><i class="bi bi-calendar-event"></i> Continuous</span>
+                                                <span><i class="bi bi-patch-check"></i> Certificate</span>
+                                            </div>
+                                            <h3 class="program-title">In-Service Training</h3>
+                                            <p>
+                                                Professional development programs for serving teachers. ICT integration,
+                                                inclusive education, and
+                                                innovative teaching methods.
+                                            </p>
+                                            <a href="##" class="program-link">
+                                                View Schedule
+                                                <i class="bi bi-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <!-- Notices Section -->
+                    <section class="section-padding notices-section">
+                        <div class="container">
+                            <div class="row align-items-start">
+                                <div class="col-lg-5 mb-5 mb-lg-0" data-aos="fade-right">
+                                    <span class="section-subtitle">Stay Updated</span>
+                                    <h2 class="section-title">Latest News &amp; Announcements</h2>
+                                    <p class="mb-4">
+                                        Get the latest updates about admissions, examinations, workshops, and important
+                                        notices.
+                                    </p>
+                                    <a href="notices.html" class="btn-hero-primary">View All Notices</a>
+                                </div>
+                                <div class="col-lg-7" data-aos="fade-left">
+                                    <div class="notice-item">
+                                        <div class="notice-date-box">
+                                            <span class="notice-day">01</span>
+                                            <span class="notice-month">Mar</span>
+                                        </div>
+                                        <div class="notice-content">
+                                            <h5>Admission Open for D.El.Ed 2026-28</h5>
+                                            <p>
+                                                Applications are now invited for Diploma in Elementary Education
+                                                program. Last date: March 31,
+                                                2026.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="notice-item">
+                                        <div class="notice-date-box">
+                                            <span class="notice-day">25</span>
+                                            <span class="notice-month">Feb</span>
+                                        </div>
+                                        <div class="notice-content">
+                                            <h5>In-Service Training Workshop</h5>
+                                            <p>
+                                                5-day workshop on ICT Integration in Teaching from March 10-15, 2026.
+                                                Registration open.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="notice-item">
+                                        <div class="notice-date-box">
+                                            <span class="notice-day">20</span>
+                                            <span class="notice-month">Feb</span>
+                                        </div>
+                                        <div class="notice-content">
+                                            <h5>Result Declared - B.Ed Semester II</h5>
+                                            <p>Results for B.Ed Semester II examination now available on student
+                                                portal.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- CTA Section -->
+                    <section class="cta-section border-top">
+                        <div class="container">
+                            <div data-aos="fade-up">
             <span class="section-subtitle mb-3">
                 <i class="bi bi-hand-thumbs-up"></i> Start Your Journey
             </span>
-                <h2 class="mb-3">Ready to Join DIET Namchi?</h2>
-                <p class="mx-auto mb-4">Explore our NCTE-recognized programs and become part of Sikkim's educational transformation.</p>
-                <div class="d-flex justify-content-center gap-3 flex-wrap">
-                    <a href="{{ path('app_main') }}" class="btn-apply">Explore Programs</a>
-                    <a href="tel:03595264521" class="btn btn-outline-primary px-4 py-2 rounded-pill">
-                        <i class="bi bi-telephone me-1"></i> Call Now
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+                                <h2 class="mb-3">Ready to Join DIET Namchi?</h2>
+                                <p class="mx-auto mb-4">Explore our NCTE-recognized programs and become part of Sikkim's
+                                    educational transformation.</p>
+                                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                                    <a href="{{ path('app_main') }}" class="btn-apply">Explore Programs</a>
+                                    <a href="tel:03595264521" class="btn btn-outline-primary px-4 py-2 rounded-pill">
+                                        <i class="bi bi-telephone me-1"></i> Call Now
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
 
 
-    {{ include('main/_staff_section.html.twig') }}
-    {{ include('main/_faq_section.html.twig') }}
+                    {{ include('main/_staff_section.html.twig') }}
+                    {{ include('main/_faq_section.html.twig') }}
 
-{% endblock %}
+                    {% endblock %}

@@ -63,22 +63,22 @@ class VaboutFormType extends AbstractType
                 'help' => ''
             ])
             ->add('description2', TextareaType::class, [
-                'label' => 'Second Description',
+                'label' => 'Mission',
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control summernote',
                     'rows' => 6,
-                    'placeholder' => 'Enter the second part of your about content...'
+                    'placeholder' => ''
                 ],
                 'help' => ''
             ])
             ->add('description3', TextareaType::class, [
-                'label' => 'Third Description',
+                'label' => 'Vision',
                 'required' => false,
                 'attr' => [
                     'class' => 'form-control summernote',
                     'rows' => 6,
-                    'placeholder' => 'Enter the third part of your about content...'
+                    'placeholder' => ''
                 ],
                 'help' => ''
             ])
