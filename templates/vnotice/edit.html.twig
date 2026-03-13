@@ -1,0 +1,25 @@
+{# templates/vnotice/edit.html.twig #}
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}Edit Notice — {{ vnotice.title }}{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h5><i class="bi bi-pencil-square"></i> Edit Notice</h5>
+        <div class="d-flex gap-2">
+            <a href="{{ path('app_vnotice_show', {'id': vnotice.id}) }}"
+               class="btn btn-outline-info">
+                <i class="bi bi-eye"></i> View
+            </a>
+            <a href="{{ path('app_vnotice_index') }}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back to list
+            </a>
+        </div>
+    </div>
+
+    {{ include('vnotice/_form.html.twig') }}
+
+</div>
+{% endblock %}

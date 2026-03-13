@@ -1,0 +1,19 @@
+{# templates/vnotice/new.html.twig #}
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}Add New Notice{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h5><i class="bi bi-plus-circle"></i> Add New Notice</h5>
+        <a href="{{ path('app_vnotice_index') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to list
+        </a>
+    </div>
+
+    {{ include('vnotice/_form.html.twig') }}
+
+</div>
+{% endblock %}

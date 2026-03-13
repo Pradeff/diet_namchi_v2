@@ -313,7 +313,9 @@ img {
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.3), transparent 55%), linear-gradient(135deg, rgba(30, 58, 138, 0.75), rgba(30, 58, 138, 0.65));
+    background: rgba(0, 0, 0, 0.8);
+    background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%);
+    /*background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.3), transparent 55%), linear-gradient(135deg, rgba(30, 58, 138, 0.75), rgba(30, 58, 138, 0.65));*/
 }
 
 .hero-content {
@@ -378,85 +380,131 @@ img {
     font-weight: 600;
     background: transparent;
 }
-
-.slick-dots li button:before {
-    color: #fff;
-    font-size: 10px;
-    opacity: 0.7;
+/* --- Slider Container --- */
+.hero-slider {
+    position: relative;
 }
 
-.slick-dots li.slick-active button:before {
-    color: #fff;
-    opacity: 1;
-}
-
+/* --- Navigation Arrows --- */
 .slick-prev,
 .slick-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%); /* Only center vertically, no hover movement */
     z-index: 10;
-    width: 50px;
-    height: 50px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 999px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    /* Initial State: Subtle Glass */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    /* Reset Slick defaults */
+    padding: 0;
+    margin: 0;
 }
 
-.slick-prev:before,
-.slick-next:before {
-    color: var(--primary-blue);
-    font-size: 20px;
-}
-
-.slick-prev:hover,
-.slick-next:hover {
-    background: var(--white);
-}
+.slick-prev { left: 20px; }
+.slick-next { right: 20px; }
 
 
-
-/* Stats Section - Light Version Matching Hero Height */
-.stats-wrapper {
-    margin-top: 0;
-    position: relative;
-    z-index: 10;
-}
-
-.stats-section {
-    background: var(--white);
-    color: var(--text-body);
-    padding: 40px 24px;
-    border-radius: 0;
-    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
-    border-top: 1px solid var(--border-subtle);
-    border-bottom: 1px solid var(--border-subtle);
-}
-
-.stat-box {
-    text-align: center;
-    padding: 20px;
-    border-right: 1px solid var(--border-subtle);
-}
-
-.stat-box:last-child {
-    border-right: none;
-}
-
-.stat-number {
-    font-size: 36px;
-    font-weight: 700;
-    color: var(--primary-blue);
-    font-family: var(--font-primary);
-    display: block;
-    margin-bottom: 6px;
+/* Icon Styling (Bootstrap Icons) */
+.slick-prev i,
+.slick-next i {
+    font-size: 1.25rem;
+    color: #fff;
+    transition: color 0.3s ease;
     line-height: 1;
 }
 
-.stat-label {
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #64748b;
-    font-weight: 500;
+/* Hover State: White BG, Colored Icon */
+.slick-prev:hover,
+.slick-next:hover {
+    background: #fff;
+    border-color: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
+
+.slick-prev:hover i,
+.slick-next:hover i {
+    color: var(--accent-gold, #D4AF37);
+}
+.slick-next::before {
+    content: '';
+}
+.slick-prev::before {
+    content: '';
+}
+
+/* --- Pagination Dots --- */
+.slick-dots {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    display: flex !important; /* Override Slick inline styles */
+    justify-content: center;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
+}
+
+.slick-dots li {
+    margin: 0;
+    width: auto;
+    height: auto;
+}
+
+.slick-dots li button {
+    padding: 0;
+    margin: 0;
+    width: 10px;
+    height: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+/* The actual dot visual */
+.slick-dots li button:before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    opacity: 1; /* Control opacity via bg-color instead */
+    transition: all 0.3s ease;
+    font-size: 0; /* Hide default Slick text char */
+    line-height: 0;
+}
+
+/* Active Dot */
+.slick-dots li.slick-active button:before {
+    background-color: #fff;
+    transform: scale(1.3);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+/* --- Mobile Responsiveness --- */
+/* JS handles hiding arrows at 768px, but ensure dots stay visible */
+@media (max-width: 768px) {
+    .slick-dots {
+        bottom: 20px;
+    }
+}
+
+
 
 /* Sections */
 .section-padding {
@@ -627,6 +675,18 @@ img {
     color: var(--white);
 }
 
+.feature-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 999px;
+    background: rgba(var(--accent-gold-rgb), 0.15);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: var(--accent-gold);
+    margin-bottom: 16px;
+}
 .feature-title {
     font-size: 20px;
     font-weight: 700;
@@ -2456,7 +2516,7 @@ iframe {
 .hs-slider .slick-prev,
 .hs-slider .slick-next {
     width: 42px; height: 42px;
-    background: var(--white);
+    background: var(--accent-gold);
     border: 1px solid var(--border-subtle);
     border-radius: 50%;
     box-shadow: var(--shadow-soft);
@@ -2473,7 +2533,7 @@ iframe {
 }
 .hs-slider .slick-prev:hover,
 .hs-slider .slick-next:hover {
-    background: var(--primary-blue);
+    background: var(--white);
     border-color: var(--primary-blue);
     box-shadow: 0 6px 18px rgba(30,58,138,.28);
 }

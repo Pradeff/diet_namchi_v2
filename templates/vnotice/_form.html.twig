@@ -1,0 +1,176 @@
+{# templates/vnotice/_form.html.twig #}
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true, 'id': 'vnotice-form', 'enctype': 'multipart/form-data'}}) }}
+
+<div class="row">
+
+    {# ── LEFT COLUMN ──────────────────────────────────────────────── #}
+    <div class="col-md-8">
+
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <strong><i class="bi bi-megaphone"></i> Notice Information</strong>
+            </div>
+            <div class="card-body">
+
+                <div class="mb-3">
+                    {{ form_label(form.title) }}
+                    {{ form_widget(form.title) }}
+                    {% if form.title.vars.errors|length > 0 %}
+                        <div class="mt-2">
+                            {% for error in form.title.vars.errors %}
+                                <span class="badge bg-danger d-inline-flex align-items-center mb-1">
+            <i class="bi bi-exclamation-triangle-fill me-1"></i>
+            {{ error.message }}
+        </span><br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.description, '<i class="bi bi-textarea me-2"></i> Description', {
+                        label_html: true,
+                        label_attr: { class: 'fw-bold mb-2' }
+                    }) }}
+                    {{ form_widget(form.description) }}
+                </div>
+
+            </div>
+        </div>
+
+        {# ── PDF Upload ────────────────────────────────────────────── #}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <strong><i class="bi bi-file-pdf text-danger"></i> PDF Attachment</strong>
+            </div>
+            <div class="card-body">
+
+                {% if vnotice.pdfFilename %}
+                    <div class="alert alert-secondary d-flex align-items-center gap-3 mb-3">
+                        <i class="bi bi-file-pdf text-danger fs-4"></i>
+                        <div>
+                            <strong>Current file:</strong>
+                            <a href="{{ asset('uploads/pdf/' ~ vnotice.pdfFilename) }}"
+                               target="_blank" class="text-danger ms-2">
+                                {{ vnotice.pdfFilename }}
+                            </a>
+                            <br><small class="text-muted">Upload a new file to replace it.</small>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="mb-3">
+                    {{ form_label(form.pdfFile, '<i class="bi bi-upload me-2"></i> Upload PDF', {
+                        label_html: true,
+                        label_attr: { class: 'fw-bold mb-2' }
+                    }) }}
+
+                    {{ form_widget(form.pdfFile) }}
+
+                    {% if form.pdfFile.vars.errors|length > 0 %}
+                        <div class="mt-2">
+                            {% for error in form.pdfFile.vars.errors %}
+                                <span class="badge bg-danger d-inline-flex align-items-center mb-1">
+                    <i class="bi bi-x-circle-fill me-1"></i>
+                    {{ error.message }}
+                </span><br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <small class="text-muted">
+                        <i class="bi bi-info-circle me-1"></i> Accepted format: PDF only.
+                    </small>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    {# ── RIGHT COLUMN ─────────────────────────────────────────────── #}
+    <div class="col-md-4">
+
+        {# Date #}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <strong><i class="bi bi-calendar-event"></i> Notice Date</strong>
+            </div>
+            <div class="card-body">
+                <div class="mb-0">
+                    {{ form_label(form.noticeDate) }}
+                    {{ form_widget(form.noticeDate) }}
+
+                    {% if form.noticeDate.vars.errors|length > 0 %}
+                        <div class="mt-2">
+                            {% for error in form.noticeDate.vars.errors %}
+                                <span class="badge bg-danger d-inline-flex align-items-center mb-1">
+                    <i class="bi bi-x-circle-fill me-1"></i>
+                    {{ error.message }}
+                </span><br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {# Actions #}
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+                <strong><i class="bi bi-gear-wide"></i> Actions</strong>
+            </div>
+            <div class="card-body">
+                <button class="btn btn-light-info btn-lg w-100 mb-2" id="submitBtn" type="submit">
+                    <span id="submitText">
+                        <i class="bi bi-check-circle-fill me-1"></i>
+                        {{ button_label|default('Save') }}
+                    </span>
+                    <span id="submitSpinner"
+                          class="spinner-border spinner-border-sm ms-2 d-none"
+                          role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </span>
+                </button>
+                <a href="{{ path('app_vnotice_index') }}" class="btn btn-outline-secondary w-100">
+                    <i class="bi bi-arrow-left"></i> Back to list
+                </a>
+            </div>
+        </div>
+
+        {# Status info #}
+        {% if vnotice.id %}
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <strong><i class="bi bi-info-circle"></i> Info</strong>
+                </div>
+                <div class="card-body small text-muted">
+                    <div class="mb-1">
+                        <i class="bi bi-calendar-plus me-1"></i>
+                        <strong>Created:</strong>
+                        {{ vnotice.createdAt ? vnotice.createdAt|date('d M Y, H:i') : '—' }}
+                    </div>
+                    <div>
+                        <i class="bi bi-calendar-check me-1"></i>
+                        <strong>Updated:</strong>
+                        {{ vnotice.updatedAt ? vnotice.updatedAt|date('d M Y, H:i') : '—' }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+</div>
+
+{{ form_end(form) }}
+
+<script>
+    document.getElementById('vnotice-form').addEventListener('submit', function () {
+        const btn     = document.getElementById('submitBtn');
+        const text    = document.getElementById('submitText');
+        const spinner = document.getElementById('submitSpinner');
+        if (btn) btn.disabled = true;
+        if (text) text.classList.add('d-none');
+        if (spinner) spinner.classList.remove('d-none');
+    });
+</script>

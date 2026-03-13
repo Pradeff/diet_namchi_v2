@@ -173,7 +173,7 @@
                     <li class="nav-item">
                         <a href="{{ path('app_notices') }}"
                            class="nav-link {% if app.request.attributes.get('_route') == 'app_notices' %}active{% endif %}">
-                            Notices
+                            Notices & Downloads
                         </a>
                     </li>
                     <li class="nav-item">
@@ -237,7 +237,7 @@
                 <a href="{{ path('app_training') }}">Training</a>
             </li>
             <li>
-                <a href="{{ path('app_notices') }}">Notices</a>
+                <a href="{{ path('app_notices') }}">Notices & Downloads</a>
             </li>
             <li>
                 <a href="{{ path('app_gallery') }}">Gallery</a>
@@ -258,25 +258,6 @@
     <div class="footer-accent-bar"></div>
 
     <div class="footer-geo"></div>
-
-    <!-- ── Newsletter Band ── -->
-    {# <div class="footer-newsletter">
-        <div class="container">
-            <div class="newsletter-label">
-                <div class="newsletter-icon">
-                    <i class="bi bi-envelope-paper-fill"></i>
-                </div>
-                <div>
-                    <h5>Stay Connected</h5>
-                    <p>Receive notices, circulars &amp; event updates directly.</p>
-                </div>
-            </div>
-            <form class="newsletter-form" onsubmit="return false">
-                <input type="email" placeholder="Your email address…" aria-label="Email address">
-                <button type="submit">Subscribe <i class="bi bi-arrow-right-short"></i></button>
-            </form>
-        </div>
-    </div> #}
 
     <!-- ── Main Body ── -->
     <div class="footer-body">

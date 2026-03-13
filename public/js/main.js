@@ -89,7 +89,7 @@ function initSliders() {
 
     // Homepage staff slider
     safeInit($('.hs-slider'), {
-        slidesToShow   : 4,
+        slidesToShow   : 5,
         slidesToScroll : 1,
         autoplay       : true,
         autoplaySpeed  : 3200,
@@ -97,13 +97,41 @@ function initSliders() {
         dots           : true,
         infinite       : true,
         pauseOnHover   : true,
+        prevArrow     : "<button type='button' class='slick-prev'><i class='bi bi-arrow-left'></i></button>",
+        nextArrow     : "<button type='button' class='slick-next'><i class='bi bi-arrow-right'></i></button>",
         responsive     : [
             { breakpoint: 1200, settings: { slidesToShow: 3 } },
             { breakpoint: 992,  settings: { slidesToShow: 2 } },
             { breakpoint: 576,  settings: { slidesToShow: 2, arrows: false } }
         ]
     });
+
+    // Vertical pagination slider for notices (2 items visible)
+    safeInit($('.notices-slider'), {
+        dots          : true,
+        infinite      : true,
+        speed         : 800,
+        slidesToShow  : 2,
+        slidesToScroll: 1,
+        cssEase       : 'ease',
+        autoplay      : true,
+        autoplaySpeed : 4000,
+        arrows        : true,
+        prevArrow     : "<button type='button' class='slick-prev'><i class='bi bi-arrow-left'></i></button>",
+        nextArrow     : "<button type='button' class='slick-next'><i class='bi bi-arrow-right'></i></button>",
+        responsive    : [
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 1,
+                    arrows: false
+                }
+            }
+        ]
+    });
 }
+
+
 
 /* ── 6. Stats counter ─────────────────────────────────────────────── */
 function initCounters() {

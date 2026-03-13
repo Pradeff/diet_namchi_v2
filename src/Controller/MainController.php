@@ -4,9 +4,11 @@ namespace App\Controller;
 use App\Repository\VaboutRepository;
 use App\Repository\VcontactRepository;
 use App\Repository\VgalleryRepository;
+use App\Repository\VnoticeRepository;
 use App\Repository\VpagesRepository;
 use App\Repository\VteamRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Vgallery;
@@ -21,7 +23,7 @@ final class MainController extends AbstractController
     ): Response {
         return $this->render('main/index.html.twig', [
             'vfaqs' => $vfaqRepository->findFirstThreeOrdered(),
-            'vteams' => $vteamRepository->findTopN(5),
+            'vteams' => $vteamRepository->findTopN(8),
             'principal' => $vteamRepository->findOneBy(['position' => 0]) ?? null,  // First/lowest position
         ]);
     }
@@ -75,12 +77,26 @@ final class MainController extends AbstractController
     }*/
 
     #[Route('/notices', name: 'app_notices')]
-    public function PgNotices(): Response
+    public function PgNotices(Request $request, VnoticeRepository $vnoticeRepository): Response
     {
+        $currentYear = (int) date('Y');
+        $limit       = 5;
+        $page        = max(1, (int) $request->query->get('page', 1));
+
+        $notices      = $vnoticeRepository->findCurrentYearPaginated($currentYear, $page, $limit);
+        $total        = $vnoticeRepository->countCurrentYear($currentYear);
+        $totalPages   = (int) ceil($total / $limit);
+
+        $archivedNotices = $vnoticeRepository->findGroupedByYear($currentYear);
+
         return $this->render('main/notices.html.twig', [
-            'controller_name' => 'MainController',
+            'notices'         => $notices,
+            'currentPage'     => $page,
+            'totalPages'      => $totalPages,
+            'archivedNotices' => $archivedNotices,
         ]);
     }
+
 
     #[Route('/gallery', name: 'app_gallery')]
     public function PgGallery(VgalleryRepository $vgalleryRepository): Response

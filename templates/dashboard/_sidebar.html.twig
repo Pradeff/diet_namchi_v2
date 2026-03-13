@@ -82,6 +82,12 @@
                         <span>FAQ's</span>
                     </a>
                 </li>
+                <li class="side_nav-item {% if app.request.attributes.get('_route') in ['app_vnotice_index','app_vnotice_new','app_vnotice_edit','app_vnotice_show'] %}active{% endif %}">
+                    <a href="{{ path('app_vnotice_index') }}" class="side_nav-link" data-tooltip="Notices & Announcements" title="Notices & Announcements">
+                        <i class="bi bi-megaphone"></i>
+                        <span>Notices & Announcements</span>
+                    </a>
+                </li>
 
                 <li class="side_nav-item {% if app.request.attributes.get('_route') in ['app_vteam_index','app_vteam_new','app_vteam_edit','app_vteam_show'] %}active{% endif %}">
                     <a href="{{ path('app_vteam_index') }}" class="side_nav-link"  data-tooltip="Staff" title="Staff">
