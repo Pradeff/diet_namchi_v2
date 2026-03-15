@@ -1,0 +1,39 @@
+<section class="section-padding">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-subtitle">Academic Offerings</span>
+            <h2 class="section-title">Our Course</h2>
+            <p>Comprehensive teacher education programs for aspiring and in-service educators.</p>
+        </div>
+
+        <div class="row g-4">
+            {% for vcourse in vcourses %}
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
+                    <div class="program-card">
+                        <div class="program-img-wrapper">
+                            <img
+                                src="{{ vcourse.coverImage ? asset('uploads/image/' ~ vcourse.coverImage) : asset('images/default.webp') }}"
+                                alt="{{ vcourse.title }}"
+                            />
+                        </div>
+                        <div class="program-content">
+                            <h3 class="program-title">{{ vcourse.title }}</h3>
+                            <p>
+                                {{ vcourse.description|length > 120 ? vcourse.description|slice(0, 120) ~ '...' : vcourse.description }}
+                            </p>
+                            <a href="{{ path('app_course_details', {'slug': vcourse.slug}) }}" class="program-link">
+                                Read More
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12 text-center py-5 text-muted">
+                    <i class="bi bi-journal-x" style="font-size: 3rem;"></i>
+                    <p class="mt-2">No courses available at the moment.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

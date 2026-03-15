@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% set site_title = global_contact and global_contact.sitetitle ? global_contact.sitetitle : 'Lets Go Sikkim Travel Agency' %}
+    {% set site_title = global_contact and global_contact.sitetitle ? global_contact.sitetitle : 'DIET Namchi' %}
     {% set site_description = global_contact and global_contact.sitedescription ? global_contact.sitedescription|slice(0, 160) : 'Discover Sikkim with curated travel packages – adventure, family, honeymoon, cultural & more.' %}
-    {% set site_url = global_contact and global_contact.sitelink ? global_contact.sitelink : 'https://letsgosikkim.com/' %}
+    {% set site_url = global_contact and global_contact.sitelink ? global_contact.sitelink : 'https://dietnamchi.com/' %}
     {% set site_image = global_contact and global_contact.logo1 ? asset('images/WebsiteAssets/' ~ global_contact.logo1) : asset('images/og-image.jpg') %}
 
     <meta charset="UTF-8">
@@ -18,7 +18,7 @@
     <meta name="keywords" content="{% block meta_keywords %}{{ global_contact.sitekeyword }}{% endblock %}">
 
     <meta name="author"
-          content="{% if global_contact and global_contact.sitetitle %}{{ global_contact.sitetitle }}{% else %}Lets Go Sikkim{% endif %}">
+          content="{% if global_contact and global_contact.sitetitle %}{{ global_contact.sitetitle }}{% else %}DIET Namchi{% endif %}">
 
     <link rel="canonical" href="{% block canonical %}{{ app.request ? app.request.uri : site_url }}{% endblock %}">
 
@@ -34,7 +34,7 @@
     <meta name="twitter:description" content="{% block twitter_description %}{{ site_description }}{% endblock %}">
     <meta name="twitter:image" content="{% block twitter_image %}{{ site_image }}{% endblock %}">
     <meta name="twitter:site"
-          content="{% if global_contact and global_contact.tw %}{{ global_contact.tw|replace({'https://twitter.com/': '@', 'https://x.com/': '@'}) }}{% else %}@LetsGoSikkim{% endif %}">
+          content="{% if global_contact and global_contact.tw %}{{ global_contact.tw|replace({'https://twitter.com/': '@', 'https://x.com/': '@'}) }}{% else %}@DietNamchi{% endif %}">
 
     {% if global_contact and global_contact.favicon %}
         <link rel="icon" href="{{ asset('images/WebsiteAssets/' ~ global_contact.favicon) }}">
@@ -48,8 +48,7 @@
         {
             "@context": "https://schema.org",
             "@type": "EducationInstitution",
-            "name": "{% if global_contact and global_contact.sitetitle %}{{ global_contact.sitetitle|e('js') }}{% else %}Lets Go Sikkim{% endif %}
-        ",
+            "name": "{% if global_contact and global_contact.sitetitle %}{{ global_contact.sitetitle|e('js') }}{% else %}D.I.E.T Namchi{% endif %}",
         {% if global_contact and global_contact.sitedescription %}"description": "{{ global_contact.sitedescription|e('js') }}",{% endif %}
         {% if global_contact and global_contact.sitelink %}"url": "{{ global_contact.sitelink|e('js') }}",{% endif %}
         {% if global_contact and global_contact.phone1 %}"telephone": "+91{{ global_contact.phone1|e('js') }}",{% endif %}
@@ -164,6 +163,13 @@
                             Admission
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ path('app_course') }}"
+                           class="nav-link {% if app.request.attributes.get('_route') in ['app_course','app_course_details'] %}active{% endif %}">
+                            Course
+                        </a>
+                    </li>
+
                     <li class="nav-item">
                         <a href="{{ path('app_training') }}"
                            class="nav-link {% if app.request.attributes.get('_route') == 'app_training' %}active{% endif %}">

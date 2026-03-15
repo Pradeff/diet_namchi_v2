@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Our Courses{% endblock %}
+
+{% block body %}
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="page-hero-content" data-aos="fade-up">
+                <h1>Our Courses</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ path('app_main') }}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Courses</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Section rendered via sub-request -->
+    {{ render(controller('App\\Controller\\MainController::CourseSection')) }}
+
+{% endblock %}

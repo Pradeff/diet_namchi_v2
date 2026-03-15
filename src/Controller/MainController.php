@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Repository\VaboutRepository;
 use App\Repository\VcontactRepository;
+use App\Repository\VcourseRepository;
 use App\Repository\VgalleryRepository;
 use App\Repository\VnoticeRepository;
 use App\Repository\VpagesRepository;
@@ -124,6 +125,39 @@ final class MainController extends AbstractController
     {
         return $this->render('main/training.html.twig', [
             'controller_name' => 'MainController',
+        ]);
+    }
+
+    #[Route('/course', name: 'app_course')]
+    public function PgCourse(VcourseRepository $vcourseRepository): Response
+    {
+        return $this->render('main/course.html.twig', [
+            'vcourses' => $vcourseRepository->findAllOrderedByCreatedAt(),
+        ]);
+    }
+
+    #[Route('/course/details/{slug}', name: 'app_course_details')]
+    public function CourseDetails(string $slug, VcourseRepository $vcourseRepository): Response
+    {
+        $vcourse = $vcourseRepository->findOneBy(['slug' => $slug]);
+
+        if (!$vcourse) {
+            throw $this->createNotFoundException('Course not found.');
+        }
+
+        return $this->render('main/course_details.html.twig', [
+            'vcourse' => $vcourse,
+        ]);
+    }
+
+    /**
+     * Sub-request action — rendered via:
+     * {{ render(controller('App\\Controller\\MainController::CourseSection')) }}
+     */
+    public function CourseSection(VcourseRepository $vcourseRepository): Response
+    {
+        return $this->render('main/_course_section.html.twig', [
+            'vcourses' => $vcourseRepository->findAllOrderedByCreatedAt(),
         ]);
     }
 

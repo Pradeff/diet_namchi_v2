@@ -89,6 +89,13 @@
                     </a>
                 </li>
 
+                <li class="side_nav-item {% if app.request.attributes.get('_route') in ['app_vcourse_index','app_vcourse_new','app_vcourse_edit','app_vcourse_show'] %}active{% endif %}">
+                    <a href="{{ path('app_vcourse_index') }}" class="side_nav-link"  data-tooltip="Course" title="Course">
+                        <i class="bi bi-people"></i>
+                        <span>Course</span>
+                    </a>
+                </li>
+
                 <li class="side_nav-item {% if app.request.attributes.get('_route') in ['app_vteam_index','app_vteam_new','app_vteam_edit','app_vteam_show'] %}active{% endif %}">
                     <a href="{{ path('app_vteam_index') }}" class="side_nav-link"  data-tooltip="Staff" title="Staff">
                         <i class="bi bi-people"></i>

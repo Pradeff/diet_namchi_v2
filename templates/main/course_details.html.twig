@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ vcourse.title }}{% endblock %}
+
+{% block body %}
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="page-hero-content" data-aos="fade-up">
+                <h1>{{ vcourse.title }}</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ path('app_main') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('app_course') }}">Courses</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ vcourse.title }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Detail -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row g-4">
+
+                <!-- Main Content -->
+                <div class="col-lg-8">
+
+                    <!-- Cover Image -->
+                    {% if vcourse.coverImage %}
+                        <div class="mb-4" data-aos="fade-up">
+                            <img src="{{ asset('uploads/image/' ~ vcourse.coverImage) }}"
+                                 alt="{{ vcourse.title }}"
+                                 class="img-fluid rounded w-100"
+                                 style="max-height: 420px; object-fit: cover;">
+                        </div>
+                    {% endif %}
+
+                    <!-- Description -->
+                    <div class="card mb-4" data-aos="fade-up">
+                        <div class="card-body">
+                            <h4 class="mb-3">About This Course</h4>
+                            <p class="mb-0">{{ vcourse.description }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Image Gallery -->
+                    {% if vcourse.images|length > 1 %}
+                        <div class="card" data-aos="fade-up">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-images"></i> Gallery</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    {% for image in vcourse.images %}
+                                        {% if image != vcourse.coverImage %}
+                                            <div class="col-6 col-md-4">
+                                                <img src="{{ asset('uploads/image/' ~ image) }}"
+                                                     alt="{{ vcourse.title }}"
+                                                     class="img-fluid rounded w-100"
+                                                     style="height: 140px; object-fit: cover;"
+                                                     loading="lazy">
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+
+                    <!-- Course Card -->
+                    <div class="card mb-4" data-aos="fade-up">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-journal-bookmark"></i> Course Info</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-borderless mb-0 small">
+                                <tbody>
+                                    <tr>
+                                        <th>Title</th>
+                                        <td>{{ vcourse.title }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Slug</th>
+                                        <td><code>{{ vcourse.slug }}</code></td>
+                                    </tr>
+                                    {% if vcourse.createdAt %}
+                                        <tr>
+                                            <th>Added On</th>
+                                            <td>{{ vcourse.createdAt|date('M j, Y') }}</td>
+                                        </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Back Link -->
+                    <a href="{{ path('app_course') }}" class="program-link">
+                        <i class="bi bi-arrow-left"></i> Back to All Courses
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

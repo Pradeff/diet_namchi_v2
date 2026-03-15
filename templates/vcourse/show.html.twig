@@ -1,0 +1,164 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}Course - {{ vcourse.title }}{% endblock %}
+
+{% block body %}
+
+    <div class="row mb-4">
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 text_color_default">
+                    <i class="bi bi-journal-bookmark"></i>
+                    Course Detail
+                </h5>
+                <div>
+                    <a href="{{ path('app_vcourse_edit', {'id': vcourse.id}) }}" class="btn btn-light-success">
+                        <i class="bi bi-pencil"></i> Edit
+                    </a>
+                    <a href="{{ path('app_vcourse_index') }}" class="btn btn-light-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-8">
+
+            <!-- Course Info -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5><i class="bi bi-info-circle"></i> Course Information</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless mb-0">
+                        <tbody>
+                            <tr>
+                                <th style="width: 160px;">Title</th>
+                                <td>{{ vcourse.title }}</td>
+                            </tr>
+                            <tr>
+                                <th>Slug</th>
+                                <td><code>{{ vcourse.slug }}</code></td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td>{{ vcourse.description }}</td>
+                            </tr>
+                            <tr>
+                                <th>Created At</th>
+                                <td>{{ vcourse.createdAt ? vcourse.createdAt|date('M j, Y H:i') : 'N/A' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Updated At</th>
+                                <td>{{ vcourse.updatedAt ? vcourse.updatedAt|date('M j, Y H:i') : 'N/A' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Images Gallery -->
+            {% if vcourse.images|length > 0 %}
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="bi bi-collection"></i> Images ({{ vcourse.images|length }})</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            {% for image in vcourse.images %}
+                                <div class="col-6 col-md-4 col-lg-3">
+                                    <div class="position-relative">
+                                        <img src="{{ asset('uploads/image/' ~ image) }}"
+                                             alt="Course Image"
+                                             class="img-fluid rounded w-100"
+                                             style="height: 120px; object-fit: cover;"
+                                             loading="lazy">
+                                        {% if image == vcourse.coverImage %}
+                                            <span class="position-absolute top-0 start-0 badge bg-success m-1">
+                                                <i class="bi bi-star-fill"></i> Cover
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card">
+                    <div class="card-body text-center py-4 text-muted">
+                        <i class="bi bi-images" style="font-size: 2.5rem;"></i>
+                        <p class="mt-2 mb-0">No images uploaded yet.</p>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+
+        <div class="col-md-4">
+
+            <!-- Cover Image -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h6><i class="bi bi-star-fill text-success"></i> Cover Image</h6>
+                </div>
+                <div class="card-body text-center p-2">
+                    {% if vcourse.coverImage %}
+                        <img src="{{ asset('uploads/image/' ~ vcourse.coverImage) }}"
+                             class="img-fluid rounded"
+                             alt="Cover Image"
+                             style="max-height: 200px;">
+                    {% else %}
+                        <div class="py-4 text-muted">
+                            <i class="bi bi-image" style="font-size: 2.5rem;"></i>
+                            <p class="mt-2 mb-0 small">No cover image set</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h6><i class="bi bi-bar-chart"></i> Statistics</h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <span>Total Images:</span>
+                        <span class="badge bg-primary">{{ vcourse.images|length }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                        <span>Cover Set:</span>
+                        {% if vcourse.coverImage %}
+                            <span class="badge bg-success">Yes</span>
+                        {% else %}
+                            <span class="badge bg-warning">No</span>
+                        {% endif %}
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                        <span>Created:</span>
+                        <small class="text-muted">{{ vcourse.createdAt ? vcourse.createdAt|date('M j, Y') : 'N/A' }}</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="card">
+                <div class="card-header">
+                    <h6><i class="bi bi-gear"></i> Actions</h6>
+                </div>
+                <div class="card-body d-grid gap-2">
+                    <a href="{{ path('app_vcourse_edit', {'id': vcourse.id}) }}" class="btn btn-primary">
+                        <i class="bi bi-pencil"></i> Edit Course
+                    </a>
+                    {% include 'vcourse/_delete_form.html.twig' %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

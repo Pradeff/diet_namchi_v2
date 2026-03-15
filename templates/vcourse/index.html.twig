@@ -1,0 +1,130 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}Courses - Index{% endblock %}
+
+{% block body %}
+
+    <div class="row mb-4">
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 text_color_default">
+                    <i class="bi bi-journal-bookmark"></i>
+                    Courses
+                </h5>
+                <a href="{{ path('app_vcourse_new') }}" class="btn btn-sm btn-primary">
+                    <i class="bi bi-plus-lg"></i>
+                    Add New
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+
+            {% if vcourses|length > 0 %}
+                <div class="table-responsive">
+                    <table id="d_table" class="table table-hover align-middle">
+                        <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Cover</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for vcourse in vcourses %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td align="center">
+                                    {% if vcourse.coverImage %}
+                                        <img src="{{ asset('uploads/image/' ~ vcourse.coverImage) }}"
+                                             alt="{{ vcourse.title }}"
+                                             class="img-thumbnail"
+                                             style="width: 80px; height: 60px; object-fit: cover;">
+                                    {% else %}
+                                        <i class="bi bi-image text-muted" style="font-size: 1.5rem;"></i>
+                                    {% endif %}
+                                </td>
+                                <td>{{ vcourse.title }}</td>
+                                <td>
+                                    {{ vcourse.description|length > 40 ? vcourse.description|slice(0, 40) ~ '...' : vcourse.description }}
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="{{ path('app_vcourse_edit', {'id': vcourse.id}) }}"
+                                           class="btn btn-xs btn-light-success">
+                                            <i class="bi bi-pencil"></i> Edit
+                                        </a>
+                                        <a href="{{ path('app_vcourse_show', {'id': vcourse.id}) }}"
+                                           class="btn btn-xs btn-light-info">
+                                            <i class="bi bi-eye"></i> View
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-xs btn-light-danger delete-btn"
+                                                data-course-id="{{ vcourse.id }}"
+                                                data-course-title="{{ vcourse.title }}">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="bi bi-journal-x text-muted" style="font-size: 4rem;"></i>
+                    <h3 class="text-muted mt-3">No Courses found</h3>
+                    <p class="text-muted">Start by creating your first course.</p>
+                    <a href="{{ path('app_vcourse_new') }}" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Create First Course
+                    </a>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <!-- Hidden delete form -->
+    <form id="delete-form" method="post" style="display: none;">
+        <input type="hidden" name="_token" id="delete-token" value="">
+        <input type="hidden" name="_method" value="DELETE">
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+            const deleteForm = document.getElementById('delete-form');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const courseId = this.dataset.courseId;
+                    const courseTitle = this.dataset.courseTitle;
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: `Do you want to delete "${courseTitle}"? This action cannot be undone!`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#dc3545',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: '<i class="bi bi-trash"></i> Yes, delete it!',
+                        cancelButtonText: '<i class="bi bi-x-circle"></i> Cancel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            deleteForm.action = `{{ path('app_vcourse_delete', {'id': '__ID__'}) }}`.replace('__ID__', courseId);
+                            document.getElementById('delete-token').value =
+                                `{{ csrf_token('delete__ID__') }}`.replace('__ID__', courseId);
+                            deleteForm.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+{% endblock %}

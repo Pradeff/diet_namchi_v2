@@ -119,11 +119,13 @@
         </div>
     </section>
 
-    <section class="section-padding">
+    {{ render(controller('App\\Controller\\MainController::CourseSection')) }}
+
+  {#  <section class="section-padding">
         <div class="container">
             <div class="section-header" data-aos="fade-up">
                 <span class="section-subtitle">Academic Offerings</span>
-                <h2 class="section-title">Our Programs</h2>
+                <h2 class="section-title">Our Course</h2>
                 <p>Comprehensive teacher education programs for aspiring and in-service educators.</p>
             </div>
 
@@ -149,7 +151,7 @@
                                 development and pedagogy.
                             </p>
                             <a href="javascript:void(0);" class="program-link">
-                                Apply Now
+                                Read More
                                 <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
@@ -176,8 +178,8 @@
                                 Advanced pedagogical training
                                 and subject specialization.
                             </p>
-                            <a href="admission.html" class="program-link">
-                                Apply Now
+                            <a href="#" class="program-link">
+                                Read More
                                 <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
@@ -204,7 +206,7 @@
                                 innovative teaching methods.
                             </p>
                             <a href="##" class="program-link">
-                                View Schedule
+                                Read More
                                 <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
@@ -212,7 +214,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>#}
 
     <section class="section-padding notices-section">
         <div class="container">
