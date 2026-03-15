@@ -1,0 +1,39 @@
+<section class="section-padding">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-subtitle">Professional Development</span>
+            <h2 class="section-title">Our Trainings</h2>
+            <p>Empowering educators through continuous professional development and in-service training programs.</p>
+        </div>
+
+        <div class="row g-4">
+            {% for vtraining in vtrainings %}
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 100 }}">
+                    <div class="program-card">
+                        <div class="program-img-wrapper">
+                            <img
+                                src="{{ vtraining.coverImage ? asset('uploads/image/' ~ vtraining.coverImage) : asset('images/default.webp') }}"
+                                alt="{{ vtraining.title }}"
+                            />
+                        </div>
+                        <div class="program-content">
+                            <h3 class="program-title">{{ vtraining.title }}</h3>
+                            <p>
+                                {{ vtraining.description|length > 120 ? vtraining.description|slice(0, 120) ~ '...' : vtraining.description }}
+                            </p>
+                            <a href="{{ path('app_training_details', {'slug': vtraining.slug}) }}" class="program-link">
+                                Read More
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12 text-center py-5 text-muted">
+                    <i class="bi bi-journal-x" style="font-size: 3rem;"></i>
+                    <p class="mt-2">No trainings available at the moment.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

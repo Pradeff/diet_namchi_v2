@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ vtraining.title }}{% endblock %}
+
+{% block body %}
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="page-hero-content" data-aos="fade-up">
+                <h1>{{ vtraining.title }}</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ path('app_main') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('app_training') }}">Trainings</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ vtraining.title }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <!-- Training Detail -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row g-4">
+
+                <!-- Main Content -->
+                <div class="col-lg-8">
+
+                    <!-- Cover Image -->
+                    {% if vtraining.coverImage %}
+                        <div class="mb-4" data-aos="fade-up">
+                            <img src="{{ asset('uploads/image/' ~ vtraining.coverImage) }}"
+                                 alt="{{ vtraining.title }}"
+                                 class="img-fluid rounded w-100"
+                                 style="max-height: 420px; object-fit: cover;">
+                        </div>
+                    {% endif %}
+
+                    <!-- Description -->
+                    <div class="card mb-4" data-aos="fade-up">
+                        <div class="card-body">
+                            <h4 class="mb-3">About This Training</h4>
+                            <p class="mb-0">{{ vtraining.description }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Image Gallery -->
+                    {% if vtraining.images|length > 1 %}
+                        <div class="card" data-aos="fade-up">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-images"></i> Gallery</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    {% for image in vtraining.images %}
+                                        {% if image != vtraining.coverImage %}
+                                            <div class="col-6 col-md-4">
+                                                <img src="{{ asset('uploads/image/' ~ image) }}"
+                                                     alt="{{ vtraining.title }}"
+                                                     class="img-fluid rounded w-100"
+                                                     style="height: 140px; object-fit: cover;"
+                                                     loading="lazy">
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+
+                    <!-- Training Info Card -->
+                    <div class="card mb-4" data-aos="fade-up">
+                        <div class="card-header">
+                            <h5 class="mb-0"><i class="bi bi-mortarboard"></i> Training Info</h5>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-borderless mb-0 small">
+                                <tbody>
+                                    <tr>
+                                        <th>Title</th>
+                                        <td>{{ vtraining.title }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Slug</th>
+                                        <td><code>{{ vtraining.slug }}</code></td>
+                                    </tr>
+                                    {% if vtraining.createdAt %}
+                                        <tr>
+                                            <th>Added On</th>
+                                            <td>{{ vtraining.createdAt|date('M j, Y') }}</td>
+                                        </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Back Link -->
+                    <a href="{{ path('app_training') }}" class="program-link">
+                        <i class="bi bi-arrow-left"></i> Back to All Trainings
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,526 @@
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5><i class="bi bi-info-circle"></i> Training Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    {{ form_label(form.title, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.title) }}
+                    {{ form_errors(form.title) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.description, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.description) }}
+                    {{ form_errors(form.description) }}
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-{{ is_edit ? 'primary' : 'success' }}">
+                        <i class="bi bi-{{ is_edit ? 'check-circle' : 'plus-circle' }}"></i>
+                        {{ is_edit ? 'Update' : 'Create' }} Training
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        {% if is_edit %}
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5><i class="bi bi-cloud-upload"></i> Upload Images</h5>
+                    <small class="text-muted">Max: {{ max_file_size }} | Allowed: JPG, PNG, GIF, WebP</small>
+                </div>
+                <div class="card-body">
+                    <div id="image-dropzone">
+                        <i class="bi bi-cloud-upload" style="font-size: 3rem; color: #6c757d;"></i>
+                        <p class="mt-2 mb-0">Drop images here or click to upload</p>
+                        <small class="text-muted">You can select multiple files at once</small>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="col-md-4">
+        {% if is_edit and vtraining.coverImage %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h6><i class="bi bi-star-fill text-success"></i> Current Cover Image</h6>
+                </div>
+                <div class="card-body text-center p-2">
+                    <img src="{{ asset('uploads/image/' ~ vtraining.coverImage) }}"
+                         class="img-fluid rounded"
+                         alt="Cover Image"
+                         style="max-height: 200px;">
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="card">
+            <div class="card-header">
+                <h6>
+                    <i class="bi bi-{{ is_edit ? 'info-circle' : 'lightbulb' }}"></i>
+                    {{ is_edit ? 'Image Management' : 'Tips' }}
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if is_edit %}
+                    <div class="alert alert-info">
+                        <small>
+                            <i class="bi bi-lightbulb"></i>
+                            <strong>Tips:</strong>
+                            <ul class="mb-0 mt-2 small">
+                                <li>Images are automatically compressed and resized</li>
+                                <li>Click the star icon to set as cover image</li>
+                                <li>Use the delete button to remove images</li>
+                                <li>Maximum file size: {{ max_file_size }}</li>
+                            </ul>
+                        </small>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle"></i>
+                        <strong>Note:</strong> You can upload images after creating the training.
+                    </div>
+                    <ul class="small text-muted">
+                        <li>Make sure your title is descriptive and unique</li>
+                        <li>The slug will be automatically generated from the title</li>
+                        <li>Provide a detailed description for better SEO</li>
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if is_edit %}
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h6><i class="bi bi-bar-chart"></i> Statistics</h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <span>Total Images:</span>
+                        <span class="badge bg-primary">{{ vtraining.images|length }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                        <span>Cover Set:</span>
+                        {% if vtraining.coverImage %}
+                            <span class="badge bg-success">Yes</span>
+                        {% else %}
+                            <span class="badge bg-warning">No</span>
+                        {% endif %}
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                        <span>Created:</span>
+                        <small class="text-muted">{{ vtraining.createdAt ? vtraining.createdAt|date('M j, Y') : 'N/A' }}</small>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{{ form_end(form) }}
+
+{% if is_edit and vtraining.images|length > 0 %}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h5><i class="bi bi-collection"></i> Current Images ({{ vtraining.images|length }})</h5>
+        </div>
+        <div class="card-body">
+            <div class="image-gallery" id="current-images">
+                {% for image in vtraining.images %}
+                    <div class="image-item {{ image == vtraining.coverImage ? 'cover-image' : '' }}" data-image="{{ image }}">
+                        <img src="{{ asset('uploads/image/' ~ image) }}" alt="Gallery Image" loading="lazy">
+
+                        <div class="image-controls">
+                            {% if image != vtraining.coverImage %}
+                                <button type="button"
+                                        class="btn btn-success btn-sm btn-image-control set-cover-btn"
+                                        data-image="{{ image }}"
+                                        title="Set as cover image">
+                                    <i class="bi bi-star"></i>
+                                </button>
+                            {% endif %}
+                            <button type="button"
+                                    class="btn btn-danger btn-sm btn-image-control delete-image-btn"
+                                    data-image="{{ image }}"
+                                    title="Delete image">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+
+                        {% if image == vtraining.coverImage %}
+                            <span class="cover-badge">
+                                <i class="bi bi-star-fill"></i> Cover
+                            </span>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if is_edit %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            if (typeof Dropzone === 'undefined') {
+                console.error('Dropzone is not loaded. Please check if the Dropzone library is properly included.');
+                return;
+            }
+
+            const maxFileSizeMB    = {{ max_file_size_mb }};
+            const maxFileSizeBytes = maxFileSizeMB * 1024 * 1024;
+            const maxFileSizeText  = '{{ max_file_size }}';
+
+            const uploadToken      = '{{ csrf_token("upload_images") }}';
+            const setCoverToken    = '{{ csrf_token("set_cover") }}';
+            const deleteImageToken = '{{ csrf_token("delete_image") }}';
+
+            Dropzone.autoDiscover = false;
+            const myDropzone = new Dropzone("#image-dropzone", {
+                url: "{{ path('app_vtraining_upload_images', {'id': vtraining.id}) }}",
+                paramName: "file",
+                maxFilesize: maxFileSizeMB,
+                acceptedFiles: "image/*",
+                parallelUploads: 5,
+                addRemoveLinks: false,
+                autoProcessQueue: true,
+                uploadMultiple: false,
+                dictDefaultMessage: `
+                    <i class="bi bi-cloud-upload" style="font-size: 3rem; color: #6c757d;"></i>
+                    <p class="mt-2 mb-0">Drop images here or click to upload</p>
+                    <small class="text-muted">You can select multiple files at once</small>
+                    <br><small class="text-danger">Max file size: ${maxFileSizeText}</small>
+                `,
+                dictFileTooBig: "File is too big. Max filesize: " + maxFileSizeText,
+                dictInvalidFileType: "You can't upload files of this type. Only images are allowed.",
+                dictResponseError: "Server responded with error code.",
+                headers: { 'X-CSRF-Token': uploadToken },
+                maxFiles: 10,
+                timeout: 120000,
+                retryChunks: false,
+
+                init: function () {
+                    const dropzone = this;
+
+                    this.on("addedfile", function (file) {
+                        if (file.size > maxFileSizeBytes) {
+                            setTimeout(() => {
+                                dropzone.removeFile(file);
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'File Too Large',
+                                    text: `File "${file.name}" is ${(file.size / (1024 * 1024)).toFixed(2)}MB. Maximum allowed size is ${maxFileSizeText}.`,
+                                    timer: 3000,
+                                    showConfirmButton: true
+                                });
+                            }, 100);
+                            return false;
+                        }
+
+                        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+                        if (!allowedTypes.includes(file.type)) {
+                            setTimeout(() => {
+                                dropzone.removeFile(file);
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Invalid File Type',
+                                    text: `File "${file.name}" is not a valid image. Only JPG, PNG, GIF, and WebP are allowed.`,
+                                    timer: 3000,
+                                    showConfirmButton: true
+                                });
+                            }, 100);
+                            return false;
+                        }
+                    });
+
+                    this.on("sending", function (file) {
+                        Swal.fire({
+                            title: 'Uploading...',
+                            text: `Processing "${file.name}"...`,
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            timer: 15000,
+                            willOpen: () => { Swal.showLoading(); }
+                        });
+                    });
+
+                    this.on("success", function (file, response) {
+                        Swal.close();
+                        dropzone.removeFile(file);
+
+                        if (response.success && response.files) {
+                            response.files.forEach(function (fileInfo) {
+                                addImageToGallery(fileInfo.name, fileInfo.url);
+                            });
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: `${response.files.length} image(s) uploaded successfully`,
+                                timer: 2000,
+                                showConfirmButton: false,
+                                toast: true,
+                                position: 'top-end'
+                            });
+                            updateImageStats();
+                        } else {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Upload Issue',
+                                text: response.message || 'Upload completed but no files were processed',
+                                timer: 3000
+                            });
+                        }
+                    });
+
+                    this.on("error", function (file, errorMessage, xhr) {
+                        Swal.close();
+                        dropzone.removeFile(file);
+
+                        let message = 'Upload failed';
+                        if (typeof errorMessage === 'string') {
+                            message = errorMessage;
+                        } else if (errorMessage && errorMessage.error) {
+                            message = errorMessage.error;
+                        } else if (xhr && xhr.status) {
+                            message = `Server error: ${xhr.status}`;
+                        }
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Upload Failed',
+                            text: `Failed to upload "${file.name}": ${message}`,
+                            timer: 4000,
+                            showConfirmButton: true
+                        });
+                    });
+
+                    this.on("complete", function (file) {
+                        setTimeout(() => {
+                            if (dropzone.files.includes(file)) { dropzone.removeFile(file); }
+                        }, 500);
+                    });
+
+                    this.on("queuecomplete", function () {
+                        setTimeout(() => { dropzone.removeAllFiles(true); }, 1000);
+                    });
+
+                    this.on("maxfilesexceeded", function (file) {
+                        dropzone.removeFile(file);
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Too Many Files',
+                            text: 'You can only upload 10 files at once.',
+                            timer: 3000
+                        });
+                    });
+                },
+            });
+
+            // ── Set Cover ──────────────────────────────────────────
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('.set-cover-btn')) {
+                    const button    = e.target.closest('.set-cover-btn');
+                    const imageName = button.dataset.image;
+
+                    fetch("{{ path('app_vtraining_set_cover', {'id': vtraining.id}) }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-CSRF-Token': setCoverToken
+                        },
+                        body: `image=${encodeURIComponent(imageName)}`
+                    })
+                        .then(r => r.json())
+                        .then(data => {
+                            if (data.success) {
+                                updateCoverImageUI(imageName);
+                                updateImageStats();
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Cover Set!',
+                                    text: data.message,
+                                    timer: 2000,
+                                    showConfirmButton: false,
+                                    toast: true,
+                                    position: 'top-end'
+                                });
+                            } else {
+                                throw new Error(data.error || 'Failed to set cover image');
+                            }
+                        })
+                        .catch(err => {
+                            Swal.fire({ icon: 'error', title: 'Error', text: err.message });
+                        });
+                }
+            });
+
+            // ── Delete Image ───────────────────────────────────────
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('.delete-image-btn')) {
+                    const button    = e.target.closest('.delete-image-btn');
+                    const imageName = button.dataset.image;
+
+                    Swal.fire({
+                        title: 'Delete Image?',
+                        text: 'This action cannot be undone!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#dc3545',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: '<i class="bi bi-trash"></i> Delete',
+                        cancelButtonText: '<i class="bi bi-x-circle"></i> Cancel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetch("{{ path('app_vtraining_delete_image', {'id': vtraining.id}) }}", {
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                    'X-CSRF-Token': deleteImageToken
+                                },
+                                body: `image=${encodeURIComponent(imageName)}`
+                            })
+                                .then(r => r.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        button.closest('.image-item').remove();
+                                        updateImageStats();
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Deleted!',
+                                            text: data.message,
+                                            timer: 2000,
+                                            showConfirmButton: false,
+                                            toast: true,
+                                            position: 'top-end'
+                                        });
+                                    } else {
+                                        throw new Error(data.error || 'Failed to delete image');
+                                    }
+                                })
+                                .catch(err => {
+                                    Swal.fire({ icon: 'error', title: 'Error', text: err.message });
+                                });
+                        }
+                    });
+                }
+            });
+
+            // ── Helper: Add image to gallery ───────────────────────
+            function addImageToGallery(imageName, imageUrl) {
+                let gallery = document.getElementById('current-images');
+
+                if (!gallery) {
+                    const mainContainer = document.querySelector('.col-12');
+                    const card = document.createElement('div');
+                    card.className = 'card mt-4';
+                    card.innerHTML = `
+                        <div class="card-header">
+                            <h5><i class="bi bi-collection"></i> Current Images (1)</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="image-gallery" id="current-images"></div>
+                        </div>
+                    `;
+                    mainContainer.appendChild(card);
+                    gallery = document.getElementById('current-images');
+                }
+
+                const imageItem = document.createElement('div');
+                imageItem.className = 'image-item';
+                imageItem.dataset.image = imageName;
+                imageItem.innerHTML = `
+                    <img src="${imageUrl}" alt="Gallery Image" loading="lazy">
+                    <div class="image-controls">
+                        <button type="button" class="btn btn-success btn-sm btn-image-control set-cover-btn"
+                                data-image="${imageName}" title="Set as cover image">
+                            <i class="bi bi-star"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm btn-image-control delete-image-btn"
+                                data-image="${imageName}" title="Delete image">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                `;
+                imageItem.style.opacity = '0';
+                gallery.appendChild(imageItem);
+                setTimeout(() => {
+                    imageItem.style.transition = 'opacity 0.3s ease';
+                    imageItem.style.opacity    = '1';
+                }, 100);
+            }
+
+            // ── Helper: Update cover image UI ──────────────────────
+            function updateCoverImageUI(newCoverImage) {
+                document.querySelectorAll('.image-item').forEach(item => {
+                    item.classList.remove('cover-image');
+                    const badge = item.querySelector('.cover-badge');
+                    if (badge) badge.remove();
+
+                    const setCoverBtn = item.querySelector('.set-cover-btn');
+                    if (setCoverBtn) {
+                        setCoverBtn.style.display = item.dataset.image === newCoverImage ? 'none' : 'block';
+                    }
+                });
+
+                const newCoverItem = document.querySelector(`[data-image="${newCoverImage}"]`);
+                if (newCoverItem) {
+                    newCoverItem.classList.add('cover-image');
+                    const coverBadge = document.createElement('span');
+                    coverBadge.className = 'cover-badge';
+                    coverBadge.innerHTML = '<i class="bi bi-star-fill"></i> Cover';
+                    newCoverItem.appendChild(coverBadge);
+                }
+            }
+
+            // ── Helper: Update statistics ──────────────────────────
+            function updateImageStats() {
+                const totalImages = document.querySelectorAll('.image-item').length;
+                const hasCover    = document.querySelector('.cover-image') !== null;
+
+                const totalBadge = document.querySelector('.badge.bg-primary');
+                const coverBadge = document.querySelector('.badge.bg-success, .badge.bg-warning');
+
+                if (totalBadge) totalBadge.textContent = totalImages;
+
+                if (coverBadge) {
+                    coverBadge.textContent = hasCover ? 'Yes' : 'No';
+                    coverBadge.className   = hasCover ? 'badge bg-success' : 'badge bg-warning';
+                }
+
+                const galleryHeader = document.querySelector('#current-images')
+                    ?.closest('.card')
+                    ?.querySelector('.card-header h5');
+                if (galleryHeader) {
+                    galleryHeader.innerHTML = `<i class="bi bi-collection"></i> Current Images (${totalImages})`;
+                }
+            }
+
+        });
+    </script>
+{% endif %}
+
+<!-- Bootstrap form validation -->
+<script>
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation');
+            Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>

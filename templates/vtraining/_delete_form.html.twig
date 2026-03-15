@@ -1,0 +1,30 @@
+<button type="button" class="btn btn-danger w-100" id="delete-training-btn">
+    <i class="bi bi-trash"></i> Delete Training
+</button>
+
+<form id="delete-training-form"
+      action="{{ path('app_vtraining_delete', {'id': vtraining.id}) }}"
+      method="post"
+      style="display: none;">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ vtraining.id) }}">
+    <input type="hidden" name="_method" value="DELETE">
+</form>
+
+<script>
+    document.getElementById('delete-training-btn').addEventListener('click', function () {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to delete "{{ vtraining.title|e('js') }}"? This action cannot be undone!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: '<i class="bi bi-trash"></i> Yes, delete it!',
+            cancelButtonText: '<i class="bi bi-x-circle"></i> Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-training-form').submit();
+            }
+        });
+    });
+</script>

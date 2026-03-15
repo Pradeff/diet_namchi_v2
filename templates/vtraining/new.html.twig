@@ -1,0 +1,29 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}New Training{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="row mb-4">
+            <div class="col">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 text_color_default">
+                        <i class="bi bi-plus-circle"></i>
+                        New Training
+                    </h5>
+                    <a href="{{ path('app_vtraining_index') }}" class="btn btn-light-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            {% include 'vtraining/_form.html.twig' with {
+                'is_edit': false,
+                'max_file_size': max_file_size,
+                'max_file_size_mb': max_file_size_mb
+            } %}
+        </div>
+    </div>
+{% endblock %}

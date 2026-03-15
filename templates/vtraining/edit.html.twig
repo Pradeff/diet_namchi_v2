@@ -1,0 +1,34 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block title %}Edit Training - {{ vtraining.title }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="row mb-4">
+            <div class="col">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 text_color_default">
+                        <i class="bi bi-pencil-square"></i>
+                        Edit Training
+                    </h5>
+                    <div>
+                        <a href="{{ path('app_vtraining_show', {'id': vtraining.id}) }}" class="btn btn-light-info">
+                            <i class="bi bi-eye"></i> View
+                        </a>
+                        <a href="{{ path('app_vtraining_index') }}" class="btn btn-light-secondary">
+                            <i class="bi bi-arrow-left"></i> Back to List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            {% include 'vtraining/_form.html.twig' with {
+                'is_edit': true,
+                'max_file_size': max_file_size,
+                'max_file_size_mb': max_file_size_mb
+            } %}
+        </div>
+    </div>
+{% endblock %}

@@ -8,6 +8,7 @@ use App\Repository\VgalleryRepository;
 use App\Repository\VnoticeRepository;
 use App\Repository\VpagesRepository;
 use App\Repository\VteamRepository;
+use App\Repository\VtrainingRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -121,12 +122,38 @@ final class MainController extends AbstractController
     }
 
     #[Route('/training', name: 'app_training')]
-    public function PgTraining(): Response
+    public function PgTraining(VtrainingRepository $vtrainingRepository): Response
     {
         return $this->render('main/training.html.twig', [
-            'controller_name' => 'MainController',
+            'vtrainings' => $vtrainingRepository->findAllOrderedByCreatedAt(),
         ]);
     }
+
+    #[Route('/training/details/{slug}', name: 'app_training_details')]
+    public function TrainingDetails(string $slug, VtrainingRepository $vtrainingRepository): Response
+    {
+        $vtraining = $vtrainingRepository->findOneBy(['slug' => $slug]);
+
+        if (!$vtraining) {
+            throw $this->createNotFoundException('Training not found.');
+        }
+
+        return $this->render('main/training_details.html.twig', [
+            'vtraining' => $vtraining,
+        ]);
+    }
+
+    /**
+     * Sub-request action — rendered via:
+     * {{ render(controller('App\\Controller\\MainController::TrainingSection')) }}
+     */
+    public function TrainingSection(VtrainingRepository $vtrainingRepository): Response
+    {
+        return $this->render('main/_training_section.html.twig', [
+            'vtrainings' => $vtrainingRepository->findAllOrderedByCreatedAt(),
+        ]);
+    }
+
 
     #[Route('/course', name: 'app_course')]
     public function PgCourse(VcourseRepository $vcourseRepository): Response

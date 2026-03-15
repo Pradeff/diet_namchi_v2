@@ -95,6 +95,12 @@
                         <span>Course</span>
                     </a>
                 </li>
+                <li class="side_nav-item {% if app.request.attributes.get('_route') in ['app_vtraining_index','app_vtraining_new','app_vtraining_edit','app_vtraining_show'] %}active{% endif %}">
+                    <a href="{{ path('app_vtraining_index') }}" class="side_nav-link"  data-tooltip="Training" title="Training">
+                        <i class="bi bi-people"></i>
+                        <span>Training</span>
+                    </a>
+                </li>
 
                 <li class="side_nav-item {% if app.request.attributes.get('_route') in ['app_vteam_index','app_vteam_new','app_vteam_edit','app_vteam_show'] %}active{% endif %}">
                     <a href="{{ path('app_vteam_index') }}" class="side_nav-link"  data-tooltip="Staff" title="Staff">
